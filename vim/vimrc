@@ -12,3 +12,5 @@ set ignorecase
 syntax on
 filetype indent on
 colorscheme desert
+
+au! BufRead,BufNewFile *.gradle setfiletype groovy 
