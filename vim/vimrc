@@ -13,4 +13,10 @@ syntax on
 filetype indent on
 colorscheme desert
 
-au! BufRead,BufNewFile *.gradle setfiletype groovy 
+au! BufRead,BufNewFile *.gradle setfiletype groovy
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+call vundle#end()
