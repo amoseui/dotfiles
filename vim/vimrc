@@ -9,6 +9,7 @@ set number
 set expandtab
 set hlsearch
 set ignorecase
+set paste
 syntax on
 filetype indent on
 colorscheme desert
