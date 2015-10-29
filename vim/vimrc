@@ -10,6 +10,13 @@ set expandtab
 set hlsearch
 set ignorecase
 set paste
+set ruler
+set showmatch
+set cursorline 
+set linebreak
+set background=dark
+set history=1000
+
 syntax on
 filetype indent on
 colorscheme desert
