@@ -31,3 +31,12 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'rhysd/committia.vim'
 call vundle#end()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Project Specific vimrc
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" allow project-specific vimrc files to be sourced
+set exrc
+" make sure project-specific vimrc files don't do unsafe things
+set secure
