@@ -9,3 +9,4 @@
 	ui = auto
 [core]
 	editor = /usr/bin/vim
+	excludesfile = ~/.gitignore
