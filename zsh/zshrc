@@ -56,6 +56,9 @@ plugins=(git)
 # export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/Workspace/github/chromium-android-build-osx/depot_tools"
 # export MANPATH="/usr/local/man:$MANPATH"
 
+alias python='python3'
+alias 2='python2'
+alias 3='python3'
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
