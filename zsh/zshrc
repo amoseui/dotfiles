@@ -56,7 +56,9 @@ plugins=(git)
 # export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/Workspace/github/chromium-android-build-osx/depot_tools"
 # export MANPATH="/usr/local/man:$MANPATH"
 
-export PATH="$HOME/Library/Android/sdk/platform-tools":$PATH
+export DEPOT_TOOLS="$HOME/Dropbox/Workspace/opensource/depot_tools"
+
+export PATH="$HOME/Library/Android/sdk/platform-tools":$DEPOT_TOOLS:$PATH
 
 alias python='python3'
 alias 2='python2'
