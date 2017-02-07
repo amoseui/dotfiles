@@ -17,6 +17,8 @@ set linebreak
 set background=dark
 set history=1000
 
+set colorcolumn=80
+
 syntax on
 filetype indent on
 colorscheme desert
