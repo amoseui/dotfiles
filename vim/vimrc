@@ -21,7 +21,6 @@ set colorcolumn=80
 
 syntax on
 filetype indent on
-colorscheme desert
 
 au Filetype python setl ts=2 sw=2 sts=2
 au Filetype cpp setl ts=2 sw=2 sts=2
@@ -32,7 +31,10 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'rhysd/committia.vim'
+Plugin 'nanotech/jellybeans.vim' 
 call vundle#end()
+
+colorscheme jellybeans
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Project Specific vimrc
