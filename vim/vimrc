@@ -19,6 +19,13 @@ set history=1000
 
 set colorcolumn=80
 
+set laststatus=2
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+
+" :W sudo saves the file
+" (useful for handling the permission-denied error)
+command W w !sudo tee % > /dev/null
+
 syntax on
 filetype indent on
 
@@ -44,3 +51,12 @@ colorscheme jellybeans
 set exrc
 " make sure project-specific vimrc files don't do unsafe things
 set secure
+
+" Returns true if paste mode is enabled
+function! HasPaste()
+    if &paste
+        return 'PASTE MODE  '
+    endif
+    return ''
+endfunction
+
