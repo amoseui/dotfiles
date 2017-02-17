@@ -16,8 +16,10 @@ set cursorline
 set linebreak
 set background=dark
 set history=1000
-
 set colorcolumn=80
+
+set autoread
+set autowrite
 
 set laststatus=2
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
