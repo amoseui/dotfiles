@@ -47,6 +47,9 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'rhysd/committia.vim'
 Plugin 'nanotech/jellybeans.vim' 
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'vim-airline/vim-airline'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
 call vundle#end()
 
 colorscheme jellybeans
@@ -76,3 +79,5 @@ let g:ycm_global_ycm_extra_conf = '~/Workspace/chromium/.ycm_extra_conf.py'
 "let g:ycm_autoclose_preview_window_after_completion = 1
 "let g:ycm_warning_symbol = '>*'
 
+"git plugin
+let g:airline_powerline_fonts = 1
