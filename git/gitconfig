@@ -1,7 +1,7 @@
 [user]
-	name = amoseui
+	name = Amos Lim
 	email = amoseui@gmail.com
-	signingkey = amoseui@gmail.com
+#	signingkey = amoseui@gmail.com
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
@@ -12,5 +12,5 @@
 	editor = /usr/bin/vim
 	excludesfile = ~/.gitignore
 	precomposeUnicode = true
-[commit]
-	gpgsign = true
+#[commit]
+#	gpgsign = true
