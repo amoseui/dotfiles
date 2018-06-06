@@ -55,7 +55,7 @@ plugins=(git history dirhistory)
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
-export DEPOT_TOOLS="$HOME/Dropbox/Workspace/opensource/depot_tools"
+export DEPOT_TOOLS="$HOME/Workspace/depot_tools"
 export PATH="$HOME/Library/Android/sdk/platform-tools":$DEPOT_TOOLS:$PATH
 
 source $ZSH/oh-my-zsh.sh
