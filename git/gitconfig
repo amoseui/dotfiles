@@ -14,3 +14,5 @@
     precomposeUnicode = true
 #[commit]
 #    gpgsign = true
+[alias]
+    lg = log --color --graph --pretty=format:'%C(yellow)%ci%Creset %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ai) %C(bold blue)%ae%Creset' --abbrev-commit
