@@ -16,4 +16,5 @@
 #    gpgsign = true
 [alias]
     co = checkout
+    cp = cherry-pick
     lg = log --color --graph --pretty=format:'%C(yellow)%ci%Creset %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ai) %C(bold blue)%ae%Creset' --abbrev-commit
