@@ -58,6 +58,9 @@ plugins=(git history dirhistory)
 export DEPOT_TOOLS="$HOME/Workspace/depot_tools"
 export PATH="$HOME/Library/Android/sdk/platform-tools":$DEPOT_TOOLS:$PATH
 
+# rust
+export PATH="$HOME/.cargo/bin:$PATH"
+
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
