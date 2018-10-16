@@ -62,6 +62,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-airline/vim-airline'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
+Plugin 'leafgarland/typescript-vim'
 call vundle#end()
 
 "if !empty(glob("~/Workspace/chromium/src/tools/vim/mojom"))
