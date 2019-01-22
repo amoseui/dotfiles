@@ -1,3 +1,6 @@
+set langmenu=en_US.UTF-8
+language messages en_US.UTF-8
+
 set ignorecase
 set smartcase
 set infercase
@@ -66,6 +69,7 @@ filetype plugin indent on
 
 au Filetype python setl ts=2 sw=2 sts=2
 au Filetype cpp setl ts=2 sw=2 sts=2
+au! BufRead,BufNewFile *.gn setfiletype python
 au! BufRead,BufNewFile *.gradle setfiletype groovy
 
 "if !empty(glob("~/Workspace/chromium/src/tools/vim/mojom"))
