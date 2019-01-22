@@ -50,6 +50,7 @@ command W w !sudo tee % > /dev/null
 
 filetype off
 
+set rtp^=~/Workspace/chromium/src/tools/vim/mojom
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
@@ -65,7 +66,7 @@ Plugin 'rust-lang/rust.vim'
 call vundle#end()
 
 syntax on
-filetype plugin indent on
+filetype indent on
 
 au Filetype python setl ts=2 sw=2 sts=2
 au Filetype cpp setl ts=2 sw=2 sts=2
