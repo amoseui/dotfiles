@@ -1,110 +1,86 @@
-set langmenu=en_US.UTF-8
+" ============================================================================
+" .vimrc of amoseui
+" ============================================================================
+
+" install vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" constants
+let chromium_path = '~/Workspace/chromium'
+
+" ----------------------------------------------------------------------------
+" VIM-PLUG BEGIN
+" ----------------------------------------------------------------------------
+call plug#begin('~/.vim/plugged')
+
+" theme
+Plug 'nanotech/jellybeans.vim'
+
+" edit
+Plug 'tpope/vim-commentary'
+
+" browsing
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
+
+" git
+Plug 'airblade/vim-gitgutter' " show git diff of a current file
+Plug 'rhysd/committia.vim' " split windows for git commit
+Plug 'tpope/vim-fugitive' " Gblame
+Plug 'vim-airline/vim-airline' " bottom bar
+Plug 'vim-airline/vim-airline-themes'
+
+" lang
+
+call plug#end()
+
+" ----------------------------------------------------------------------------
+" BASIC SETTINGS
+" ----------------------------------------------------------------------------
+
+" set encoding
 language messages en_US.UTF-8
+set langmenu=en_US.UTF-8
+set encoding=utf-8
 
-set ignorecase
-set smartcase
-set infercase
+colorscheme jellybeans
+let g:airline_theme='jellybeans'
 
+set colorcolumn=80 " keep 80 columns.
+set hlsearch " highlight search
+set ignorecase " ignore case on search
+set number " show line numbers
+set showmatch " show the matched bracket
+
+" TODO: indent and tab
+
+" show tab caracters
 set list
 set listchars=tab:>-
 
-autocmd BufWritePre * %s/\s\+$//e
-""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
-
-set encoding=utf-8
-
-set nocompatible
-set autoindent
-set cindent
-set smartindent
-set wrap
-set ruler
-
-set number
-set hlsearch
-set ruler
-set showmatch
-set cursorline
-set linebreak
-set background=dark
-set history=1000
-set colorcolumn=80
-
-set autoread
-set autowrite
-
-set laststatus=2
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
-
+" browse files to open as zsh style
 set wildmenu
 set wildmode=longest:list,full
 
-" :W sudo saves the file
-" (useful for handling the permission-denied error)
-command W w !sudo tee % > /dev/null
+" remove whitespaces
+autocmd BufWritePre * %s/\s\+$//e
 
-filetype off
+" ----------------------------------------------------------------------------
+" chromium
+" ----------------------------------------------------------------------------
 
-set rtp^=~/Workspace/chromium/src/tools/vim/mojom
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'rhysd/committia.vim'
-Plugin 'nanotech/jellybeans.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'vim-airline/vim-airline'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-fugitive'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'rust-lang/rust.vim'
-call vundle#end()
+" ----------------------------------------------------------------------------
+" python
+" ----------------------------------------------------------------------------
 
-syntax on
-filetype indent on
+" ----------------------------------------------------------------------------
+" KEY MAPPINGS
+" ----------------------------------------------------------------------------
+map <C-n> :NERDTreeToggle<cr>
 
-au Filetype python setl ts=2 sw=2 sts=2
-au Filetype cpp setl ts=2 sw=2 sts=2
-au! BufRead,BufNewFile *.gn setfiletype python
-au! BufRead,BufNewFile *.gradle setfiletype groovy
-
-"if !empty(glob("~/Workspace/chromium/src/tools/vim/mojom"))
-	""set runtimepath+=~/Workspace/chromium/src/tools/vim/mojom
-	"exe 'set rtp+=' . expand('~/Workspace/chromium/src/tools/vim/mojom')
-"endif
-
-colorscheme jellybeans
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Project Specific vimrc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" allow project-specific vimrc files to be sourced
-set exrc
-" make sure project-specific vimrc files don't do unsafe things
-set secure
-
-" Returns true if paste mode is enabled
-function! HasPaste()
-    if &paste
-        return 'PASTE MODE  '
-    endif
-    return ''
-endfunction
-
-"let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:ycm_global_ycm_extra_conf = '~/Workspace/chromium/.ycm_extra_conf.py'
-"let g:ycm_confirm_extra_conf = 0
-"let g:ycm_key_list_select_completion = ['', '']
-"let g:ycm_key_list_previous_completion = ['', '']
-"let g:ycm_autoclose_preview_window_after_completion = 1
-"let g:ycm_warning_symbol = '>*'
-
-
-"git plugin
-let g:airline_powerline_fonts = 1
