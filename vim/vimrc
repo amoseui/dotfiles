@@ -55,6 +55,8 @@ let g:airline_theme='jellybeans'
 set colorcolumn=80 " keep 80 columns.
 set hlsearch " highlight search
 set ignorecase " ignore case on search
+set smartcase " don't ignore case with capital letters on search
+set incsearch " incremental search
 set number " show line numbers
 set showmatch " show the matched bracket
 
