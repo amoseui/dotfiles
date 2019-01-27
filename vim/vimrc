@@ -24,7 +24,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 " constants
-let chromium_path='~/Workspace/chromium'
+let $CHROMIUM_PATH=$HOME . '/Workspace/chromium/src'
 
 " ----------------------------------------------------------------------------
 " VIM-PLUG BEGIN
@@ -51,6 +51,7 @@ Plug 'vim-airline/vim-airline-themes'
 
 " lang
 Plug 'https://gn.googlesource.com/gn', { 'rtp': 'tools/gn/misc/vim' }
+Plug '$CHROMIUM_PATH/tools/vim/mojom'
 
 call plug#end()
 
@@ -120,6 +121,6 @@ command W w !sudo tee % > /dev/null
 " ----------------------------------------------------------------------------
 " KEY MAPPINGS
 " ----------------------------------------------------------------------------
-"map <C-n> :NERDTreeToggle<CR>
-map <C-n> :pyf ~/.vim/plugged/gn/tools/gn/misc/vim/gn-format.py<CR>
+map <C-n> :NERDTreeToggle<CR>
+map <C-G> :pyf ~/.vim/plugged/gn/tools/gn/misc/vim/gn-format.py<CR>
 
