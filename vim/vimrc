@@ -2,8 +2,19 @@
 " .vimrc of amoseui
 " ============================================================================
 
-"No compatibility to trditional vi
+" no compatibility to trditional vi
 set nocompatible
+
+" support python2 and python3 for nvim
+if has('nvim')
+  if has('mac')
+    let g:python_host_prog='/usr/bin/python'
+    let g:python3_host_prog='/Library/Frameworks/Python.framework/Versions/3.6/bin/python3'
+  else
+    let g:python_host_prog='/usr/bin/python2'
+    let g:python3_host_prog='/usr/bin/python3'
+  endif
+endif
 
 " install vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -13,7 +24,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 " constants
-let chromium_path = '~/Workspace/chromium'
+let $CHROMIUM_PATH=$HOME . '/Workspace/chromium'
+let $CHROMIUM_SRC_PATH=$CHROMIUM_PATH . '/src'
 
 " ----------------------------------------------------------------------------
 " VIM-PLUG BEGIN
@@ -25,6 +37,7 @@ Plug 'nanotech/jellybeans.vim'
 
 " edit
 Plug 'tpope/vim-commentary'
+Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py --clang-completer' }
 
 " browsing
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -39,6 +52,8 @@ Plug 'vim-airline/vim-airline' " bottom bar
 Plug 'vim-airline/vim-airline-themes'
 
 " lang
+Plug 'https://gn.googlesource.com/gn', { 'rtp': 'tools/gn/misc/vim' }
+Plug '$CHROMIUM_SRC_PATH/tools/vim/mojom'
 
 call plug#end()
 
@@ -73,13 +88,12 @@ set linebreak
 
 " tab and indent
 set expandtab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set smarttab
 set autoindent
 set smartindent
-set paste
 
 " show tab characters
 set list listchars=tab:»\ ,trail:·
@@ -101,6 +115,9 @@ command W w !sudo tee % > /dev/null
 " ----------------------------------------------------------------------------
 " chromium
 " ----------------------------------------------------------------------------
+source $CHROMIUM_SRC_PATH/tools/vim/clang-format.vim
+source $CHROMIUM_SRC_PATH/tools/vim/filetypes.vim
+let g:ycm_global_ycm_extra_conf=$CHROMIUM_PATH.'/.ycm_extra_conf.py'
 
 " ----------------------------------------------------------------------------
 " python
@@ -109,5 +126,6 @@ command W w !sudo tee % > /dev/null
 " ----------------------------------------------------------------------------
 " KEY MAPPINGS
 " ----------------------------------------------------------------------------
-map <C-n> :NERDTreeToggle<cr>
+map <C-n> :NERDTreeToggle<CR>
+map <C-G> :pyf ~/.vim/plugged/gn/tools/gn/misc/vim/gn-format.py<CR>
 
