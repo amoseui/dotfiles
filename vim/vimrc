@@ -24,7 +24,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 " constants
-let $CHROMIUM_PATH=$HOME . '/Workspace/chromium/src'
+let $CHROMIUM_PATH=$HOME . '/Workspace/chromium'
+let $CHROMIUM_SRC_PATH=$CHROMIUM_PATH . '/src'
 
 " ----------------------------------------------------------------------------
 " VIM-PLUG BEGIN
@@ -36,6 +37,7 @@ Plug 'nanotech/jellybeans.vim'
 
 " edit
 Plug 'tpope/vim-commentary'
+Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py --clang-completer' }
 
 " browsing
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -51,7 +53,7 @@ Plug 'vim-airline/vim-airline-themes'
 
 " lang
 Plug 'https://gn.googlesource.com/gn', { 'rtp': 'tools/gn/misc/vim' }
-Plug '$CHROMIUM_PATH/tools/vim/mojom'
+Plug '$CHROMIUM_SRC_PATH/tools/vim/mojom'
 
 call plug#end()
 
@@ -113,8 +115,9 @@ command W w !sudo tee % > /dev/null
 " ----------------------------------------------------------------------------
 " chromium
 " ----------------------------------------------------------------------------
-source $CHROMIUM_PATH/tools/vim/clang-format.vim
-source $CHROMIUM_PATH/tools/vim/filetypes.vim
+source $CHROMIUM_SRC_PATH/tools/vim/clang-format.vim
+source $CHROMIUM_SRC_PATH/tools/vim/filetypes.vim
+let g:ycm_global_ycm_extra_conf=$CHROMIUM_PATH.'/.ycm_extra_conf.py'
 
 " ----------------------------------------------------------------------------
 " python
