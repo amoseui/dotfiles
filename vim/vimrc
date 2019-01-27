@@ -2,6 +2,9 @@
 " .vimrc of amoseui
 " ============================================================================
 
+"No compatibility to trditional vi
+set nocompatible
+
 " install vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -27,7 +30,6 @@ Plug 'tpope/vim-commentary'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdtree'
 
 " git
 Plug 'airblade/vim-gitgutter' " show git diff of a current file
@@ -49,29 +51,52 @@ language messages en_US.UTF-8
 set langmenu=en_US.UTF-8
 set encoding=utf-8
 
+"English spelling checker.
+setlocal spelllang=en_us
+
 colorscheme jellybeans
 let g:airline_theme='jellybeans'
 
+set autowrite
+set number " show line numbers
 set colorcolumn=80 " keep 80 columns.
+set cursorline " highlight current cursor line
 set hlsearch " highlight search
 set ignorecase " ignore case on search
 set smartcase " don't ignore case with capital letters on search
+set infercase " adjust case on autocomplete
 set incsearch " incremental search
-set number " show line numbers
+set scrolloff=5 " cursor offset by lines
 set showmatch " show the matched bracket
+set matchpairs+=<:> " add match pairs
+set linebreak
 
-" TODO: indent and tab
+" tab and indent
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set smarttab
+set autoindent
+set smartindent
+set paste
 
-" show tab caracters
-set list
-set listchars=tab:>-
+" show tab characters
+set list listchars=tab:»\ ,trail:·
 
 " browse files to open as zsh style
 set wildmenu
 set wildmode=longest:list,full
 
+" TODO: need to check on linux
+"set mouse=c
+
 " remove whitespaces
 autocmd BufWritePre * %s/\s\+$//e
+
+" :W sudo saves the file
+" (useful for handling the permission-denied error)
+command W w !sudo tee % > /dev/null
 
 " ----------------------------------------------------------------------------
 " chromium
