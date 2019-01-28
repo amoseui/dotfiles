@@ -80,7 +80,6 @@ set hlsearch " highlight search
 set ignorecase " ignore case on search
 set smartcase " don't ignore case with capital letters on search
 set infercase " adjust case on autocomplete
-set incsearch " incremental search
 set scrolloff=5 " cursor offset by lines
 set showmatch " show the matched bracket
 set matchpairs+=<:> " add match pairs
@@ -111,6 +110,9 @@ autocmd BufWritePre * %s/\s\+$//e
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
+
+au FileType gitcommit setl spell
+au FileType make setl ts=4 sw=4 sts=4
 
 " ----------------------------------------------------------------------------
 " chromium
