@@ -21,3 +21,5 @@ ln -sf ~/.vim/autoload/plug.vim ~/.config/nvim/autoload/
 
 vim +PlugInstall +qall
 
+# antigen for zsh
+curl -L git.io/antigen > ~/.antigen.zsh

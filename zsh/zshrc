@@ -88,6 +88,26 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-source $HOME/Dropbox/Workspace/opensource/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Use antigen
+source $HOME/.antigen.zsh
+
+# Use Oh-My-Zsh
+antigen use oh-my-zsh
+
+# Set theme
+antigen theme ys
+
+# Set plugins (plugins not part of Oh-My-Zsh can be installed using githubusername/repo)
+antigen bundle git
+antigen bundle autojump
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    antigen bundle osx
+fi
+
+# Apply changes
+antigen apply
