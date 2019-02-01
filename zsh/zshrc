@@ -88,8 +88,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # Use antigen
 source $HOME/.antigen.zsh
 
@@ -111,3 +109,5 @@ fi
 
 # Apply changes
 antigen apply
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
