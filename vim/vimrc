@@ -5,17 +5,6 @@
 " no compatibility to trditional vi
 set nocompatible
 
-" support python2 and python3 for nvim
-if has('nvim')
-  if has('mac')
-    let g:python_host_prog='/usr/bin/python'
-    let g:python3_host_prog='/Library/Frameworks/Python.framework/Versions/3.6/bin/python3'
-  else
-    let g:python_host_prog='/usr/bin/python2'
-    let g:python3_host_prog='/usr/bin/python3'
-  endif
-endif
-
 " install vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -78,7 +67,6 @@ set colorcolumn=80 " keep 80 columns.
 set cursorline " highlight current cursor line
 set hlsearch " highlight search
 set ignorecase " ignore case on search
-set smartcase " don't ignore case with capital letters on search
 set infercase " adjust case on autocomplete
 set scrolloff=5 " cursor offset by lines
 set showmatch " show the matched bracket

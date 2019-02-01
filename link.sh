@@ -14,11 +14,6 @@ ln -sf $ZSHRC_PATH ~/.zshrc
 mv -v ~/.vimrc ~/.vimrc.old 2> /dev/null
 ln -sf $VIMRC_PATH ~/.vimrc
 
-# nvim
-mkdir -p ~/.config/nvim/autoload
-ln -sf $VIMRC_PATH ~/.config/nvim/init.vim
-ln -sf ~/.vim/autoload/plug.vim ~/.config/nvim/autoload/
-
 vim +PlugInstall +qall
 
 # antigen for zsh
