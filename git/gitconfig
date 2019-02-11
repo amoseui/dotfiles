@@ -9,7 +9,7 @@
 [color]
     ui = auto
 [core]
-    editor = /usr/bin/vim
+    editor = vim
     excludesfile = ~/.gitignore
     precomposeUnicode = true
 #[commit]
