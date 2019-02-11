@@ -42,7 +42,9 @@ Plug 'vim-airline/vim-airline-themes'
 
 " lang
 Plug 'https://gn.googlesource.com/gn', { 'rtp': 'tools/gn/misc/vim' }
-Plug '$CHROMIUM_SRC_PATH/tools/vim/mojom'
+if isdirectory($CHROMIUM_PATH)
+  Plug '$CHROMIUM_SRC_PATH/tools/vim/mojom'
+endif
 
 call plug#end()
 
@@ -105,9 +107,11 @@ au FileType make setl ts=4 sw=4 sts=4
 " ----------------------------------------------------------------------------
 " chromium
 " ----------------------------------------------------------------------------
-source $CHROMIUM_SRC_PATH/tools/vim/clang-format.vim
-source $CHROMIUM_SRC_PATH/tools/vim/filetypes.vim
-let g:ycm_global_ycm_extra_conf=$CHROMIUM_PATH.'/.ycm_extra_conf.py'
+if isdirectory($CHROMIUM_PATH)
+  source $CHROMIUM_SRC_PATH/tools/vim/clang-format.vim
+  source $CHROMIUM_SRC_PATH/tools/vim/filetypes.vim
+  let g:ycm_global_ycm_extra_conf=$CHROMIUM_PATH.'/.ycm_extra_conf.py'
+endif
 
 " ----------------------------------------------------------------------------
 " python
