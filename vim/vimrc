@@ -32,6 +32,7 @@ Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py --clang-completer' 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'mhinz/vim-startify'
 
 " git
 Plug 'airblade/vim-gitgutter' " show git diff of a current file
@@ -45,6 +46,8 @@ Plug 'https://gn.googlesource.com/gn', { 'rtp': 'tools/gn/misc/vim' }
 if isdirectory($CHROMIUM_PATH)
   Plug '$CHROMIUM_SRC_PATH/tools/vim/mojom'
 endif
+
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
@@ -116,6 +119,74 @@ endif
 " ----------------------------------------------------------------------------
 " python
 " ----------------------------------------------------------------------------
+
+" ----------------------------------------------------------------------------
+" vimwiki
+" ----------------------------------------------------------------------------
+let wiki = {}
+let wiki.path = '~/Workspace/wiki/_wiki/'
+let wiki.ext = '.md'
+
+let g:vimwiki_list = [wiki]
+let g:vimwiki_conceallevel = 0
+
+function! LastModified()
+    if &modified
+        let save_cursor = getpos(".")
+        let n = min([10, line("$")])
+        keepjumps exe '1,' . n . 's#^\(.\{,10}updated\s*: \).*#\1' .
+              \ strftime('%Y-%m-%d %H:%M:%S +0900') . '#e'
+        call histdel('search', -1)
+        call setpos('.', save_cursor)
+    endif
+endfun
+autocmd BufWritePre *.md call LastModified()
+
+function! NewTemplate()
+
+    let l:wiki_directory = v:false
+
+    for wiki in g:vimwiki_list
+        if expand('%:p:h') . '/' == wiki.path
+            let l:wiki_directory = v:true
+            break
+        endif
+    endfor
+
+    if !l:wiki_directory
+        return
+    endif
+
+    if line("$") > 1
+        return
+    endif
+
+    let l:template = []
+    call add(l:template, '---')
+    call add(l:template, 'layout  : wiki')
+    call add(l:template, 'title   : ')
+    call add(l:template, 'summary : ')
+    call add(l:template, 'date    : ' . strftime('%Y-%m-%d %H:%M:%S +0900'))
+    call add(l:template, 'updated : ' . strftime('%Y-%m-%d %H:%M:%S +0900'))
+    call add(l:template, 'tags    : ')
+    call add(l:template, 'toc     : true')
+    call add(l:template, 'public  : true')
+    call add(l:template, 'parent  : ')
+    call add(l:template, 'latex   : false')
+    call add(l:template, '---')
+    call add(l:template, '* TOC')
+    call add(l:template, '{:toc}')
+    call add(l:template, '')
+    call add(l:template, '# ')
+    call setline(1, l:template)
+    execute 'normal! G'
+    execute 'normal! $'
+
+    echom 'new wiki page has created'
+endfunction
+autocmd BufRead,BufNewFile *.md call NewTemplate()
+
+let g:ycm_filetype_blacklist = {}
 
 " ----------------------------------------------------------------------------
 " KEY MAPPINGS
