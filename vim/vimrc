@@ -124,11 +124,13 @@ endif
 " vimwiki
 " ----------------------------------------------------------------------------
 let wiki = {}
-let wiki.path = '~/Workspace/wiki/_wiki/'
+let wiki.path = '~/Workspace/wiki/_wiki'
 let wiki.ext = '.md'
 
 let g:vimwiki_list = [wiki]
 let g:vimwiki_conceallevel = 0
+
+let g:ycm_filetype_blacklist = {}
 
 function! LastModified()
     if &modified
@@ -140,14 +142,13 @@ function! LastModified()
         call setpos('.', save_cursor)
     endif
 endfun
-autocmd BufWritePre *.md call LastModified()
 
 function! NewTemplate()
 
     let l:wiki_directory = v:false
 
     for wiki in g:vimwiki_list
-        if expand('%:p:h') . '/' == wiki.path
+        if expand('%:p:h') == expand(wiki.path)
             let l:wiki_directory = v:true
             break
         endif
@@ -168,7 +169,7 @@ function! NewTemplate()
     call add(l:template, 'summary : ')
     call add(l:template, 'date    : ' . strftime('%Y-%m-%d %H:%M:%S +0900'))
     call add(l:template, 'updated : ' . strftime('%Y-%m-%d %H:%M:%S +0900'))
-    call add(l:template, 'tags    : ')
+    call add(l:template, 'tag     : ')
     call add(l:template, 'toc     : true')
     call add(l:template, 'public  : true')
     call add(l:template, 'parent  : ')
@@ -184,9 +185,24 @@ function! NewTemplate()
 
     echom 'new wiki page has created'
 endfunction
-autocmd BufRead,BufNewFile *.md call NewTemplate()
 
-let g:ycm_filetype_blacklist = {}
+augroup vimwikiauto
+    autocmd BufWritePre *wiki/*.md keepjumps call LastModified()
+    autocmd BufRead,BufNewFile *wiki/*.md call NewTemplate()
+augroup END
+
+" ----------------------------------------------------------------------------
+" Startify
+" ----------------------------------------------------------------------------
+let g:startify_list_order = [
+            \ ['    Sessions'],
+            \'sessions',
+            \ ['    Most Recently Used files'],
+            \'files',
+            \'bookmarks',
+            \ ['    Commands'],
+            \'commands'
+            \]
 
 " ----------------------------------------------------------------------------
 " KEY MAPPINGS
