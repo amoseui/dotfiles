@@ -56,7 +56,7 @@ plugins=(git history dirhistory)
 # export MANPATH="/usr/local/man:$MANPATH"
 
 export DEPOT_TOOLS="$HOME/Workspace/depot_tools"
-export PATH="$HOME/Library/Android/sdk/platform-tools":$DEPOT_TOOLS:$PATH
+export PATH="$HOME/bin":"$HOME/Library/Android/sdk/platform-tools":$DEPOT_TOOLS:$PATH
 
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
