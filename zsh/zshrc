@@ -104,10 +104,21 @@ antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    antigen bundle osx
+    antigen bundle macos
 fi
 
 # Apply changes
 antigen apply
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+CPU=$(uname -m)
+if [[ "$CPU" == "arm64" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+  export PATH=/opt/homebrew/bin:$PATH
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+alias ibrew="arch -x86_64 /usr/local/bin/brew"
+alias abrew="arch -arm64 /opt/homebrew/bin/brew"
+
