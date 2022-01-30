@@ -62,7 +62,13 @@ plugins=(
 # export MANPATH="/usr/local/man:$MANPATH"
 
 export DEPOT_TOOLS="$HOME/Workspace/depot_tools"
-export PATH="$HOME/bin":"$HOME/Library/Android/sdk/platform-tools":$DEPOT_TOOLS:$PATH
+export PATH=$PATH:$DEPOT_TOOLS
+
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
