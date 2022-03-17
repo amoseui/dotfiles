@@ -1,1 +1,6 @@
 # dotfiles
+
+## Installation
+```
+$ ./link.sh
+```
