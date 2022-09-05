@@ -61,6 +61,8 @@ plugins=(
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
+export PATH=$PATH:~/.local/bin
+
 export DEPOT_TOOLS="$HOME/Workspace/depot_tools"
 export PATH=$PATH:$DEPOT_TOOLS
 
@@ -123,14 +125,19 @@ fi
 antigen apply
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-CPU=$(uname -m)
-if [[ "$CPU" == "arm64" ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-else
-  export PATH=/opt/homebrew/bin:$PATH
-  eval "$(/usr/local/bin/brew shellenv)"
+
+export FZF_CTRL_T_OPTS='--height 90% --bind ctrl-f:preview-page-down,ctrl-b:preview-page-up --preview "bat --theme=Coldark-Dark --style=numbers --color=always --line-range :500 {}"'
+
+OS_TYPE=$(uname)
+if [[ "$OS_TYPE" == "Darwin" ]]; then
+    CPU=$(uname -m)
+    if [[ "$CPU" == "arm64" ]]; then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    else
+      export PATH=/opt/homebrew/bin:$PATH
+      eval "$(/usr/local/bin/brew shellenv)"
+    fi
+
+    alias ibrew="arch -x86_64 /usr/local/bin/brew"
+    alias abrew="arch -arm64 /opt/homebrew/bin/brew"
 fi
-
-alias ibrew="arch -x86_64 /usr/local/bin/brew"
-alias abrew="arch -arm64 /opt/homebrew/bin/brew"
-
