@@ -21,3 +21,5 @@
     lg = log --color --graph --pretty=format:'%C(yellow)%ci%Creset %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ai) %C(bold blue)%ae%Creset' --abbrev-commit
     prev = reset --hard HEAD^
     s = status
+[http]
+    cookiefile = ~/.gitcookies
