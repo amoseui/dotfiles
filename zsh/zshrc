@@ -124,6 +124,8 @@ fi
 # Apply changes
 antigen apply
 
+export TERM="xterm-256color"
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export FZF_CTRL_T_OPTS='--height 90% --bind ctrl-f:preview-page-down,ctrl-b:preview-page-up --preview "bat --theme=Coldark-Dark --style=numbers --color=always --line-range :500 {}"'
