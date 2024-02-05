@@ -23,3 +23,5 @@
     s = status
 [http]
     cookiefile = ~/.gitcookies
+[pull]
+    rebase = true
