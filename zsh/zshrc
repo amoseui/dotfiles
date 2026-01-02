@@ -55,6 +55,7 @@ plugins=(
   dirhistory
   zsh-syntax-highlighting
   zsh-autosuggestions
+  asdf
 )
 
 # User configuration
@@ -78,7 +79,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -143,3 +144,11 @@ if [[ "$OS_TYPE" == "Darwin" ]]; then
     alias ibrew="arch -x86_64 /usr/local/bin/brew"
     alias abrew="arch -arm64 /opt/homebrew/bin/brew"
 fi
+
+eval "$(/opt/homebrew/Caskroom/miniconda/base/bin/conda shell.zsh hook)"
+
+
+# Added by Antigravity
+export PATH="/Users/amoseui/.antigravity/antigravity/bin:$PATH"
+
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
