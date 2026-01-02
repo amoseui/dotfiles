@@ -47,7 +47,6 @@ if isdirectory($CHROMIUM_PATH)
   Plug '$CHROMIUM_SRC_PATH/tools/vim/mojom'
 endif
 
-Plug 'wakatime/vim-wakatime'
 Plug 'vimwiki/vimwiki'
 
 call plug#end()
