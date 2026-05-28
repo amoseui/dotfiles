@@ -55,3 +55,4 @@ link_file "$DOTFILES_PATH/claude/settings.json" ~/.claude/settings.json
 link_file "$DOTFILES_PATH/claude/CLAUDE.md" ~/.claude/CLAUDE.md
 link_dir_contents "$DOTFILES_PATH/claude/agents" ~/.claude/agents
 link_dir_contents "$DOTFILES_PATH/claude/commands" ~/.claude/commands
+link_dir_contents "$DOTFILES_PATH/claude/skills" ~/.claude/skills

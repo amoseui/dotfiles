@@ -8,7 +8,7 @@ Personal dotfiles configuration for Git, Vim, Tmux, and Zsh.
 - **vim/** - Vim configuration with plugin support
 - **tmux/** - Tmux configuration
 - **zsh/** - Zsh configuration
-- **claude/** - Claude Code settings, global memory, custom agents and commands
+- **claude/** - Claude Code settings, global memory, custom agents, commands, and skills
 
 ## Prerequisites
 
@@ -54,8 +54,9 @@ Claude Code configs (per-file links, parent dirs created if missing):
 - `~/.claude/CLAUDE.md` → `~/dotfiles/claude/CLAUDE.md`
 - `~/.claude/agents/*` → `~/dotfiles/claude/agents/*`
 - `~/.claude/commands/*` → `~/dotfiles/claude/commands/*`
+- `~/.claude/skills/*` → `~/dotfiles/claude/skills/*`
 
-Drop new agent or command files into `claude/agents/` or `claude/commands/`
+Drop new agent, command, or skill files into the matching `claude/` subdir
 and re-run `./link.sh` to pick them up.
 
 Additionally:
