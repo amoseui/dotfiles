@@ -20,3 +20,38 @@ vim +PlugInstall +qall
 
 # antigen for zsh
 curl -L git.io/antigen > ~/.antigen.zsh
+
+# ---- AI agent configs ----
+
+link_file() {
+    # link_file <src> <dst>
+    local src="$1"
+    local dst="$2"
+    [ -e "$src" ] || return 0
+    mkdir -p "$(dirname "$dst")"
+    if [ -e "$dst" ] && [ ! -L "$dst" ]; then
+        mv -v "$dst" "$dst.old"
+    fi
+    ln -sf "$src" "$dst"
+}
+
+link_dir_contents() {
+    # link every file/subdir inside <src> into <dst>
+    local src="$1"
+    local dst="$2"
+    [ -d "$src" ] || return 0
+    mkdir -p "$dst"
+    for entry in "$src"/* "$src"/.[!.]*; do
+        [ -e "$entry" ] || continue
+        local name
+        name=$(basename "$entry")
+        [ "$name" = ".gitkeep" ] && continue
+        link_file "$entry" "$dst/$name"
+    done
+}
+
+# Claude Code
+link_file "$DOTFILES_PATH/claude/settings.json" ~/.claude/settings.json
+link_file "$DOTFILES_PATH/claude/CLAUDE.md" ~/.claude/CLAUDE.md
+link_dir_contents "$DOTFILES_PATH/claude/agents" ~/.claude/agents
+link_dir_contents "$DOTFILES_PATH/claude/commands" ~/.claude/commands

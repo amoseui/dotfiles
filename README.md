@@ -8,6 +8,7 @@ Personal dotfiles configuration for Git, Vim, Tmux, and Zsh.
 - **vim/** - Vim configuration with plugin support
 - **tmux/** - Tmux configuration
 - **zsh/** - Zsh configuration
+- **claude/** - Claude Code settings, global memory, custom agents and commands
 
 ## Prerequisites
 
@@ -48,6 +49,15 @@ The script creates the following symbolic links:
 - `~/.vimrc` → `~/dotfiles/vim/vimrc`
 - `~/.zshrc` → `~/dotfiles/zsh/zshrc`
 
+Claude Code configs (per-file links, parent dirs created if missing):
+- `~/.claude/settings.json` → `~/dotfiles/claude/settings.json`
+- `~/.claude/CLAUDE.md` → `~/dotfiles/claude/CLAUDE.md`
+- `~/.claude/agents/*` → `~/dotfiles/claude/agents/*`
+- `~/.claude/commands/*` → `~/dotfiles/claude/commands/*`
+
+Drop new agent or command files into `claude/agents/` or `claude/commands/`
+and re-run `./link.sh` to pick them up.
+
 Additionally:
 - `~/.antigen.zsh` - Antigen plugin manager for Zsh
 
@@ -72,6 +82,8 @@ git pull
 To remove the dotfiles, simply delete the symbolic links:
 ```bash
 rm ~/.gitconfig ~/.gitignore ~/.tmux.conf ~/.vimrc ~/.zshrc ~/.antigen.zsh
+rm ~/.claude/settings.json ~/.claude/CLAUDE.md
+# also remove any symlinks under ~/.claude/agents, ~/.claude/commands
 ```
 
 And restore your backups if needed:
