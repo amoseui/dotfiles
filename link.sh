@@ -32,7 +32,7 @@ link_file() {
     if [ -e "$dst" ] && [ ! -L "$dst" ]; then
         mv -v "$dst" "$dst.old"
     fi
-    ln -sf "$src" "$dst"
+    ln -sfn "$src" "$dst"
 }
 
 link_dir_contents() {
@@ -53,6 +53,10 @@ link_dir_contents() {
 # Claude Code
 link_file "$DOTFILES_PATH/claude/settings.json" ~/.claude/settings.json
 link_file "$DOTFILES_PATH/claude/CLAUDE.md" ~/.claude/CLAUDE.md
+link_file "$DOTFILES_PATH/claude/statusline-command.sh" ~/.claude/statusline-command.sh
 link_dir_contents "$DOTFILES_PATH/claude/agents" ~/.claude/agents
 link_dir_contents "$DOTFILES_PATH/claude/commands" ~/.claude/commands
 link_dir_contents "$DOTFILES_PATH/claude/skills" ~/.claude/skills
+
+# Ghostty
+link_file "$DOTFILES_PATH/ghostty/config" ~/.config/ghostty/config
