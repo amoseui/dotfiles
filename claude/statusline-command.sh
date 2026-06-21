@@ -81,21 +81,22 @@ if [ -n "$pct" ]; then
     line1="${line1} ${sep} ${bc}${bar}${R} ${pct}%${ctxlabel}"
 fi
 
-if [ "$added" != "0" ] || [ "$removed" != "0" ]; then
-    line1="${line1} ${sep} ${green}+${added}${R}${D}/${R}${red}-${removed}${R}"
-fi
+# 항상 표시 (편집 전이면 +0/-0)
+line1="${line1} ${sep} ${green}+${added}${R}${D}/${R}${red}-${removed}${R}"
 
 # ---- cost + plan usage (appended to line 1) -------------------------------
 [ -n "$cost" ] && [ "$cost" != "null" ] && \
     line1="${line1} ${sep} ${green}\$$(printf '%.2f' "$cost")${R}"
 
+# plan은 항상 표시. 데이터가 아직 없으면(세션 시작 직후) … 플레이스홀더.
 # 5h: always countdown. 7d: countdown only when <=12h left, else absolute date.
 now=$(date +%s)
-plan=""
 if [ -n "$rl5" ]; then
     rl5d=$(printf '%.1f' "$rl5"); rl5i=${rl5d%.*}   # 표시는 소수 1자리, 색상은 정수부로
     c=$(pctcolor "$rl5i"); t=$(remain_t "$rl5_at")
-    plan="${gray}5h${R} ${c}${rl5d}%${R}${t:+ ${D}↻${t}${R}}"
+    p5="${gray}5h${R} ${c}${rl5d}%${R}${t:+ ${D}↻${t}${R}}"
+else
+    p5="${gray}5h${R} ${D}…${R}"
 fi
 if [ -n "$rl7" ]; then
     rl7d=$(printf '%.1f' "$rl7"); rl7i=${rl7d%.*}
@@ -105,9 +106,11 @@ if [ -n "$rl7" ]; then
     else
         t=$(reset_t "$rl7_at" "%m/%d %H:%M")
     fi
-    plan="${plan}${rl5:+ ${sep} }${gray}7d${R} ${c}${rl7d}%${R}${t:+ ${D}↻${t}${R}}"
+    p7="${gray}7d${R} ${c}${rl7d}%${R}${t:+ ${D}↻${t}${R}}"
+else
+    p7="${gray}7d${R} ${D}…${R}"
 fi
-[ -n "$plan" ] && line1="${line1} ${sep} ${gray}plan${R} ${plan}"
+line1="${line1} ${sep} ${gray}plan${R} ${p5} ${sep} ${p7}"
 
 # ---- Line 2: place (dir + git + commit title + time) ----------------------
 home="$HOME"; short_cwd="${cwd/#$home/~}"
