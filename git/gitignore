@@ -9,3 +9,5 @@
 *.iml 
 .idea/
 .tool-versions
+
+**/.claude/settings.local.json
