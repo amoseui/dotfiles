@@ -1,0 +1,32 @@
+# brief-morning 설정 파일 예시
+# 이 파일을 복사하여 config.yaml을 만들고 머신에 맞게 수정한다.
+#   cp config.example.yaml config.yaml
+# config.yaml은 머신-로컬 설정이므로 dotfiles repo에 commit하지 않는다(.gitignore).
+
+# ─────────────────────────────────────────────
+# 작업 그룹 enable/disable
+# ─────────────────────────────────────────────
+tasks:
+  on_this_day: true     # TASK A : 이날의 기록 (과거 같은 날짜)
+  calendar: true        # TASK B : Google Calendar 이번 주 일정 (Calendar MCP)
+  gmail: true           # TASK C : Gmail 받은편지함 요약 (Gmail MCP)
+  daily_note: true      # TASK E : 최신 daily note 확인
+  git_status: true      # TASK F : Git 로컬 상태 확인
+  github_pr: false      # TASK G : GitHub PR 조회 (gh CLI 필요 — 설치/인증 후 true)
+
+# ─────────────────────────────────────────────
+# Git 상태 확인 설정 (tasks.git_status: true 일 때만 사용)
+# ─────────────────────────────────────────────
+git:
+  # workspace 아래에서 최근 recent_days일 내 커밋이 있는 git repo를 자동 탐색해 worktree 상태를 점검한다.
+  workspace: /Users/amoseui/Workspace/github
+  recent_days: 30
+  # 점검에서 제외할 repo 디렉터리명 목록
+  exclude: []
+
+# ─────────────────────────────────────────────
+# GitHub PR 조회 설정 (tasks.github_pr: true 일 때만 사용)
+# ─────────────────────────────────────────────
+github:
+  # "owner/repo" 형식. gh CLI가 인증돼 있어야 한다.
+  repos: []
