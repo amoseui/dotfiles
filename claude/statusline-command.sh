@@ -38,7 +38,6 @@ rl5=$(echo "$input"      | jq -r '.rate_limits.five_hour.used_percentage // empt
 rl7=$(echo "$input"      | jq -r '.rate_limits.seven_day.used_percentage // empty')
 rl5_at=$(echo "$input"   | jq -r '.rate_limits.five_hour.resets_at // empty')
 rl7_at=$(echo "$input"   | jq -r '.rate_limits.seven_day.resets_at // empty')
-transcript=$(echo "$input" | jq -r '.transcript_path // empty')
 
 hum() { awk -v t="$1" 'BEGIN{ if(t>=1000000) printf "%.1fM",t/1e6; else if(t>=1000) printf "%.0fk",t/1e3; else printf "%d",t }'; }
 pctcolor() { [ "$1" -ge 80 ] && printf '%s' "$red" && return; [ "$1" -ge 50 ] && printf '%s' "$yellow" && return; printf '%s' "$green"; }
@@ -90,31 +89,6 @@ fi
 [ -n "$cost" ] && [ "$cost" != "null" ] && \
     line1="${line1} ${sep} ${green}\$$(printf '%.2f' "$cost")${R}"
 
-# 세션 누적 토큰: statusline JSON엔 누적값이 없어 transcript의 usage를 합산한다.
-# transcript 변경 시그니처(mtime-size)로 캐시해 매 렌더마다 재파싱하지 않는다.
-if [ -n "$transcript" ] && [ -f "$transcript" ]; then
-    cdir="${TMPDIR:-/tmp}/cc-statusline"; mkdir -p "$cdir" 2>/dev/null
-    key=$(printf '%s' "$transcript" | md5 2>/dev/null || printf '%s' "$transcript" | md5sum 2>/dev/null | cut -d' ' -f1)
-    cfile="$cdir/$key"
-    sig=$(stat -f '%m-%z' "$transcript" 2>/dev/null || stat -c '%Y-%s' "$transcript" 2>/dev/null)
-    tot=""; out=""
-    if [ -f "$cfile" ]; then
-        read csig ctot cout < "$cfile"
-        [ "$sig" = "$csig" ] && tot="$ctot" && out="$cout"
-    fi
-    if [ -z "$tot" ]; then
-        pair=$(jq -r '(.message.usage // empty)
-            | "\((.input_tokens//0)+(.cache_creation_input_tokens//0)+(.cache_read_input_tokens//0)+(.output_tokens//0)) \(.output_tokens//0)"' \
-            "$transcript" 2>/dev/null \
-            | awk '{t+=$1; o+=$2} END{printf "%d %d", t, o}')
-        tot="${pair% *}"; out="${pair#* }"
-        [ -n "$tot" ] && printf '%s %s %s\n' "$sig" "$tot" "$out" > "$cfile" 2>/dev/null
-    fi
-    if [ -n "$tot" ] && [ "$tot" != "0" ]; then
-        line1="${line1} ${sep} ${cyan}Σ${R} $(hum "$tot") ${D}↓$(hum "$out")${R}"
-    fi
-fi
-
 # 5h: always countdown. 7d: countdown only when <=12h left, else absolute date.
 now=$(date +%s)
 plan=""
@@ -143,7 +117,7 @@ if [ -n "$cwd" ] && git -C "$cwd" rev-parse --is-inside-work-tree >/dev/null 2>&
     branch=$(git -C "$cwd" rev-parse --abbrev-ref HEAD 2>/dev/null)
     commit=$(git -C "$cwd" rev-parse --short HEAD 2>/dev/null)
     subject=$(git -C "$cwd" log -1 --format=%s 2>/dev/null)
-    maxlen=32
+    maxlen=58
     if [ -n "$subject" ] && [ "${#subject}" -gt "$maxlen" ]; then
         subject="${subject:0:$((maxlen-1))}…"
     fi
