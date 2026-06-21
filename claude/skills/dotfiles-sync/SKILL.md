@@ -1,7 +1,7 @@
 ---
 name: dotfiles-sync
 description: |
-  로컬 설정 변경을 dotfiles 저장소(~/Workspace/github/dotfiles)에 반영하고 commit / push하는 스킬.
+  로컬 설정 변경을 dotfiles 저장소(예: ~/dotfiles)에 반영하고 commit / push하는 스킬.
   새 config 파일 추가, 기존 설정 편집(zsh / vim / tmux / git / claude 등), AI 에이전트 설정 변경을
   dotfiles repo로 동기화할 때 사용한다.
   "이거 dotfiles에 반영해줘", "dotfiles 업데이트", "dotfiles에 추가/커밋/push", "설정 백업",
@@ -76,7 +76,7 @@ fi
   답을 받으면 `.git`을 가진 디렉터리인지 확인한 뒤 로컬 파일에 저장한다:
 
   ```bash
-  REPO="<사용자가 답한 절대 경로>"        # 예: /Users/amoseui/Workspace/github/dotfiles
+  REPO="<사용자가 답한 절대 경로>"        # 예: ~/dotfiles, /Users/you/src/dotfiles
   case "$REPO" in "~"/*) REPO="$HOME/${REPO#~/}";; esac   # ~ 확장
   if [ -d "$REPO/.git" ]; then
     mkdir -p "$(dirname "$STATE")"
@@ -223,12 +223,6 @@ git -C "$REPO" commit -m "[claude] add jellybeans statusline and sync settings"
 메시지는 영어로, 무엇이 왜 바뀌었는지 간결하게 적는다. 최근 로그(`git log --oneline -10`)를 참고해
 톤을 맞춘다. commit은 사용자에게 따로 묻지 않고 진행한다.
 
-커밋 메시지 본문이 필요한 경우 마지막 줄에 다음을 포함한다:
-
-```
-Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
-```
-
 ### 4. push 한다 (반드시 확인)
 
 push는 외부로 나가는 작업이므로 **항상 사용자에게 먼저 확인**한다. 무엇을 push할지 요약해서 보여준다:
@@ -252,4 +246,5 @@ git -C "$REPO" log origin/main..HEAD --oneline   # push될 커밋 미리보기
 ## 날짜 / 환경 확인
 
 필요하면 `date`, `git remote -v`, `git branch --show-current` 등으로 현재 환경을 확인한다.
-원격은 보통 `origin git@github.com:amoseui/dotfiles.git`, 기본 브랜치는 `main`이다.
+원격은 보통 `origin git@github.com:<you>/dotfiles.git` 형태이고, 기본 브랜치는 보통 `main`이다.
+실제 값은 위 명령으로 확인한다.
