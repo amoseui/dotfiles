@@ -57,6 +57,7 @@ link_file "$DOTFILES_PATH/claude/statusline-command.sh" ~/.claude/statusline-com
 link_dir_contents "$DOTFILES_PATH/claude/agents" ~/.claude/agents
 link_dir_contents "$DOTFILES_PATH/claude/commands" ~/.claude/commands
 link_dir_contents "$DOTFILES_PATH/claude/skills" ~/.claude/skills
+link_dir_contents "$DOTFILES_PATH/claude/hooks" ~/.claude/hooks
 
 # Ghostty
 link_file "$DOTFILES_PATH/ghostty/config" ~/.config/ghostty/config

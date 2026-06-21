@@ -8,9 +8,39 @@
     "superpowers@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true
   },
-  "extraKnownMarketplaces": {},
+  "extraKnownMarketplaces": {
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
+      }
+    }
+  },
   "language": "Korean",
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "skipDangerousModePermissionPrompt": true,
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "KNOWLEDGE_GRAPH_PATH=\"$HOME/Obsidian/amoseui/5. Claude/knowledge\" python3 \"$HOME/.claude/hooks/knowledge-graph-update.py\""
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "KNOWLEDGE_GRAPH_PATH=\"$HOME/Obsidian/amoseui/5. Claude/knowledge\" bash \"$HOME/.claude/hooks/knowledge-graph-inject.sh\""
+          }
+        ]
+      }
+    ]
+  }
 }
