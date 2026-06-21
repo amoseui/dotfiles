@@ -1,0 +1,2 @@
+# 머신-로컬 설정 — TMDB 키 등 시크릿 포함 가능. 절대 commit하지 않는다.
+config.yaml

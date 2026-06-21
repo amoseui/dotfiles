@@ -1,0 +1,9 @@
+# PKM Skill 설정 샘플
+# 이 파일을 config.yaml로 복사한 뒤 실제 값을 입력한다.
+# config.yaml은 머신-로컬(시크릿 포함)이므로 repo에 commit하지 않는다(.gitignore).
+#
+# TMDB API key 발급(무료): https://www.themoviedb.org/settings/api
+# 또는 환경변수 $TMDB_API_KEY를 사용해도 된다.
+
+tmdb:
+  api_key: "YOUR_TMDB_API_KEY_HERE"
