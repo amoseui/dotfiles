@@ -93,17 +93,19 @@ fi
 now=$(date +%s)
 plan=""
 if [ -n "$rl5" ]; then
-    c=$(pctcolor "$rl5"); t=$(remain_t "$rl5_at")
-    plan="${gray}5h${R} ${c}${rl5}%${R}${t:+ ${D}↻${t}${R}}"
+    rl5d=$(printf '%.1f' "$rl5"); rl5i=${rl5d%.*}   # 표시는 소수 1자리, 색상은 정수부로
+    c=$(pctcolor "$rl5i"); t=$(remain_t "$rl5_at")
+    plan="${gray}5h${R} ${c}${rl5d}%${R}${t:+ ${D}↻${t}${R}}"
 fi
 if [ -n "$rl7" ]; then
-    c=$(pctcolor "$rl7")
+    rl7d=$(printf '%.1f' "$rl7"); rl7i=${rl7d%.*}
+    c=$(pctcolor "$rl7i")
     if [ -n "$rl7_at" ] && [ "$((rl7_at - now))" -le 43200 ]; then
         t=$(remain_t "$rl7_at")
     else
         t=$(reset_t "$rl7_at" "%m/%d %H:%M")
     fi
-    plan="${plan}${rl5:+ ${sep} }${gray}7d${R} ${c}${rl7}%${R}${t:+ ${D}↻${t}${R}}"
+    plan="${plan}${rl5:+ ${sep} }${gray}7d${R} ${c}${rl7d}%${R}${t:+ ${D}↻${t}${R}}"
 fi
 [ -n "$plan" ] && line1="${line1} ${sep} ${gray}plan${R} ${plan}"
 
