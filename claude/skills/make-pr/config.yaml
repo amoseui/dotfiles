@@ -1,0 +1,9 @@
+# make-pr 스킬 설정 파일
+#
+# PR 생성 시 repo별 기본 동작을 제어한다.
+# 이 파일이 없거나 키가 비어 있으면 default 동작(draft 생성)으로 진행한다.
+
+# Draft 없이 ready 상태로 바로 PR을 생성할 repo 목록.
+# 매칭 키: `gh repo view --json name --jq '.name'` 결과(GitHub repo 이름).
+# 여기 없는 repo는 모두 --draft로 생성되고, GitHub UI 또는 `gh pr ready <num>`로 전환한다.
+ready_repos: []
