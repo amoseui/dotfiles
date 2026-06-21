@@ -152,3 +152,4 @@ eval "$(/opt/homebrew/Caskroom/miniconda/base/bin/conda shell.zsh hook)"
 export PATH="/Users/amoseui/.antigravity/antigravity/bin:$PATH"
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
+alias cld='claude --dangerously-skip-permissions'
