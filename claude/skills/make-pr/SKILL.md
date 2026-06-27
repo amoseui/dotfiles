@@ -72,14 +72,15 @@ argument-hint: "[PR 제목]"
 ## 3. PR Title & Content
 
 ### Title
-- **`$ARGUMENTS` 있으면** 그대로 제목으로 사용
-- **없으면** 커밋 히스토리 기반 자동 생성: `{type}: {한국어 제목}` (type은 feat/fix/refactor/chore 등 영어 유지)
+- **제목은 영어 필수.** (type은 feat/fix/refactor/chore 등 영어 유지)
+- **`$ARGUMENTS` 있으면** 제목으로 사용하되, 영어가 아니면 영어로 번역/정리해서 사용
+- **없으면** 커밋 히스토리 기반 자동 생성: `{type}: {English title}`
 
 ### Content — Body 작성 원칙 (외부 리뷰어가 *코드 안 봐도 이해* 가능하게)
 - *왜 만들었나*(배경/문제) + *무엇이 가능해지나*(효과)를 먼저. *어떻게 구현*은 코드에 위임, body에선 최소화
 - 영문 jargon → 한국어 풀어쓰기, file path·class명·내부 약어 노출 최소화(고수준 의도만)
 - 한 단락 4-5줄 이상이면 bullet/표로 쪼개기, 한 문장에 한 정보
-- 섹션 추천: `## What does this PR do?`(핵심 1문장 + 3 bullet) → `## 왜 만들었나` → `## 핵심 표/리스트` → `## 화면`(있으면) → `## 활용`
+- 섹션 추천: `## Summary`(핵심 1문장 + 3 bullet) → `## Background`(왜 만들었나) → `## Changes`(핵심 표/리스트) → `## Test` → `## Screenshots`(있으면)
 - self-check: 코드 안 본 사람이 제목+body만으로 왜/무엇/효과를 답할 수 있는가?
 
 ## 4. PR 생성
@@ -88,9 +89,19 @@ argument-hint: "[PR 제목]"
 프로젝트 루트 `.github/PULL_REQUEST_TEMPLATE.md`가 있으면 그 양식으로 `pull_request.md` 작성. 없으면 기본:
 
 ```markdown
-## What does this PR do?
+## Summary
 
 -
+
+## Background
+
+## Changes
+
+-
+
+## Test
+
+- [ ]
 
 <!-- ## Screenshots (필요 시) -->
 ```
