@@ -53,6 +53,19 @@ frontmatter·태그 규칙(최소):
 - 주제 태그: feature/fix/refactor/docs/chore/troubleshooting/planning/dev/book/movie 등에서 적절히
 - 파일명: 한글 자연어, 특수문자(`/\:*?"<>|#`)→`-`, 최대 100자
 
+## 공통 규칙: superpowers 작업 문서 참고
+
+work 노트(개발·작업 기록)·PR 문서를 만들 때, 그 작업의 repo에 superpowers 산출물이 있으면 참고해 맥락을 보강한다.
+
+- 위치: `<repo>/docs/superpowers/specs/*.md`(brainstorming 설계)·`<repo>/docs/superpowers/plans/*.md`(writing-plans 구현 계획). cwd가 아니라 **그 작업의 repo 루트** 기준.
+- 활용: 관련 문서만 읽어 `# 목적`·`## 기술적 고려사항`(PR 노트는 `## 기술적 의사결정`)의 "왜"를 보강한다.
+- 출처: 참고한 문서는 `# 참고`(PR 노트는 `## 참고`)에 repo-상대경로로 남긴다.
+- gitignore된 로컬 산출물이라 없을 수 있다 → 있을 때만 쓰고 없으면 조용히 건너뛴다.
+
+```bash
+ls "$REPO"/docs/superpowers/specs/*.md "$REPO"/docs/superpowers/plans/*.md 2>/dev/null
+```
+
 ---
 
 ## 1. 노트 생성
@@ -98,6 +111,7 @@ tags:
 
 - 단순 메모 등 내용이 적으면 `# 작업 내용`/`# 결과`/`# 참고`는 상황에 맞게 생략 가능. work 노트(개발·작업 기록)는 위 전체 구조를 따른다.
 - `# 참고`의 세션·브랜치는 출처 역추적용 — 알 수 있을 때만 채운다.
+- work 노트는 **공통 규칙: superpowers 작업 문서 참고**를 적용한다 — repo에 spec/plan이 있으면 `# 목적`·`## 기술적 고려사항`을 보강하고 `# 참고`에 경로를 남긴다.
 
 생성 후 `[[obsidian-history]]`에 따라 `wiki/log.md`에도 한 줄 기록한다.
 
@@ -137,7 +151,7 @@ tags:
 
 ## 5. PR 문서화
 
-GitHub PR을 work 노트로 변환해 **`5. Claude/notes/`**에 기록한다.
+GitHub PR을 work 노트로 변환해 **`5. Claude/notes/`**에 기록한다. PR이 속한 repo에 superpowers spec/plan이 있으면 **공통 규칙: superpowers 작업 문서 참고**에 따라 `## 기술적 의사결정`을 보강하고 `## 참고`에 경로를 남긴다.
 
 ### PR 정보 수집
 - **URL 제공 시**: `gh pr view {url} --json ...`
@@ -184,6 +198,7 @@ repository: {repo-name}
 
 ## 참고
 - **PR**: {URL}
+- **설계/계획**: {docs/superpowers/specs/...md, docs/superpowers/plans/...md}   # 참고한 superpowers 문서가 있을 때만
 
 
 ---

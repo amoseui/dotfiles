@@ -33,6 +33,7 @@ tags:
 # 참고
 - 세션: {claude/codex} {session_id 앞 8자}
 - 브랜치: {branch}
+- 설계/계획: {docs/superpowers/specs/...md, docs/superpowers/plans/...md}   # 참고한 superpowers 문서가 있을 때만
 - {관련 PR/링크/[[관련 노트]]}
 
 

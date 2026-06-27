@@ -46,6 +46,10 @@ digest.sessions를 읽고:
 ### 5. 노트 작성 + daily note 백링크
 승인된 CREATE 항목마다:
 1. 세부가 필요하면 해당 세션 `transcript_path`를 **타깃 grep/jq로만** 부분 조회(전체 읽기 금지).
+   - **superpowers 작업 문서 참고**: 작업항목의 `project` repo 루트에 `docs/superpowers/specs/*.md`(brainstorming 설계)·`docs/superpowers/plans/*.md`(writing-plans 구현 계획)가 있으면, 이 작업과 **관련된 것만** 읽어 노트의 `# 목적`·`# 기술적 고려사항`(왜 했나·핵심 의사결정)을 보강한다. gitignore된 로컬 산출물이라 없을 수 있으니, 있을 때만 graceful하게 쓰고 없으면 조용히 건너뛴다. 참고한 문서는 노트 `# 참고`에 repo-상대경로로 출처를 남긴다.
+     ```bash
+     ls "$PROJECT"/docs/superpowers/specs/*.md "$PROJECT"/docs/superpowers/plans/*.md 2>/dev/null
+     ```
 2. `references/note-template.md` 구조로 **`/Users/amoseui/Obsidian/amoseui/5. Claude/notes/<한글 자연어 제목>.md`**를 **Write 도구로** 생성.
    - 폴더가 없으면 만든다(`5. Claude/notes/`).
    - frontmatter: created/modified(`date "+%Y-%m-%d %H:%M:%S"`)/date/tags.

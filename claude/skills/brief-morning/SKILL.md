@@ -236,9 +236,18 @@ for repo in "${RECENT_REPOS[@]}"; do
   done < <(git -C "$repo" worktree list --porcelain | awk '/^worktree /{print $2}')
 done
 wait
+
+# superpowers plan(진행 중 작업 계획) 신호 — 읽기 전용, 파일 존재만 확인
+for repo in "${RECENT_REPOS[@]}"; do
+  for p in "$repo"/docs/superpowers/plans/*.md; do
+    [ -f "$p" ] && echo "PLAN: $(basename "$repo") :: $(basename "$p")"
+  done
+done
 ```
 
 **보고 기준**: 미커밋 변경(STATUS) 또는 미푸시 커밋(UNPUSHED)이 **하나라도 있는 worktree만** 표에 표시. 완전히 깨끗한 worktree는 생략하고 스캔한 repo 개수만 적는다. pending이 전혀 없으면 "정리 안 된 로컬 작업 없음".
+
+**진행 중 작업(superpowers plan) 신호**: `PLAN:` 줄이 있으면 해당 repo에 `docs/superpowers/plans/`(writing-plans 구현 계획)가 남아 있다는 뜻이므로 "진행 중인 작업 계획"으로 함께 표시한다. plan **파일명만** 가볍게 나열하고 본문은 읽지 않는다(읽기 전용 유지). gitignore된 로컬 산출물이라 없을 수 있으니 없으면 생략.
 
 ### G: GitHub PR 조회
 
@@ -309,6 +318,9 @@ _(메일이 없으면 "받은편지함 메일 없음")_
 |------|--------|-------------|-------------|
 
 _(미커밋·미푸시가 있는 worktree만 표시. 전부 깨끗하면 "정리 안 된 로컬 작업 없음")_
+
+**📋 진행 중인 작업 계획** _(superpowers plan이 있을 때만)_
+- {repo}: {plan 파일명}
 
 ## 📤 내 PR 현황
 - 총 N개의 열린 PR (🟢 머지 가능 / 🟡 리뷰 대기 / 🔴 조치 필요)
