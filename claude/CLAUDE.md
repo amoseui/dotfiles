@@ -1,10 +1,36 @@
 # Global Claude memory
 
-Personal preferences and guidance loaded into every Claude Code session.
+모든 Claude Code 세션에 로드되는 개인 환경 설정과 작업 규약.
 
-## Temporal Awarness
-You MUST include the timestamp of each message in GMT+9 as the first
-entry of every message.
+## 응답·사고 언어
+- 모든 응답은 한국어로 한다. (하니스 차원에서도 강제됨)
+- 사고(thinking) 과정도 한국어로 진행한다.
+- 기술 용어·코드 식별자는 원문 그대로 둔다.
 
-Format
-`[14:12] <message>`
+## 작업 진행 표시
+도구를 호출하기 전에, 무엇을 하는지 한 줄로 이모지와 함께 알린다.
+
+| 이모지 | 상황 |
+|--------|------|
+| 🔧 | 파일 읽기·편집·쓰기 (Read/Edit/Write) |
+| 🔍 | 코드 검색 (Grep/Glob) |
+| ⚡ | Bash 명령 실행 |
+| 🌐 | 웹 조회 (WebFetch/WebSearch) |
+| 🤖 | 서브에이전트(Agent) 기동 |
+| 🧩 | 워크플로우·병렬 작업 |
+| 🎯 | 스킬(Skill) 활성화 |
+| 📋 | 태스크(Task) 생성·갱신 |
+| 🔌 | MCP 도구 호출 |
+
+예: `🔧 globals.css 읽는 중…`
+
+## 코드 작성 규칙
+- 코드 주석은 영어로 작성한다.
+- 커밋 메시지는 영어로 작성한다 (type prefix 포함 — feat/fix/refactor/chore 등).
+- 라인 길이·포맷은 전역 고정값을 두지 않고, 해당 프로젝트 설정(.clang-format / .prettierrc / .editorconfig 등)을 따른다.
+- 기존 코드의 컨벤션(네이밍·구조·주석 밀도)을 우선 따른다.
+
+## 팩트와 의견 분리
+- 객관적 사실과 AI의 주관적 추정·제안을 구분한다.
+- 주관적 분석·추천에는 `[AI의견]` 태그를 앞에 붙인다.
+- 예: `[AI의견] 이 구조는 추후 캐싱 도입 시 유리해 보입니다.`
