@@ -1,17 +1,17 @@
-# hermes PKM 스킬 설정 — 환경별로 다른 경로/값을 여기에만 둔다.
-# SKILL.md는 본문에 경로를 하드코딩하지 않고 이 파일을 Read 해서 사용한다.
+# hermes PKM 스킬 설정 — 예시(템플릿).
 #
-# 경로 우선순위 (SKILL.md가 따른다):
-#   1) 환경변수 HERMES_VAULT_PATH 가 설정돼 있으면 그 값을 vault_path 로 사용
-#   2) 아니면 아래 vault_path 값을 사용
-# 새 머신에서는 이 파일의 vault_path 한 줄(또는 HERMES_VAULT_PATH)만 바꾸면 된다.
+# ⚠️ 이 파일(config.example.yaml)은 git에 커밋된다(개인값 없음).
+#    실제 사용 시 같은 폴더에 config.yaml 로 복사한 뒤 개인값을 채운다:
+#      cp config.example.yaml config.yaml
+#    config.yaml 은 .gitignore 되어 git에 올라가지 않는다(개인 식별값 보관처).
+#    스크립트/로더(_config.py)는 config.yaml 을 먼저 찾고, 없으면 이 예시로 폴백한다.
 #
 # 주의: 값에는 인라인 주석(값 뒤 # ...)을 쓰지 않는다. 설명은 키 위의 줄에 단다.
 # (셸 grep/sed 등 단순 파서가 주석을 값으로 오인하는 사고 방지)
 
 # ── Vault ────────────────────────────────────────────────────────────
 # Obsidian vault의 루트 절대 경로 (이 하위에서만 파일 작업).
-vault_path: /Users/amoseui/Obsidian/amoseui/amoseui
+vault_path: /path/to/your/Obsidian/vault
 
 # ── Hermes 전용 생성 영역 ────────────────────────────────────────────
 # ★ Hermes가 만드는 노트는 사람 노트 / 다른 에이전트(예: Claude Code의
@@ -54,3 +54,29 @@ wiki_log: "hermes/log.md"
 # ── 타임존 ───────────────────────────────────────────────────────────
 # created/modified/이력 시각 기준.
 timezone: "Asia/Seoul"
+
+# ── Google 계정 (daily-notes-automation / brief-morning 공유) ─────────
+# 개인 식별 값은 config.yaml(이 파일의 복사본)에만 둔다.
+# 토큰은 ~/.hermes/google-accounts/<id>/google_token.json 에 격리 저장.
+accounts:
+  # PRIMARY: Gmail + Calendar 둘 다 사용하는 주 계정 id.
+  primary: PRIMARY_ACCOUNT_ID
+  # SECOND: Gmail 별표만 합치는 보조 계정 id.
+  second: SECOND_ACCOUNT_ID
+
+# 별표 메일에서 SECOND 계정 항목 뒤에 붙일 태그를 표시할지.
+# (PRIMARY는 무태그, SECOND만 " (<id>)" 꼬리표)
+mail_tag_second: true
+
+# ── Calendar (PRIMARY 계정 기준) ─────────────────────────────────────
+# 오늘 일정 합칠 때 포함할 캘린더 이름(부분매칭, 대소문자 무시).
+# primary 캘린더는 항상 포함. 구독성 노이즈(휴일/스포츠팀)는 빼둔다.
+calendars_include:
+  - "Personal"
+  - "Work"
+
+# ── GitHub / 워크스페이스 ────────────────────────────────────────────
+# 오늘 커밋 추출에 쓰는 GitHub 사용자 (github.com/<user>.atom).
+github_user: your-github-username
+# brief-morning이 worktree 상태를 훑는 로컬 git 루트 (절대 경로).
+git_workspace: /path/to/your/git/workspace

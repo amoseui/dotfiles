@@ -31,7 +31,7 @@ metadata:
 
 | 항목 | 값 |
 |------|----|
-| Vault 루트 | `/Users/amoseui/Obsidian/amoseui/amoseui` (amoseui 두 번) |
+| Vault 루트 | `$CFG_vault_path` (config; 이 vault는 `amoseui` 두 번 중첩 구조) |
 | AI 노트 폴더 | `{vault}/hermes/notes/` (사람 노트와 분리) |
 | daily note | `{vault}/Retrospective/1. Daily/YYYY-MM-DD.md` |
 | 백링크 섹션 | `## 🤖 Hermes 작업 로그` 의 `### Morning/Afternoon/Evening` |
@@ -49,7 +49,8 @@ metadata:
 ### 1. 수집 (collect.py 실행)
 임시 파일에 digest를 받는다(zsh noclobber → `>|`). 인박스도 함께 합친다:
 ```bash
-VAULT="/Users/amoseui/Obsidian/amoseui/amoseui"
+eval "$(python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/_config.py --shell)"
+VAULT="$CFG_vault_path"
 DIGEST=$(mktemp /tmp/pkm_collect.XXXXXX)
 python3 ~/.hermes/skills/note-taking/pkm-collect/scripts/collect.py \
   --vault "$VAULT" \
@@ -120,8 +121,7 @@ rm -f "$DIGEST"
 - **인박스 재처리 방지**: 처리한 맥북 digest는 `_processed/`로 옮기거나, 마커(state.json) since로 거른다.
   단 마커는 이 맥 로컬 mtime 기준이라, 인박스는 started_at 기준으로 합쳐지므로 `_processed/` 이동이 가장 확실.
 - **Codex 세션은 transcript_path가 없을 수 있다**(맥북 inbox) — digest 메타만으로 노트 작성.
-- **vault root는 amoseui 두 번**. dotfiles의 Claude Code용 pkm-collect는 한 단계 위(`.../Obsidian/amoseui`)와
-  `5. Claude/notes`를 쓰지만, Hermes판은 `.../amoseui/amoseui` + `hermes/notes`다(혼동 금지).
+- **vault root는 config `vault_path` 기준** — 이 vault는 `amoseui` 두 번 중첩 구조다. dotfiles의 Claude Code용 pkm-collect는 한 단계 위 경로 + `5. Claude/notes`를 쓰지만, Hermes판은 config의 `vault_path` + `hermes/notes`다(혼동 금지).
 - 시각은 `TZ=Asia/Seoul date`로 확인(추측 금지).
 
 ## 의존성

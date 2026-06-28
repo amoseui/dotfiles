@@ -5,3 +5,7 @@ docs/superpowers/
 hermes/skills/**/state.json
 hermes/skills/**/__pycache__/
 *.pyc
+
+# Hermes 스킬 실제 설정 — 개인 식별값(경로/계정) 보관처, 커밋 제외.
+# 템플릿은 config.example.yaml 로 커밋된다.
+hermes/skills/**/config.yaml

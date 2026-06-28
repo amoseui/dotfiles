@@ -4,7 +4,7 @@ description: |
   Obsidian daily note(회고) 자동 생성·채움 cron 작업용 스킬 (Hermes 전용).
   매일 아침(06:00) 일일 회고 노트를 템플릿으로 생성하고 캘린더/Todoist/별표메일로 채우며,
   매일 밤(23:50) Git 커밋·캘린더 지난 일정·Todoist 완료 항목으로 일일 회고 섹션을 채운다.
-  검증된 헬퍼 스크립트(scripts/)와 계정/경로가 박제돼 있어 cron이 헤매지 않는다.
+  검증된 헬퍼 스크립트(scripts/)가 config.yaml에서 계정/경로를 읽어 cron이 헤매지 않는다.
   트리거: daily note 자동화, 아침 브리핑, 밤 회고, 회고 노트 cron, 이 스킬을 로드하는 cron 작업.
 version: 1.0.0
 author: Hermes Agent + Amos
@@ -29,28 +29,34 @@ metadata:
 
 ## 0. 고정 환경 (검증 완료 — 추측 금지)
 
+> 개인 식별 값(vault 경로, Google 계정 id, 캘린더 목록, GitHub 사용자, workspace 경로)은
+> **`hermes` 스킬의 `config.yaml`에만** 둔다(`~/.hermes/skills/note-taking/hermes/config.yaml`).
+> 헬퍼 스크립트는 `_config.py`로 이 파일을 읽어 동작하므로, 이 문서와 스크립트에는
+> 실제 값을 하드코딩하지 않는다. 아래 표의 `<...>`는 config 키를 가리킨다.
+
 | 항목 | 값 |
 |------|----|
-| Vault 루트 | `/Users/amoseui/Obsidian/amoseui/amoseui` |
+| Vault 루트 | `<vault_path>` (config) |
 | 일일 노트 | `{vault}/Retrospective/1. Daily/YYYY-MM-DD.md` |
 | 템플릿 | `{vault}/Templates/template-retrospective-1-daily.md` |
 | 통합 로그 | `{vault}/wiki/log.md` (헤딩 `# Change Log`, 최신이 맨 위) |
 | 타임존 | Asia/Seoul (KST) — 날짜/시각은 항상 `TZ=Asia/Seoul date` |
 | 스킬 스크립트 | `~/.hermes/skills/note-taking/daily-notes-automation/scripts/` |
 
-### 데이터 소스 (계정 매핑 — 사용자 확정)
+### 데이터 소스 (계정 매핑 — config가 결정)
 
 | 데이터 | 소스 | 방법 |
 |--------|------|------|
-| 오늘 일정 / 지난 일정 | **prenine** 캘린더 | `scripts/calendar_today.py` |
+| 오늘 일정 / 지난 일정 | **PRIMARY** 캘린더 (`accounts.primary`) | `scripts/calendar_today.py` |
 | 할 일 (오늘+기한지남 p1) | **Todoist** (MCP) | `todoist_*` 도구, filter `(today \| overdue) & p1` |
-| 별표 메일 (전체) | **amoseui + prenine** 합침 | `scripts/starred_mail.py` |
-| Git 커밋 | **amoseui** GitHub | `scripts/git_commits_today.py` (atom 피드, 인증 불필요) |
+| 별표 메일 (전체) | **PRIMARY + SECOND** 합침 (`accounts.*`) | `scripts/starred_mail.py` |
+| Git 커밋 | **GitHub** (`github_user`) | `scripts/git_commits_today.py` (atom 피드, 인증 불필요) |
 | Todoist 완료 항목 | **Todoist** (MCP) | `todoist_activity_by_date_range` (recurring 포함) |
 
-> Google 토큰은 계정별로 `~/.hermes/google-accounts/{amoseui,prenine}/google_token.json`에
-> 분리 저장돼 있다. 헬퍼 스크립트가 `HERMES_HOME`을 바꿔가며 계정을 전환하므로
-> cron 프롬프트는 스크립트만 호출하면 된다. amoseui는 Calendar 미사용(Gmail만), prenine은 둘 다.
+> Google 토큰은 계정별로 `~/.hermes/google-accounts/<id>/google_token.json`에
+> 분리 저장돼 있다(`<id>`=config의 `accounts.primary`/`accounts.second`). 헬퍼 스크립트가
+> `HERMES_HOME`을 바꿔가며 계정을 전환하므로 cron 프롬프트는 스크립트만 호출하면 된다.
+> SECOND는 보통 Gmail만, PRIMARY는 Gmail+Calendar 둘 다(역할은 config 주석 참고).
 
 ## 0.1 헬퍼 스크립트 (이미 검증됨)
 
@@ -198,16 +204,20 @@ python3 "$SC/calendar_today.py"      # 캘린더 지난 일정 (오늘 일정과
 
 ## Pitfalls
 
-- **`google_api.py`는 Python 3.10+ 전용** — 파일 상단 `str | None` 타입힌트 때문에 **시스템 `python3`(3.9)로 부르면 import 단계에서 죽는다**(`TypeError: unsupported operand type(s) for |`). 죽으면 헬퍼 스크립트가 빈 결과를 받아 **거짓으로 "…없음"을 출력**한다(일정/메일이 있는데도 없다고 나오는 주범). → 헬퍼 스크립트는 `gws`/`google_api.py`를 `subprocess`로 부를 때 **`sys.executable`**(자기를 실행한 python)을 쓴다. 바닐라 `"python3"` 금지. cron은 venv python(3.11)으로 스크립트를 부르므로 `sys.executable`이면 안전. 직접 터미널 검증 시에도 `~/.hermes/hermes-agent/venv/bin/python`으로 부를 것.\n- **prenine 캘린더는 primary가 아니라 보조 캘린더에 일정이 산다** — 계정에 캘린더가 8개(개인=primary, 약속·회사·운동·생일 + 휴일·KBO·수원삼성 구독)인데 **실제 약속은 `약속`/`회사`/`운동`/`생일` 등 secondary 캘린더에 있다**. `calendarId=primary`만 조회하면 `[]`가 나와 거짓 "오늘 일정 없음"이 된다. → `calendar_today.py`는 `calendarList().list()`로 캘린더 목록을 받아 **포함 대상 캘린더들을 합쳐** 조회해야 한다(휴일·스포츠 구독은 보통 제외). 어떤 캘린더를 포함할지는 사용자 확정 목록을 따른다.\n- **\"…없음\" 결과는 의심하라** — 캘린더/메일이 빈 결과면 진짜 빈 건지, 위 두 버그(잘못된 python / primary-only)로 죽거나 누락된 건지 venv python으로 넓은 날짜·전체 캘린더로 교차 확인한다.\n- **Todoist 도구는 새 세션에서만 보인다** — cron은 항상 새 세션이라 OK. 대화형으로 테스트하려면 `/new` 후 확인.
+- **`google_api.py`는 Python 3.10+ 전용** — 파일 상단 `str | None` 타입힌트 때문에 **시스템 `python3`(3.9)로 부르면 import 단계에서 죽는다**(`TypeError: unsupported operand type(s) for |`). 죽으면 헬퍼 스크립트가 빈 결과를 받아 **거짓으로 "…없음"을 출력**한다(일정/메일이 있는데도 없다고 나오는 주범). → 헬퍼 스크립트는 `gws`/`google_api.py`를 `subprocess`로 부를 때 **`sys.executable`**(자기를 실행한 python)을 쓴다. 바닐라 `"python3"` 금지. cron은 venv python(3.11)으로 스크립트를 부르므로 `sys.executable`이면 안전. 직접 터미널 검증 시에도 `~/.hermes/hermes-agent/venv/bin/python`으로 부를 것.
+- **PRIMARY 캘린더는 primary가 아니라 보조 캘린더에 일정이 산다** — 계정에 캘린더가 여러 개(개인=primary + 약속·회사·운동·생일 등 secondary + 휴일·스포츠 구독)인데 **실제 약속은 secondary 캘린더에 있다**. `calendarId=primary`만 조회하면 `[]`가 나와 거짓 "오늘 일정 없음"이 된다. → `calendar_today.py`는 `calendarList().list()`로 캘린더 목록을 받아 **config `calendars_include`에 매칭되는 캘린더들을 합쳐** 조회한다(휴일·스포츠 구독은 제외). 포함 목록은 config에서 바꾼다.
+- **"…없음" 결과는 의심하라** — 캘린더/메일이 빈 결과면 진짜 빈 건지, 위 두 버그(잘못된 python / primary-only)로 죽거나 누락된 건지 venv python으로 넓은 날짜·전체 캘린더로 교차 확인한다.
+- **Todoist 도구는 새 세션에서만 보인다** — cron은 항상 새 세션이라 OK. 대화형으로 테스트하려면 `/new` 후 확인.
 - **완료 항목은 `todoist_completed_tasks_get` 말고 `todoist_activity_by_date_range`** — recurring 완료 누락 방지.
-- **Google 계정 혼동 금지** — 캘린더=prenine, 메일=amoseui+prenine 합침. 스크립트가 알아서 처리하니 직접 토큰 경로를 만지지 말 것.
+- **Google 계정 혼동 금지** — 캘린더=PRIMARY, 메일=PRIMARY+SECOND 합침(계정 id는 config). 스크립트가 알아서 처리하니 직접 토큰 경로를 만지지 말 것.
 - **atom 피드의 커밋 메시지**는 `<content>` HTML의 `<blockquote>`에 있다(events API payload는 비어 옴). 스크립트가 처리하므로 직접 gh를 호출할 필요 없다.
-- **vault root는 `amoseui` 두 번**(`.../Obsidian/amoseui/amoseui`). 한 단계 위로 쓰지 말 것.
+- **vault root 경로는 config `vault_path` 기준** — 한 단계 위로 잘못 쓰지 말 것(상위 경로와 헷갈리기 쉬움).
 - **공백 포함 경로**(`1. Daily`) 따옴표 처리 주의.
 
 ## 의존성
 - `read_file` / `write_file` / `patch` / `terminal` (vault 파일 조작)
-- `scripts/calendar_today.py` · `starred_mail.py` · `git_commits_today.py` (검증됨)
-- google-workspace 스킬의 `google_api.py` + 계정별 `~/.hermes/google-accounts/{amoseui,prenine}/` 토큰
+- `scripts/calendar_today.py` · `starred_mail.py` · `git_commits_today.py` (검증됨) + `scripts/_config.py` (config 로더)
+- google-workspace 스킬의 `google_api.py` + 계정별 `~/.hermes/google-accounts/<id>/` 토큰 (`<id>`=config accounts.*)
+- `hermes` 스킬의 `config.yaml` (개인 식별 값의 단일 출처)
 - Todoist MCP(`mcp-todoist`) — `todoist_task_get`, `todoist_activity_by_date_range`
 - 인터넷(GitHub atom 피드)

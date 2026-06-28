@@ -1,22 +1,30 @@
 #!/usr/bin/env python3
-"""두 Google 계정(amoseui, prenine)의 별표편지함 메일을 모두 합쳐 한 줄 요약.
+"""두 Google 계정(PRIMARY, SECOND)의 별표편지함 메일을 모두 합쳐 한 줄 요약.
 
+계정 id는 config.yaml(accounts.primary / accounts.second)에서 읽는다.
 각 계정의 토큰은 HERMES_HOME 격리 폴더에 분리 저장돼 있다:
-  ~/.hermes/google-accounts/amoseui/google_token.json
-  ~/.hermes/google-accounts/prenine/google_token.json
+  ~/.hermes/google-accounts/<id>/google_token.json
 
 google_api.py를 HERMES_HOME 환경변수만 바꿔가며 호출해 계정을 전환한다.
-출력: `* [발신자] 제목` bullet (별표 전체, 날짜 필터 없음), 없으면 `* 새로운 중요 메일 없음`.
+출력: `* (발신자) 제목` bullet (별표 전체, 날짜 필터 없음), 없으면 `* 새로운 중요 메일 없음`.
 대괄호 [ ]를 피하기 위해 발신자는 () 안에 넣는다.
+SECOND 계정 항목엔 꼬리표 ` (<id>)`를 붙인다(config mail_tag_second=true일 때).
 """
 import os, sys, json, subprocess
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _config
+
 HOME = Path.home()
 GAPI = HOME / ".hermes/skills/productivity/google-workspace/scripts/google_api.py"
+PRIMARY = _config.get("accounts.primary", "primary")
+SECOND = _config.get("accounts.second", "second")
+TAG_SECOND = _config.as_bool(_config.get("mail_tag_second"), True)
+# PRIMARY 먼저(무태그), SECOND 나중(꼬리표). 토큰 없는 계정은 자동 skip.
 ACCOUNTS = {
-    "amoseui": HOME / ".hermes/google-accounts/amoseui",
-    "prenine": HOME / ".hermes/google-accounts/prenine",
+    PRIMARY: HOME / ".hermes/google-accounts" / PRIMARY,
+    SECOND: HOME / ".hermes/google-accounts" / SECOND,
 }
 MAX = 25  # 계정당 최대
 
@@ -50,7 +58,7 @@ def main():
             if key in seen:
                 continue
             seen.add(key)
-            tag = "" if acct == "amoseui" else f" ({acct})"
+            tag = f" ({acct})" if (TAG_SECOND and acct == SECOND) else ""
             lines.append(f"* ({frm}) {subj}{tag}")
     if lines:
         print("\n".join(lines))

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""prenine 계정의 선택한 캘린더들에서 오늘(KST) 일정을 합쳐 bullet로 출력.
+"""PRIMARY 계정의 선택한 캘린더들에서 오늘(KST) 일정을 합쳐 bullet로 출력.
 
-prenine 계정엔 캘린더가 여러 개고 실제 일정은 보조 캘린더(약속/회사/운동/생일 등)에 있다.
+PRIMARY 계정 id는 config.yaml(accounts.primary)에서 읽는다.
+이 계정엔 캘린더가 여러 개고 실제 일정은 보조 캘린더(약속/회사/운동/생일 등)에 있다.
 google_api.py CLI는 primary만 조회하므로, 여기서는 google_api 모듈을 직접 import해
 INCLUDE_CALENDARS(이름 부분매칭)에 해당하는 캘린더만 합친다.
 
@@ -19,13 +20,18 @@ import os, sys
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _config
+
 KST = timezone(timedelta(hours=9))
 HOME = Path.home()
 GW_SCRIPTS = HOME / ".hermes/skills/productivity/google-workspace/scripts"
-ACCOUNT_HOME = HOME / ".hermes/google-accounts/prenine"
+# PRIMARY 계정(Gmail+Calendar). 개인 식별값은 config.yaml에만 둔다.
+PRIMARY = _config.get("accounts.primary", "primary")
+ACCOUNT_HOME = HOME / ".hermes/google-accounts" / PRIMARY
 
 # 포함할 캘린더 이름(부분매칭, 대소문자 무시). primary는 항상 포함.
-INCLUDE_CALENDARS = ["개인", "약속", "회사", "운동", "생일", "수원삼성"]
+INCLUDE_CALENDARS = _config.get("calendars_include", [])
 
 
 def hhmm(iso):
@@ -51,9 +57,9 @@ def included(cal):
 def main():
     day = sys.argv[1] if len(sys.argv) > 1 else datetime.now(KST).strftime("%Y-%m-%d")
     if not (ACCOUNT_HOME / "google_token.json").exists():
-        print("* 오늘 일정 없음 (prenine 미인증)")
+        print(f"* 오늘 일정 없음 ({PRIMARY} 미인증)")
         return
-    # google_api 모듈을 prenine HERMES_HOME으로 로드
+    # google_api 모듈을 PRIMARY HERMES_HOME으로 로드
     os.environ["HERMES_HOME"] = str(ACCOUNT_HOME)
     sys.path.insert(0, str(GW_SCRIPTS))
     try:
