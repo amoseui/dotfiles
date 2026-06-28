@@ -1,0 +1,8 @@
+# pkm-push 설정 — 이 머신(보조 머신)의 vault 경로 등.
+# SKILL.md가 이 파일을 읽어 vault_path를 collect.py에 전달한다.
+#
+# 이 머신에서 동기되는 Obsidian vault의 절대 경로 한 줄만 맞추면 된다.
+vault_path: /Users/amoseui/Obsidian/amoseui
+
+# digest에서 제외할 민감 키워드(쉼표 구분, collect.py로 전달).
+exclude_keywords: "의료,병원,보험,건강검진,진료,대장내시경"
