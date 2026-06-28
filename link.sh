@@ -61,3 +61,6 @@ link_dir_contents "$DOTFILES_PATH/claude/hooks" ~/.claude/hooks
 
 # Ghostty
 link_file "$DOTFILES_PATH/ghostty/config" ~/.config/ghostty/config
+
+# cmux
+link_file "$DOTFILES_PATH/cmux/cmux.json" ~/.config/cmux/cmux.json
