@@ -59,6 +59,10 @@ def main(argv=None):
     ap.add_argument("--codex-sessions", default=str(Path.home() / ".codex/sessions"))
     ap.add_argument("--codex-history", default=str(Path.home() / ".codex/history.jsonl"))
     ap.add_argument("--marker", default=str(Path(__file__).resolve().parent.parent / "state.json"))
+    # 동기 vault 인박스: 보조 머신이 pkm-push로 밀어넣은 digest JSON들을 함께 합친다.
+    ap.add_argument("--inbox-dir", default=None,
+                    help="보조 머신 digest JSON 폴더(예: <vault>/hermes/inbox/codex-claude). "
+                         "이 안의 *.json sessions를 since 이후만 합친다.")
     ap.add_argument("--since", default=None)
     ap.add_argument("--min-prompts", type=int, default=2)
     ap.add_argument("--min-edits", type=int, default=1)
@@ -100,6 +104,26 @@ def main(argv=None):
 
     sessions.extend(codex_digest.build_codex_digests(
         args.codex_history, args.codex_sessions, since_epoch))
+
+    # 보조 머신 인박스 digest 합치기: pkm-push가 밀어넣은 JSON들의 sessions를
+    # since 이후로 필터해 합친다. 각 세션에 origin 파일명을 표시(추적용).
+    if args.inbox_dir:
+        inbox = Path(args.inbox_dir)
+        if inbox.exists():
+            for jf in sorted(inbox.glob("*.json")):
+                try:
+                    payload = json.loads(jf.read_text(encoding="utf-8"))
+                except (ValueError, OSError):
+                    continue
+                for s in payload.get("sessions", []):
+                    try:
+                        st = datetime.fromisoformat(s["started_at"]).timestamp()
+                    except (ValueError, KeyError, TypeError):
+                        st = None
+                    if st is not None and st < since_epoch:
+                        continue
+                    s.setdefault("inbox_origin", jf.name)
+                    sessions.append(s)
 
     kept = []
     for d in sessions:
