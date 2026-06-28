@@ -1,0 +1,56 @@
+# hermes PKM 스킬 설정 — 환경별로 다른 경로/값을 여기에만 둔다.
+# SKILL.md는 본문에 경로를 하드코딩하지 않고 이 파일을 Read 해서 사용한다.
+#
+# 경로 우선순위 (SKILL.md가 따른다):
+#   1) 환경변수 HERMES_VAULT_PATH 가 설정돼 있으면 그 값을 vault_path 로 사용
+#   2) 아니면 아래 vault_path 값을 사용
+# 새 머신에서는 이 파일의 vault_path 한 줄(또는 HERMES_VAULT_PATH)만 바꾸면 된다.
+#
+# 주의: 값에는 인라인 주석(값 뒤 # ...)을 쓰지 않는다. 설명은 키 위의 줄에 단다.
+# (셸 grep/sed 등 단순 파서가 주석을 값으로 오인하는 사고 방지)
+
+# ── Vault ────────────────────────────────────────────────────────────
+# Obsidian vault의 루트 절대 경로 (이 하위에서만 파일 작업).
+vault_path: /Users/amoseui/Obsidian/amoseui/amoseui
+
+# ── Hermes 전용 생성 영역 ────────────────────────────────────────────
+# ★ Hermes가 만드는 노트는 사람 노트 / 다른 에이전트(예: Claude Code의
+#   "5. Claude/") 와 섞지 않고 전용 폴더에만 둔다. (vault 기준 상대 경로)
+# Hermes 일반/PR 노트 본체
+note_dir: "hermes/notes"
+# 책/영화 노트
+media_dir: "hermes/media"
+
+# ── Daily Journal 백링크 ─────────────────────────────────────────────
+# daily note 경로 패턴. {date}=YYYY-MM-DD.
+journal_glob: "Retrospective/1. Daily/{date}.md"
+# Hermes 작업 백링크를 모으는 AI 전용 섹션 헤딩.
+journal_logs_heading: "## 🤖 Hermes 작업 로그"
+# 작업항목 대표 시각(로컬) → 시간대 버킷 경계.
+journal_time_buckets:
+  # 이전 = Morning
+  morning_end: "12:00"
+  # 이전 = Afternoon, 이후 = Evening
+  afternoon_end: "18:00"
+# daily note가 없을 때 참고할 stub 템플릿 (vault 기준 상대).
+daily_template: "Templates/template-retrospective-1-daily.md"
+
+# ── 변경 이력 (obsidian-history 규칙) ────────────────────────────────
+# vault 내 .md 변경 시 통합 로그를 남기는 파일 (vault 기준 상대).
+history_log: "wiki/log.md"
+# 이력 파일 최상단 헤딩 (최신 항목을 이 헤딩 바로 아래에 삽입).
+history_log_heading: "# Change Log"
+
+# ── llm-wiki (지식 베이스) ───────────────────────────────────────────
+# 소스를 컴파일하는 상호연결 지식 위키의 루트 (vault 기준 상대).
+# 이 안에 SCHEMA.md / index.md / log.md / raw/ / entities/ / concepts/
+# / comparisons/ / queries/ 가 있다. 도메인: PKM.
+# 주의: 이 wiki의 log.md 는 위 history_log(obsidian-history)와 별개다.
+wiki_dir: "hermes"
+wiki_schema: "hermes/SCHEMA.md"
+wiki_index: "hermes/index.md"
+wiki_log: "hermes/log.md"
+
+# ── 타임존 ───────────────────────────────────────────────────────────
+# created/modified/이력 시각 기준.
+timezone: "Asia/Seoul"

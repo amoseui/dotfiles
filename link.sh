@@ -59,6 +59,14 @@ link_dir_contents "$DOTFILES_PATH/claude/commands" ~/.claude/commands
 link_dir_contents "$DOTFILES_PATH/claude/skills" ~/.claude/skills
 link_dir_contents "$DOTFILES_PATH/claude/hooks" ~/.claude/hooks
 
+# Hermes (custom skills only — bundled skills are managed by Hermes itself)
+# Link individual skills, not whole category dirs, since custom skills live
+# inside bundled categories (e.g. note-taking/).
+link_file "$DOTFILES_PATH/hermes/skills/note-taking/brief-morning"          ~/.hermes/skills/note-taking/brief-morning
+link_file "$DOTFILES_PATH/hermes/skills/note-taking/daily-notes-automation" ~/.hermes/skills/note-taking/daily-notes-automation
+link_file "$DOTFILES_PATH/hermes/skills/note-taking/hermes"                 ~/.hermes/skills/note-taking/hermes
+link_file "$DOTFILES_PATH/hermes/skills/note-taking/pkm-collect"            ~/.hermes/skills/note-taking/pkm-collect
+
 # Ghostty
 link_file "$DOTFILES_PATH/ghostty/config" ~/.config/ghostty/config
 

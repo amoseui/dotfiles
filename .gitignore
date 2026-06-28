@@ -1,2 +1,7 @@
 # superpowers 작업 산출물 (spec/plan) — 로컬에만 보관, 커밋 제외
 docs/superpowers/
+
+# Hermes 스킬 런타임 상태/캐시 — 머신별 자동생성, 커밋 제외
+hermes/skills/**/state.json
+hermes/skills/**/__pycache__/
+*.pyc
