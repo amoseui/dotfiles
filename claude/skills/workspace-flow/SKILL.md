@@ -20,6 +20,7 @@ Codex 리뷰를 정해진 순서로 위임한다.
 - **Interactive by default**: 각 단계 경계에서 사용자 승인을 받고 다음으로 넘어간다.
 - 이상 상황(테스트 실패·예상치 못한 파일 상태·권한 오류)은 멈추고 상황 + 선택지를 보고한다.
 - spec/plan은 `docs/superpowers/`에 두고 대상 repo에서 gitignore한다.
+- **Chromium 개발 시 worktree를 절대 사용하지 않는다.** `superpowers:using-git-worktrees` 등으로 worktree를 만들려 해도 chromium 대상에서는 예외 없이 금지하고, 현재 워크스페이스에서 직접 진행한다.
 - 범위 밖: Scale Gate, 세션 로깅, advisor 매트릭스, 훅 경계(필요해지면 후속 확장).
 
 ## 0단계: 사전 점검

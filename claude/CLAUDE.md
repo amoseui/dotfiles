@@ -45,3 +45,17 @@
 - 과제와 무관한 인접 코드·주석·포맷은 "겸사겸사" 고치지 않는다.
 - 무관한 죽은 코드는 **언급만** 하고, 삭제는 요청받았을 때만 한다. 내 변경이 만들어 낸 고아(import·변수·함수)만 정리한다.
 - 자기 점검: 바뀐 모든 줄이 사용자의 요청으로 직접 거슬러 올라가야 한다.
+
+## Git worktree
+- **Chromium 개발 시 worktree를 절대 사용하지 않는다.** superpowers:using-git-worktrees 등이 worktree를 제안하더라도 chromium 대상에서는 예외 없이 금지한다.
+
+<!-- CODEGRAPH_START -->
+## CodeGraph
+
+In repositories indexed by CodeGraph (a `.codegraph/` directory exists at the repo root), reach for it BEFORE grep/find or reading files when you need to understand or locate code:
+
+- **MCP tool** (when available): `codegraph_explore` answers most code questions in one call — the relevant symbols' verbatim source plus the call paths between them, including dynamic-dispatch hops grep can't follow. Name a file or symbol in the query to read its current line-numbered source. If it's listed but deferred, load it by name via tool search.
+- **Shell** (always works): `codegraph explore "<symbol names or question>"` prints the same output.
+
+If there is no `.codegraph/` directory, skip CodeGraph entirely — indexing is the user's decision.
+<!-- CODEGRAPH_END -->
