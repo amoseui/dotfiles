@@ -11,3 +11,6 @@
 .tool-versions
 
 **/.claude/settings.local.json
+
+# CodeGraph index — auto-generated per repo, never commit
+.codegraph/
