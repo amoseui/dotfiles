@@ -47,7 +47,7 @@
 - 자기 점검: 바뀐 모든 줄이 사용자의 요청으로 직접 거슬러 올라가야 한다.
 
 ## Git worktree
-- **Chromium 개발 시 worktree를 절대 사용하지 않는다.** superpowers:using-git-worktrees 등이 worktree를 제안하더라도 chromium 대상에서는 예외 없이 금지한다.
+- **Chromium 개발 시 worktree를 절대 사용하지 않는다.** 저장소 규모가 너무 커서 worktree 생성 비용이 과도하기 때문이다. superpowers:using-git-worktrees 등이 worktree를 제안하더라도 chromium 대상에서는 예외 없이 금지한다.
 
 <!-- CODEGRAPH_START -->
 ## CodeGraph
