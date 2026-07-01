@@ -25,6 +25,10 @@ font-family = "Noto Sans CJK KR"
 font-size = 13
 window-padding-x = 10
 
+# Color theme ported from iTerm2 custom preset "Oceanic-Dark-iterm3".
+# Theme file lives at ghostty/themes/oceanic-dark (linked to ~/.config/ghostty/themes/).
+theme = oceanic-dark
+
 # # Spacing around the equals sign does not matter.
 # # All of these are identical:
 # key=value

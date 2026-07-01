@@ -69,6 +69,7 @@ link_file "$DOTFILES_PATH/hermes/skills/note-taking/pkm-collect"            ~/.h
 
 # Ghostty
 link_file "$DOTFILES_PATH/ghostty/config" ~/.config/ghostty/config
+link_dir_contents "$DOTFILES_PATH/ghostty/themes" ~/.config/ghostty/themes
 
 # cmux
 link_file "$DOTFILES_PATH/cmux/cmux.json" ~/.config/cmux/cmux.json
