@@ -6,26 +6,6 @@
   },
   "model": "claude-fable-5[1m]",
   "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "KNOWLEDGE_GRAPH_PATH=\"$HOME/Obsidian/amoseui/5. Claude/knowledge\" python3 \"$HOME/.claude/hooks/knowledge-graph-update.py\""
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "KNOWLEDGE_GRAPH_PATH=\"$HOME/Obsidian/amoseui/5. Claude/knowledge\" bash \"$HOME/.claude/hooks/knowledge-graph-inject.sh\""
-          }
-        ]
-      }
-    ],
     "UserPromptSubmit": [
       {
         "hooks": [

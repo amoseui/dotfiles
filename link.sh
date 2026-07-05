@@ -57,7 +57,6 @@ link_file "$DOTFILES_PATH/claude/statusline-command.sh" ~/.claude/statusline-com
 link_dir_contents "$DOTFILES_PATH/claude/agents" ~/.claude/agents
 link_dir_contents "$DOTFILES_PATH/claude/commands" ~/.claude/commands
 link_dir_contents "$DOTFILES_PATH/claude/skills" ~/.claude/skills
-link_dir_contents "$DOTFILES_PATH/claude/hooks" ~/.claude/hooks
 
 # Hermes (custom skills only — bundled skills are managed by Hermes itself)
 # Link individual skills, not whole category dirs, since custom skills live

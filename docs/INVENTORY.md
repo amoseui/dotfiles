@@ -22,7 +22,7 @@
 | obsidian-history | 스킬 | 자작 (1f83118 이전) | 작동 | 유지 | pkm 계열 스킬이 의존 |
 | pkm-push | 스킬 | 자작 (094323b) | 작동 | 유지 | 크로스머신 파이프라인의 맥북 쪽 절반 (T2-2에서 자동화) |
 | workspace-flow | 스킬 | 자작 (79c9b54) | 작동 | 모름(계측 대기) | |
-| knowledge-graph 훅 ×2 | 훅 | 7loro 이식 (ddc1f77) | **no-op** (claude_agent_sdk 미설치) | **폐기 — T2-1 승인, 세션 1 집행** | llm-wiki(Hermes, 운영 중)와 경합 → 단일 경로화. 부활 대안은 스펙 §5 T2-1에서 기각 |
+| knowledge-graph 훅 ×2 | 훅 | 7loro 이식 (ddc1f77) | 제거됨 | **폐기 완료 (2026-07-05)** | no-op(claude_agent_sdk 미설치)이었고 llm-wiki(Hermes, 운영 중)와 경합 → 단일 경로화. 부활 대안은 스펙 §5 T2-1에서 기각 |
 | statusline-command.sh | statusline | 자작 (f08c58c, 이후 다수 수정) | 작동 | 유지 | 매 세션 사용. "누적토큰 Σ 다시 넣지 말 것"(HANDOFF) |
 | settings.json | 설정 | 자작 | 작동 | 유지 | live와 심링크로 일치 |
 | CLAUDE.md | 설정 | 자작 | 작동 | 유지 | 글로벌 메모리 |
@@ -51,5 +51,5 @@
 
 ## 판정 요약 (2026-07-05)
 
-- 유지 12 / 폐기 1(knowledge-graph 훅) / 수정·재설계 2(pkm-collect 맥북판, link.sh) / 모름(계측 대기) 10 / dotfiles 편입 예정 1(Hermes 코어 설정, T1-3)
+- 유지 12 / 폐기 완료 1(knowledge-graph 훅, 2026-07-05) / 수정·재설계 2(pkm-collect 맥북판, link.sh) / 모름(계측 대기) 10 / dotfiles 편입 예정 1(Hermes 코어 설정, T1-3)
 - 다음 재판정: T1-2 계측 4주 데이터 확보 후 (스펙 §7 세션 5+)
