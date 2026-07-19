@@ -8,7 +8,7 @@ description: |
   단, wiki/log.md 자체를 수정할 때는 log.md에 중복 기록하지 않는다.
 ---
 
-# Obsidian History Tracker
+# obsidian-history — vault 수정 이력 관리
 
 Obsidian vault 내 .md 파일을 수정할 때마다 두 곳에 수정 이력을 기록한다.
 

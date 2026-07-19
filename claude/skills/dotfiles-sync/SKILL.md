@@ -15,7 +15,7 @@ description: |
   사용자가 어느 작업 디렉터리에 있든(저장소 밖이어도) 동작한다.
 ---
 
-# Dotfiles Sync
+# dotfiles-sync — 로컬 설정 → 저장소 동기화
 
 로컬에서 바뀐 설정을 dotfiles 저장소에 정확히 반영하고, 일관된 컨벤션으로 commit한 뒤
 사용자 확인을 거쳐 push한다.

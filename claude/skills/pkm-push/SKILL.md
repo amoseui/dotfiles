@@ -9,7 +9,7 @@ description: |
   하루 작업을 마치며 이 머신의 AI 사용 내역을 메인 머신으로 보내달라는 요청 시.
 ---
 
-# pkm-push (보조 머신 → vault 인박스)
+# pkm-push — 보조 머신 → vault 인박스
 
 이 머신의 오늘 Claude Code/Codex 내역을 **digest JSON**으로 수집해 동기 vault의
 공유 인박스에 저장한다. **읽기 전용 수집 + 인박스 쓰기만** 한다(노트 작성·요약은 메인 머신 몫).

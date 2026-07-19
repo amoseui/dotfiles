@@ -7,7 +7,7 @@ description: |
   "책 추가", "영화 추가", "book", "movie", "읽은 책", "본 영화" 등 도서/영화 노트 생성 요청 시.
 ---
 
-# PKM Skill - Obsidian Vault 관리
+# pkm — Obsidian vault 관리
 
 사용자가 요청하는 vault 작업(노트 작성/편집/검색, 저널, PR 문서화, 책/영화)을 수행한다.
 

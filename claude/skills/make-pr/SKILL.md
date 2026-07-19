@@ -7,7 +7,7 @@ description: |
 argument-hint: "[PR 제목]"
 ---
 
-# Make PR
+# make-pr — 커밋·푸시·PR 생성 자동화
 
 변경사항 커밋 → 브랜치 푸시 → PR 생성 → PKM 문서화를 자동화한다. `gh` CLI가 필요하다.
 
@@ -71,12 +71,12 @@ argument-hint: "[PR 제목]"
 
 ## 3. PR Title & Content
 
-### Title
+### 제목 (Title)
 - **제목은 영어 필수.** (type은 feat/fix/refactor/chore 등 영어 유지)
 - **`$ARGUMENTS` 있으면** 제목으로 사용하되, 영어가 아니면 영어로 번역/정리해서 사용
 - **없으면** 커밋 히스토리 기반 자동 생성: `{type}: {English title}`
 
-### Content — Body 작성 원칙 (외부 리뷰어가 *코드 안 봐도 이해* 가능하게)
+### 내용 — body 작성 원칙 (외부 리뷰어가 *코드 안 봐도 이해* 가능하게)
 - *왜 만들었나*(배경/문제) + *무엇이 가능해지나*(효과)를 먼저. *어떻게 구현*은 코드에 위임, body에선 최소화
 - 영문 jargon → 한국어 풀어쓰기, file path·class명·내부 약어 노출 최소화(고수준 의도만)
 - 한 단락 4-5줄 이상이면 bullet/표로 쪼개기, 한 문장에 한 정보
@@ -138,7 +138,7 @@ gh pr create $DRAFT_FLAG --assignee @me --title "[Title]" --body-file pull_reque
 ### 기존 PR body 수정 시 — 사용자 콘텐츠 보존
 `gh pr edit`로 수정할 땐 단순 덮어쓰기 금지. ① `gh pr view [n] --json body --jq '.body'`로 fetch → ② 사용자가 수동 추가한 스크린샷(`![...](https://github.com/.../assets/...)`)·외부 링크·체크박스·Dependent PR 식별 → ③ 그대로 포함 → ④ `--body-file`로 갱신 → ⑤ 임시 파일 정리.
 
-### Cleanup
+### 정리 (Cleanup)
 PR 생성/수정 성공 후 `pull_request.md` 삭제.
 
 ## 5. 최종 출력
