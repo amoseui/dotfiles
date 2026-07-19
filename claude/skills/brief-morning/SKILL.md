@@ -66,8 +66,8 @@ cat ~/.claude/skills/brief-morning/config.yaml 2>/dev/null || echo "NO_CONFIG"
 
 **질문 3** — github_pr 또는 github_issues 선택 시: 대상 repo 목록(+ github_issues면 이메일 라벨명, 기본 email)
 
-> ⚠️ `git_status`나 `github_pr`를 선택하지 않았다면 해당 질문은 건너뛴다.
-> ⚠️ `github_pr`는 `gh` CLI가 필요하다. 미설치면 `brew install gh && gh auth login` 안내 후 기본 off로 둔다.
+> ⚠️ `git_status`·`github_pr`·`github_issues` 중 선택하지 않은 항목의 질문은 건너뛴다.
+> ⚠️ `github_pr`·`github_issues`는 `gh` CLI가 필요하다. 미설치면 `brew install gh && gh auth login` 안내 후 기본 off로 둔다.
 
 ### config.yaml 생성
 
