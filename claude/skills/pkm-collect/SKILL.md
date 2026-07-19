@@ -1,11 +1,24 @@
 ---
 name: pkm-collect
-description: 하루 업무 종료 시 오늘의 Claude Code 대화 기록을 분석해 기록 가치가 있는 작업만 골라 PKM vault의 "5. Claude/notes"(Claude 전용 폴더)에 노트로 합성하고, 오늘 daily note에 백링크를 건다. 기존 노트와 중복되지 않게 한다. 트리거 - "pkm collect", "오늘 한 일 정리", "업무 정리해줘", "하루 작업 노트", "일과 정리", "오늘 작업 기록", "daily collect" 등 하루를 마무리하며 작업을 PKM에 정리해달라는 요청 시.
+description: |
+  [수동 폴백] 이 맥북에서 Claude Code 대화 기록을 직접 분석해 PKM vault의
+  "5. Claude/notes"에 노트로 합성하고 daily note에 백링크를 건다.
+  ★ 평시 경로가 아니다: 평소에는 pkm-push가 digest를 인박스로 밀고 맥미니
+  Hermes의 pkm-collect가 노트를 합성한다(단일 경로). 이 스킬은 Hermes가
+  장애·부재 중일 때, 또는 사용자가 "맥북에서 직접" 정리를 원할 때만 쓴다.
+  트리거 - "pkm collect 직접", "맥북에서 오늘 한 일 정리", "Hermes 없이 노트
+  합성", "수동 collect" 등 이 머신에서 직접 합성하라는 명시적 요청 시.
 ---
 
-# pkm-collect
+# pkm-collect — 대화 기록 → PKM 노트 합성 (수동 폴백)
 
-오늘 Claude Code 대화 기록 → PKM 노트 + daily note 백링크. **결정론 수집은 collect.py, 의미 판단·작성은 LLM**.
+> **역할**: 평시 노트 합성은 `pkm-push`(이 맥북) → vault 인박스 →
+> **맥미니 Hermes의 pkm-collect**가 담당하는 단일 경로다. 이 스킬은 그
+> 경로가 막혔을 때(Hermes 장애·부재)나 사용자가 명시적으로 이 머신에서
+> 직접 합성을 원할 때만 실행한다. 실행 전에 이 사실을 사용자에게 상기시킨다.
+
+오늘 Claude Code 대화 기록 → PKM 노트 + daily note 백링크. **결정론 수집은
+collect.py, 의미 판단·작성은 LLM**.
 
 ## 전제
 - vault: `/Users/amoseui/Obsidian/amoseui` (config.yaml의 vault_path). cwd와 무관하게 이 vault에 작성한다.

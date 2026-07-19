@@ -1,15 +1,18 @@
 ---
 name: workspace-flow
 description: |
-  대규모·다단계 작업을 brainstorm → plan → execute → review → ship 순서로 일관되게
-  진행하는 얇은 오케스트레이터. 기존 superpowers 스킬 + Workflow 도구 + Codex 리뷰를
-  정해진 순서로 위임·조율한다. 각 단계 경계에서 사용자 승인을 받는다.
-  트리거: "workspace flow", "workspace workflow", "워크스페이스 플로우로 해줘",
-  "이 작업 정식 절차로 진행", "/workspace-flow" 등. 대규모 리뉴얼·기능 구현 요청 시.
+  대규모·다단계 작업을 brainstorm → plan → execute → review → ship 순서로
+  일관되게 진행하는 얇은 오케스트레이터. 기존 superpowers 스킬 + Workflow
+  도구 + Codex 리뷰를 정해진 순서로 위임·조율하고, 각 단계 경계에서 사용자
+  승인을 받는다.
+  ★ 사용자가 이 스킬을 기억해 부르길 기다리지 말 것: 대규모 리뉴얼, 신규
+  기능 구현, 여러 파일에 걸친 다단계 작업 요청이 오면 Claude가 먼저
+  "workspace-flow로 진행할까요?"라고 제안한다. 명시 트리거: "workspace flow",
+  "워크스페이스 플로우로 해줘", "이 작업 정식 절차로 진행", "/workspace-flow".
 argument-hint: "[작업 목표]"
 ---
 
-# Workspace Flow
+# workspace-flow — 대규모 작업 오케스트레이터
 
 대규모·다단계 작업을 **brainstorm → plan → execute → review → ship** 5단계로 진행하는
 얇은 오케스트레이터다. 자체 로직은 최소화하고, 기존 superpowers 스킬 · Workflow 도구 ·
@@ -17,6 +20,8 @@ Codex 리뷰를 정해진 순서로 위임한다.
 
 ## 원칙
 
+- **제안형 진입**: 이 스킬의 1차 진입 경로는 사용자의 기억이 아니라 Claude의
+  제안이다. 대규모·다단계 작업 신호를 보면 착수 전에 이 스킬 사용을 제안한다.
 - **Interactive by default**: 각 단계 경계에서 사용자 승인을 받고 다음으로 넘어간다.
 - 이상 상황(테스트 실패·예상치 못한 파일 상태·권한 오류)은 멈추고 상황 + 선택지를 보고한다.
 - spec/plan은 `docs/superpowers/`에 두고 대상 repo에서 gitignore한다.
