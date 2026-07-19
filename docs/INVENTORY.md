@@ -60,5 +60,5 @@
   흡수) / 신설 1(monthly-review)
 - 전통 dotfiles의 "모름"(vim/tmux/cmux)은 이 계측 방법(Claude transcript)의
   사각 — 보류 유지.
-- 다음 재판정: **2026-08-19경 monthly-review 실행** (스킬이 예정일 경과를
+- 다음 재판정: **2026-07-31 monthly-review 실행** (스킬이 예정일 경과를
   감지하면 먼저 제안한다)
