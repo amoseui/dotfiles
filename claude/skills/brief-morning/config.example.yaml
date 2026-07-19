@@ -2,17 +2,37 @@
 # 이 파일을 복사하여 config.yaml을 만들고 머신에 맞게 수정한다.
 #   cp config.example.yaml config.yaml
 # config.yaml은 머신-로컬 설정이므로 dotfiles repo에 commit하지 않는다(.gitignore).
+#
+# ── 환경 프로파일 프리셋 ──
+# personal-laptop — 개인 맥북. 아침 브리핑(캘린더·메일·일지)은 맥미니 Hermes가
+#   담당하므로 여기서는 끄고, Hermes가 볼 수 없는 로컬 git 상태 + PR 현황만
+#   켠 가벼운 "작업 시작 브리핑"으로 쓴다. (아래 기본값이 이 프리셋)
+# work — 회사 머신. Hermes·Google MCP가 없는 분리 환경. calendar/gmail은 끄고
+#   github_issues를 켠다(이메일이 GitHub issue로 유입되므로 이메일 라벨 issue가
+#   받은편지함 역할). vault가 없으면 on_this_day/daily_note는 값과 무관하게
+#   자동으로 건너뛴다.
+#   work 예시: git_status/github_pr/github_issues=true, 나머지 false,
+#   github.issue_repos/email_label 지정.
 
 # ─────────────────────────────────────────────
 # 작업 그룹 enable/disable
 # ─────────────────────────────────────────────
 tasks:
-  on_this_day: true     # TASK A : 이날의 기록 (과거 같은 날짜)
-  calendar: true        # TASK B : Google Calendar 이번 주 일정 (Calendar MCP)
-  gmail: true           # TASK C : Gmail 받은편지함 요약 (Gmail MCP)
-  daily_note: true      # TASK E : 최신 daily note 확인
+  on_this_day: false    # TASK A : 이날의 기록 (과거 같은 날짜, vault 필요)
+  calendar: false       # TASK B : Google Calendar 이번 주 일정 (Calendar MCP)
+  gmail: false          # TASK C : Gmail 받은편지함 요약 (Gmail MCP)
+  daily_note: false     # TASK E : 최신 daily note 확인 (vault 필요)
   git_status: true      # TASK F : Git 로컬 상태 확인
-  github_pr: false      # TASK G : GitHub PR 조회 (gh CLI 필요 — 설치/인증 후 true)
+  github_pr: true       # TASK G : GitHub PR 조회 (gh CLI 필요)
+  github_issues: false  # TASK H : GitHub 이슈 받은편지함 (gh CLI 필요, 회사용)
+
+# ─────────────────────────────────────────────
+# Obsidian vault (TASK A/E에서 사용)
+# ─────────────────────────────────────────────
+vault:
+  # daily note가 있는 vault 루트. 없는 머신(예: 회사)은 빈 값으로 둔다 —
+  # on_this_day/daily_note 태스크가 자동으로 건너뛴다.
+  path: /Users/amoseui/Obsidian/amoseui
 
 # ─────────────────────────────────────────────
 # Git 상태 확인 설정 (tasks.git_status: true 일 때만 사용)
@@ -25,8 +45,12 @@ git:
   exclude: []
 
 # ─────────────────────────────────────────────
-# GitHub PR 조회 설정 (tasks.github_pr: true 일 때만 사용)
+# GitHub 조회 설정 (tasks.github_pr / tasks.github_issues 용)
 # ─────────────────────────────────────────────
 github:
-  # "owner/repo" 형식. gh CLI가 인증돼 있어야 한다.
+  # PR 조회 대상. "owner/repo" 형식. gh CLI가 인증돼 있어야 한다.
   repos: []
+  # (회사) 이메일이 GitHub issue로 유입될 때 붙는 라벨명.
+  email_label: email
+  # (회사) 이메일 라벨 issue를 조회할 "owner/repo" 목록. 비어 있으면 TASK H skip.
+  issue_repos: []

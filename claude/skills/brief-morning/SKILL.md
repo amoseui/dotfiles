@@ -1,14 +1,30 @@
 ---
 name: brief-morning
 description: |
-  아침 업무 시작 루틴: 이날의 기록·지난 일지 요약, 이번 주 일정, 받은편지함 요약, 로컬 git 상태, PR 현황을 한 번에 모아 브리핑한다.
-  트리거: "아침 브리핑", "모닝 브리핑", "morning brief", "업무 시작", "/brief-morning" 등.
-  config.yaml이 없으면 사용자에게 설정을 묻고 파일을 생성한 뒤 작업을 진행한다.
+  작업 시작/아침 브리핑(환경 프로파일 기반): 로컬 git 상태·GitHub PR·진행 중
+  계획(superpowers plan)을 기본으로, 설정에 따라 이날의 기록·일정·메일
+  (또는 회사 환경의 GitHub 이슈 받은편지함)을 한 화면에 모은다.
+  트리거: "아침 브리핑", "모닝 브리핑", "morning brief", "업무 시작",
+  "작업 시작 브리핑", "/brief-morning" 등.
+  config.yaml이 없으면 사용자에게 설정을 묻고 파일을 생성한 뒤 진행한다.
+  개인 맥북에서는 캘린더·메일 브리핑을 Hermes(맥미니)가 담당하므로 이 스킬은
+  로컬 git 중심의 경량 브리핑으로 동작한다(config 프리셋 참고).
 ---
 
-# Brief Morning
+# brief-morning — 작업 시작/아침 브리핑
 
-아침 업무 시작 루틴: 어제(또는 최근) 작업 요약 및 오늘 챙길 것들을 한 화면에 모은다.
+어제(또는 최근) 작업 요약과 오늘 챙길 것들을 한 화면에 모은다. 어떤 태스크를
+켤지는 머신의 환경 프로파일(config.yaml)이 정한다.
+
+## 환경 프로파일
+
+| 프로파일 | 환경 | 켜는 것 |
+|---|---|---|
+| personal-laptop | 개인 맥북 — 아침 브리핑은 Hermes(맥미니)가 담당 | git_status·github_pr (로컬 git은 Hermes가 못 봄) |
+| work | 회사 — Hermes·Google MCP 없음, 분리 계정 | git_status·github_pr·github_issues(이메일 라벨 issue = 받은편지함) |
+
+프리셋 상세는 `config.example.yaml` 주석 참고. vault가 없는 머신은
+on_this_day/daily_note가 자동으로 건너뛰어진다.
 
 ## 제약사항
 
@@ -17,7 +33,7 @@ description: |
 
 ---
 
-## STEP 0: 설정 읽기 (가장 먼저 실행)
+## 0단계: 설정 읽기 (가장 먼저 실행)
 
 스킬 디렉터리의 `config.yaml`을 읽어 이 머신의 설정을 파악한다.
 
@@ -28,6 +44,9 @@ cat ~/.claude/skills/brief-morning/config.yaml 2>/dev/null || echo "NO_CONFIG"
 ### config.yaml이 있는 경우
 
 파일 내용을 파싱하여 설정값을 확인하고, **enabled된 태스크만** 아래 병렬 실행 블록에서 수행한다.
+
+`vault.path`가 비어 있거나 경로가 존재하지 않으면 on_this_day/daily_note
+태스크는 enabled여도 건너뛴다(회사 등 vault 없는 머신 대응).
 
 ### config.yaml이 없는 경우 (NO_CONFIG)
 
@@ -40,11 +59,12 @@ cat ~/.claude/skills/brief-morning/config.yaml 2>/dev/null || echo "NO_CONFIG"
 - `daily_note` — 최신 daily note 확인
 - `git_status` — Git 로컬 상태 확인
 - `github_pr` — GitHub PR 조회 (`gh` CLI 필요)
+- `github_issues` — GitHub 이슈 받은편지함 (`gh` CLI 필요, 회사용)
 
 **질문 2** — `git_status`를 선택한 경우: 작업 베이스 디렉터리 (이 아래 git repo들을 자동 탐색)
 - 예시 옵션: `~/Workspace/github`, `~/Workspace` + "직접 입력". `recent_days`는 기본 30.
 
-**질문 3** — `github_pr`를 선택한 경우: PR 조회할 저장소 목록 (쉼표 구분, 예: `owner/repo`)
+**질문 3** — github_pr 또는 github_issues 선택 시: 대상 repo 목록(+ github_issues면 이메일 라벨명, 기본 email)
 
 > ⚠️ `git_status`나 `github_pr`를 선택하지 않았다면 해당 질문은 건너뛴다.
 > ⚠️ `github_pr`는 `gh` CLI가 필요하다. 미설치면 `brew install gh && gh auth login` 안내 후 기본 off로 둔다.
@@ -74,8 +94,8 @@ cat ~/.claude/skills/brief-morning/config.yaml 2>/dev/null || echo "NO_CONFIG"
 
 ┌──────────────────────────┬──────────────────────────┐
 │   Agent 1 (sonnet)       │   Agent 2 (sonnet)       │
-│  TASK B + C              │  TASK F + G              │
-│  (일정 + 메일, MCP)      │  (Git 상태 + GitHub PR)  │
+│  TASK B + C              │  TASK F + G + H          │
+│  (일정·메일)            │  (git·PR·이슈)            │
 └──────────────────────────┴──────────────────────────┘
 ```
 
@@ -84,7 +104,7 @@ cat ~/.claude/skills/brief-morning/config.yaml 2>/dev/null || echo "NO_CONFIG"
 1. **메인 컨텍스트**: TASK A + E 파일 탐색을 **단일 Bash 호출**로 동시 수행 → 찾은 파일을 **Read 병렬 호출**로 한 번에 읽는다.
 2. **Agent 병렬 실행**: 나머지 enabled된 그룹을 **하나의 메시지에서 2개 Agent 동시 호출**.
    - **Agent 1** (`model: "sonnet"`): Calendar + Gmail — **MCP 도구**로 수집·요약.
-   - **Agent 2** (`model: "sonnet"`): Git 상태 + GitHub PR — 동일 CLI 기반, Bash `&`로 병렬.
+   - **Agent 2** (`model: "sonnet"`): Git 상태 + GitHub PR + 이슈 받은편지함 — 동일 CLI 기반, Bash `&`로 병렬.
    - 두 Agent 결과를 취합하여 최종 출력 생성.
 
 > ⚠️ **반드시 하나의 메시지에서 2개 Agent를 동시 호출**해야 진정한 병렬 실행이 된다. 순차 호출 금지.
@@ -100,11 +120,15 @@ cat ~/.claude/skills/brief-morning/config.yaml 2>/dev/null || echo "NO_CONFIG"
 
 > ⚡ TASK E(최신 일지)의 파일 탐색과 **단일 Bash 호출로 동시 수행**한다.
 
+아래 `VAULT_ROOT`에 config의 `vault.path` 값을 채워 실행한다.
+
 ```bash
 # 매칭 없는 글로브를 빈 목록으로 (zsh/bash 공통) — 과거 기록이 없을 때 에러 방지
 setopt null_glob 2>/dev/null; shopt -s nullglob 2>/dev/null
 
-VAULT="/Users/amoseui/Obsidian/amoseui/Retrospective/1. Daily"
+VAULT_ROOT=""   # config: vault.path (비어 있으면 이 블록 전체 skip)
+[ -n "$VAULT_ROOT" ] && [ -d "$VAULT_ROOT" ] || { echo "NO_VAULT"; exit 0; }
+VAULT="$VAULT_ROOT/Retrospective/1. Daily"
 TODAY_MMDD=$(date '+%m-%d')
 CUR_YEAR=$(date '+%Y')
 
@@ -180,9 +204,9 @@ fi
 
 ---
 
-## TASK F+G: Git 상태 + GitHub PR (Agent 2, `model: "sonnet"`)
+## TASK F+G+H: Git 상태 + GitHub PR + 이슈 받은편지함 (Agent 2, `model: "sonnet"`)
 
-> **건너뛰기 조건**: `tasks.git_status: false` AND `tasks.github_pr: false` 둘 다 false면 이 Agent 생략.
+> **건너뛰기 조건**: git_status·github_pr·github_issues 모두 false면 이 Agent 생략.
 
 ### F: Git 로컬 상태 확인
 
@@ -272,6 +296,27 @@ wait
 
 G 결과에서 내가 작성한 PR(`author.login == @me`)은 "리뷰 대기"에서 제외.
 
+### H: GitHub 이슈 받은편지함 (회사용)
+
+> **건너뛰기 조건**: `tasks.github_issues: false` 또는 `github.issue_repos`가
+> 비어 있음. `gh` 미설치면 생략하고 설치 안내.
+
+회사 환경에서 이메일은 GitHub issue에 이메일 라벨이 붙어 유입된다. 해당
+issue를 받은편지함처럼 보여준다:
+
+```bash
+EMAIL_LABEL="email"   # config: github.email_label
+REPOS=()              # config: github.issue_repos ("owner/repo")
+command -v gh >/dev/null 2>&1 || { echo "GH_NOT_INSTALLED"; exit 0; }
+for repo in "${REPOS[@]}"; do
+  echo "=== $repo - EMAIL ISSUES ==="
+  gh issue list --repo "$repo" --state open --label "$EMAIL_LABEL" \
+    --json number,title,author,createdAt,url 2>&1
+done
+```
+
+- 최신순 정렬, 작성자/제목/생성일 표. 없으면 "이슈 받은편지함 비어 있음".
+
 ---
 
 ## 출력 형식
@@ -304,6 +349,12 @@ _(일정 없는 날은 생략, 충돌 시 ⚠️ 표시)_
 | ... | ... | ... |
 
 _(메일이 없으면 "받은편지함 메일 없음")_
+
+## 📥 GitHub 이슈 받은편지함
+| # | 제목 | 작성자 | 생성일 |
+|---|------|--------|--------|
+
+_(github_issues 태스크가 꺼져 있거나 이슈가 없으면 섹션 생략)_
 
 ## 지난 일지 요약
 [요약 내용]
