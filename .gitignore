@@ -9,3 +9,9 @@ hermes/skills/**/__pycache__/
 # Hermes 스킬 실제 설정 — 개인 식별값(경로/계정) 보관처, 커밋 제외.
 # 템플릿은 config.example.yaml 로 커밋된다.
 hermes/skills/**/config.yaml
+
+# Hermes feed-pipeline 런타임/노이즈 파일 — 머신별 자동생성, 커밋 제외.
+# (config.yaml / feeds.opml / newsletter-senders.json / scripts 는 추적한다.)
+hermes/feed-pipeline/rss-seen.json
+hermes/feed-pipeline/state/
+hermes/feed-pipeline/**/__pycache__/

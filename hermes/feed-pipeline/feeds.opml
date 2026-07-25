@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+<head>
+  <title>My feeds</title>
+</head>
+<body>
+<outline text="Feeds" title="Feeds">
+  <outline title="Chrome Developers - Blog"  type="rss" xmlUrl="https://developer.chrome.com/feeds/blog.xml" />
+  <outline title="Slack Engineering"  type="rss" xmlUrl="https://slack.engineering/feed" />
+  <outline title="10x Lessons"  type="rss" xmlUrl="https://tkim.co/feed/" />
+  <outline title="Integerous DevLog on Integerous DevLog"  type="rss" xmlUrl="http://integerous.github.io/index.xml" />
+  <outline title="ahn.heejong"  type="rss" xmlUrl="https://ahnheejong.name/feed.xml" />
+  <outline title="이바닥늬우스"  type="rss" xmlUrl="https://ebadak.news/feed/" />
+  <outline title="Google Open Source Blog"  type="rss" xmlUrl="http://google-opensource.blogspot.com/feeds/posts/default" />
+  <outline title="Netflix TechBlog - Medium"  type="rss" xmlUrl="http://techblog.netflix.com/feeds/posts/default" />
+  <outline title="Spotify Engineering"  type="rss" xmlUrl="http://labs.spotify.com/feed/" />
+  <outline title="IT의 중심에서"  type="rss" xmlUrl="https://subokim.wordpress.com/feed/" />
+  <outline title="Live & Venture"  type="rss" xmlUrl="https://liveandventure.com/feed/" />
+  <outline title="직 장 학 교"  type="rss" xmlUrl="https://jigjang.wordpress.com/feed/" />
+  <outline title="OO 디자인 공부합니다"  type="rss" xmlUrl="https://imseongkang.wordpress.com/feed/" />
+  <outline title="Channy's Blog"  type="rss" xmlUrl="http://feeds.feedburner.com/channy" />
+  <outline title="Chromium Blog"  type="rss" xmlUrl="http://blog.chromium.org/feeds/posts/default" />
+  <outline title="Nolboo's Blog"  type="rss" xmlUrl="https://nolboo.kim/feed.xml" />
+  <outline title="쉽게 살 수 있을까 ?"  type="rss" xmlUrl="https://hl1itj.tistory.com/rss" />
+  <outline title="Andrew Ahn"  type="rss" xmlUrl="http://www.andrewahn.co/feed/" />
+  <outline title="nothing special"  type="rss" xmlUrl="https://radiofun.tumblr.com/rss" />
+  <outline title="Back to the Mac"  type="rss" xmlUrl="http://macnews.tistory.com/rss" />
+  <outline title="44BITS: IT 뉴스, 클라우드 컴퓨팅, 프로그래밍, 컨테이너, 리눅스"  type="rss" xmlUrl="https://44bits.io/ko/feed/all" />
+  <outline title="The GitHub Blog: Engineering News and Updates"  type="rss" xmlUrl="https://githubengineering.com/atom.xml" />
+  <outline title="SoundCloud Backstage Blog"  type="rss" xmlUrl="https://developers.soundcloud.com/blog.rss" />
+  <outline title="Sujin Lee | Creative Technologist"  type="rss" xmlUrl="https://sujinlee.me/rss/" />
+  <outline title="LinkedIn Engineering"  type="rss" xmlUrl="https://engineering.linkedin.com/blog.rss" />
+  <outline title="Banksalad RSS Feed"  type="rss" xmlUrl="https://blog.banksalad.com/rss.xml" />
+  <outline title="ohyecloudy pnotes"  type="rss" xmlUrl="http://feeds.feedburner.com/opnote" />
+  <outline title="전종현의 인사이트"  type="rss" xmlUrl="http://hyuni.me/feed/" />
+  <outline title="Bloter.net"  type="rss" xmlUrl="http://feeds.feedburner.com/Bloter" />
+  <outline title="Guru's Blog"  type="rss" xmlUrl="http://feeds.feedburner.com/xguru" />
+  <outline title="우아한형제들 기술 블로그"  type="rss" xmlUrl="http://woowabros.github.io/feed.xml" />
+  <outline title="에스티마의 인터넷이야기 EstimaStory.com"  type="rss" xmlUrl="http://estima.wordpress.com/feed/" />
+  <outline title="안수빈의 블로그"  type="rss" xmlUrl="https://ansubin.com/rss/" />
+  <outline title="Engineering - Stack Overflow Blog"  type="rss" xmlUrl="https://stackoverflow.blog/engineering/feed/" />
+  <outline title="Outsider's Dev Story"  type="rss" xmlUrl="http://feeds2.feedburner.com/rss_outsider_dev" />
+  <outline title="신현석(Hyeonseok Shin)"  type="rss" xmlUrl="http://hyeonseok.com/rss/" />
+  <outline title="애자일 이야기"  type="rss" xmlUrl="http://agile.egloos.com/index.xml" />
+  <outline title="techNeedle 테크니들"  type="rss" xmlUrl="http://techneedle.com/?feed=rss2" />
+  <outline title="토스테크"  type="rss" xmlUrl="https://toss.tech/rss.xml" />
+  <outline title="컬리 기술 블로그"  type="rss" xmlUrl="http://thefarmersfront.github.io/feed.xml" />
+  <outline title="LINE ENGINEERING Feed ko"  type="rss" xmlUrl="https://engineering.linecorp.com/ko/feed/" />
+  <outline title="우아한형제들 기술블로그"  type="rss" xmlUrl="https://techblog.woowahan.com/feed/" />
+  <outline title="NHN Cloud Meetup"  type="rss" xmlUrl="https://meetup.toast.com/rss" />
+  <outline title="Mina Lee"  type="rss" xmlUrl="https://minalee.info/feed/" />
+  <outline title="Captain Pangyo - Articles"  type="rss" xmlUrl="https://joshua1988.github.io/atom.xml" />
+  <outline title="VELOPERT.LOG"  type="rss" xmlUrl="https://velopert.com/feed" />
+  <outline title="JBEE.io"  type="rss" xmlUrl="https://jbee.io/rss.xml" />
+  <outline title="Banksalad Tech - Medium"  type="rss" xmlUrl="https://medium.com/feed/rainist-engineering/" />
+  <outline title="@hof 블로그"  type="rss" xmlUrl="http://feeds2.feedburner.com/hof" />
+  <outline title="ZUM 기술 블로그"  type="rss" xmlUrl="https://zuminternet.github.io/feed.xml" />
+  <outline title="The Missing Notes"  type="rss" xmlUrl="http://likejazz.com/rss" />
+  <outline title="jacking75"  type="rss" xmlUrl="https://jacking75.github.io/feed.xml" />
+  <outline title="Google Developers Korea Blog"  type="rss" xmlUrl="http://feeds.feedburner.com/GoogleDevelopersKorea" />
+  <outline title="/* the devil is in the detail */"  type="rss" xmlUrl="http://minjang.github.io/feed.xml" />
+  <outline title="Subicura's Blog"  type="rss" xmlUrl="https://subicura.com/feed.xml" />
+  <outline title="Sangkon Han(SigmaDream, sd or SD)"  type="rss" xmlUrl="https://www.sangkon.com/rss/" />
+  <outline title="Jeremy's Blog"  type="rss" xmlUrl="http://sungjk.github.io/feed.xml" />
+  <outline title="tech.kakao.com"  type="rss" xmlUrl="http://tech.kakao.com/rss/" />
+  <outline title="dev-notes"  type="rss" xmlUrl="http://dev.likejazz.com/rss" />
+  <outline title="기억보단 기록을"  type="rss" xmlUrl="HttpS://jojoldu.tistory.com/rss" />
+  <outline title="D2 Blog"  type="rss" xmlUrl="http://d2.naver.com/d2.atom" />
+  <outline title="개발자스럽다"  type="rss" xmlUrl="https://blog.gaerae.com/feeds/posts/default" />
+  <outline title="tebica story"  type="rss" xmlUrl="https://earlybird.kr/feed" />
+  <outline title="Feature creep designer"  type="rss" xmlUrl="https://lqez.github.io/blog/feeds/all.atom.xml" />
+  <outline title="컴퓨터 vs 책"  type="rss" xmlUrl="https://jhrogue.blogspot.com/feeds/posts/default" />
+  <outline title=""  type="rss" xmlUrl="http://djsoulscape.wordpress.com/feed/" />
+  <outline title="Everything in its Right Place"  type="rss" xmlUrl="https://blog.amoseui.com/rss.xml" />
+  <outline title="Idioteque"  type="rss" xmlUrl="https://amoseui.tistory.com/feed/" />
+  <outline title="Human-Computer Symbiosis"  type="rss" xmlUrl="http://sangminpark.wordpress.com/feed/" />
+  <outline title="How to Disappear Completely"  type="rss" xmlUrl="https://rss.blog.naver.com/amoseui_.xml" />
+  <outline title="마이크로소프트웨어"  type="rss" xmlUrl="http://feeds.feedburner.com/imaso" />
+  <outline title="오세용닷컴"  type="rss" xmlUrl="http://ohseyong.com/?feed=rss2" />
+  <outline title="영어 잘하는 방법"  type="rss" xmlUrl="http://howtospeakenglish.tistory.com/rss" />
+  <outline title="Dotty Studio"  type="rss" xmlUrl="http://dotty.org/rss" />
+  <outline title="꿈 많은 개발자가 되자! Tae-hwan"  type="rss" xmlUrl="http://thdev.net/rss" />
+  <outline title="kth 개발자 블로그"  type="rss" xmlUrl="http://feeds.feedburner.com/devparan" />
+  <outline title="배워서 남주자"  type="rss" xmlUrl="http://countryxide.tistory.com/rss" />
+  <outline title="README"  type="rss" xmlUrl="http://feeds.feedburner.com/skpreadme" />
+  <outline title="Kizoo"  type="rss" xmlUrl="http://kizoo.blogspot.com/feeds/posts/default" />
+  <outline title="작도닷넷"  type="rss" xmlUrl="http://xacdo.net/tt/index.xml" />
+  <outline title="Coupang Engineering Blog - Medium"  type="rss" xmlUrl="https://medium.com/feed/coupang-tech" />
+  <outline title="조성문의 블로그"  type="rss" xmlUrl="http://sungmooncho.com/rss" />
+  <outline title="Better than the Best"  type="rss" xmlUrl="http://dosh.kim/rss" />
+  <outline title="Google Korea Blog"  type="rss" xmlUrl="http://googlekoreablog.blogspot.com/atom.xml" />
+  <outline title="K리그 프로그래머"  type="rss" xmlUrl="http://feeds.feedburner.com/crazytazo" />
+  <outline title="요우의 내맘대로 블로그"  type="rss" xmlUrl="http://luckyyowu.tistory.com/rss" />
+  <outline title="Jake Park"  type="rss" xmlUrl="http://vcnc.tistory.com/rss" />
+  <outline title="F monologue"  type="rss" xmlUrl="http://blog.fguy.com/feeds/posts/default" />
+  <outline title="박피디의 게임 개발 이야기"  type="rss" xmlUrl="http://rss.egloos.com/blog/parkpd" />
+  <outline title="DRAMA&COMPANY"  type="rss" xmlUrl="http://developer.dramancompany.com/feed/" />
+  <outline title="지앤선의 책 사랑"  type="rss" xmlUrl="http://jinson.tistory.com/rss" />
+  <outline title="Joone Blog"  type="rss" xmlUrl="http://feeds.feedburner.com/Joone" />
+  <outline title="콴다 팀블로그 - Medium"  type="rss" xmlUrl="https://blog.mathpresso.com/feed" />
+  <outline title="jupiny의 개발일지"  type="rss" xmlUrl="https://jupiny.com/rss/" />
+  <outline title="Inflab tech blog"  type="rss" xmlUrl="https://tech.inflab.com/rss.xml" />
+  <outline title="Dreaming for the Future"  type="rss" xmlUrl="http://www.chidoo.me/index.php/feed/" />
+  <outline title="Hyeseong's Blog"  type="rss" xmlUrl="https://blog.cometkim.kr/rss.xml" />
+  <outline title="여름으로 가는 문"  type="rss" xmlUrl="http://doortts.tistory.com/rss" />
+  <outline title="미국 사는 어떤 덕후의 블로그"  type="rss" xmlUrl="http://duckhoo.wordpress.com/feed/" />
+  <outline title="SangChanLee"  type="rss" xmlUrl="http://gyaleon.wordpress.com/feed/" />
+  <outline title="shiren the creator"  type="rss" xmlUrl="http://shiren.github.io/feed.xml" />
+  <outline title="Eric Han's IT Blog"  type="rss" xmlUrl="https://futurecreator.github.io/feed.xml" />
+  <outline title="DailyEngineering"  type="rss" xmlUrl="http://hyunseob.github.io/atom.xml" />
+  <outline title="The Dream of Super Surplus Power"  type="rss" xmlUrl="http://feeds.feedburner.com/surpreem" />
+  <outline title="curioe"  type="rss" xmlUrl="http://feeds.feedburner.com/curioe" />
+  <outline title="개발새발"  type="rss" xmlUrl="http://feeds.feedburner.com/github/dogfeet" />
+  <outline title="커피고래의 노트"  type="rss" xmlUrl="https://coffeewhale.com/feed" />
+  <outline title="Eunchan.Kim"  type="rss" xmlUrl="https://www.eunchan.kim/rss.xml" />
+  <outline title="커니의 안드로이드 이야기"  type="rss" xmlUrl="http://kunny.github.io/feed.xml" />
+  <outline title="Sungjun .Dev"  type="rss" xmlUrl="https://gwonsungjun.github.io/atom.xml" />
+  <outline title="Mozilla 웹 기술 블로그"  type="rss" xmlUrl="http://hacks.mozilla.or.kr/feed/" />
+  <outline title="호돌맨의 블로그"  type="rss" xmlUrl="https://hodolman.com/rss" />
+  <outline title="안드로이드 개발 팁 블로그"  type="rss" xmlUrl="http://tiii.tistory.com/rss" />
+  <outline title="craft + alchemy"  type="rss" xmlUrl="https://www.chrischae.kr/rss/" />
+  <outline title="MORE AGILE"  type="rss" xmlUrl="http://www.moreagile.net/feeds/posts/default" />
+  <outline title="The Missing Papers"  type="rss" xmlUrl="http://docs.likejazz.com/atom.xml" />
+  <outline title="하조은의 블로그"  type="rss" xmlUrl="https://hajoeun.blog/rss.xml" />
+  <outline title="Just hack'em"  type="rss" xmlUrl="http://justhackem.wordpress.com/feed/" />
+  <outline title="이상현 IN 베를린"  type="rss" xmlUrl="https://iamsang.com/index.xml" />
+  <outline title="Dev.White | Feed"  type="rss" xmlUrl="https://junhobaik.github.io/rss.xml" />
+  <outline title="개발자노트"  type="rss" xmlUrl="http://jhleed.tistory.com/rss" />
+  <outline title="실리콘밸리 이야기"  type="rss" xmlUrl="http://sv-story.blogspot.com/feeds/posts/default" />
+  <outline title="구글러들 스토리"  type="rss" xmlUrl="http://rss.egloos.com/blog/piniapple" />
+  <outline title="재그지그의 개발 블로그"  type="rss" xmlUrl="https://wormwlrm.github.io/feed.xml" />
+  <outline title="Joone's Blog"  type="rss" xmlUrl="http://joone4u.blogspot.com/feeds/posts/default" />
+  <outline title="생각하고 나누고 공감하기…"  type="rss" xmlUrl="http://blog.fupfin.com/?feed=rss2" />
+  <outline title="exp cabinet"  type="rss" xmlUrl="http://ohyecloudy.com/lifelog/feed.xml" />
+  <outline title="I_Jemin"  type="rss" xmlUrl="https://ijemin.com/feed/" />
+  <outline title="미국에서 프론트앤드 개발자로 일하기"  type="rss" xmlUrl="https://neochaex.blogspot.com/feeds/posts/default?alt=rss" />
+  <outline title="brightparagon"  type="rss" xmlUrl="https://brightparagon.wordpress.com/feed/" />
+  <outline title="Skeuomorphic Bit"  type="rss" xmlUrl="http://zaverome.wordpress.com/feed/" />
+  <outline title="zetlos.log"  type="rss" xmlUrl="https://v2.velog.io/rss/zetlos" />
+  <outline title=""  type="rss" xmlUrl="http://thdev.tech/feed.xml" />
+  <outline title="리카이의 IT와 그 주변 이야기"  type="rss" xmlUrl="https://keehoonlee.wordpress.com/feed/" />
+  <outline title="메튜의 IT 블로그"  type="rss" xmlUrl="https://matthew.kr/feed/" />
+  <outline title="dev diary, TIL"  type="rss" xmlUrl="http://feeds.feedburner.com/OhyecloudyDevDiary" />
+  <outline title="eungjun"  type="rss" xmlUrl="https://blog.npcode.com/feed/" />
+  <outline title="edykim.com 블로그 RSS 피드"  type="rss" xmlUrl="http://haruair.com/feed" />
+  <outline title="오종인"  type="rss" xmlUrl="https://ji5.me/?feed=rss2" />
+  <outline title="개발자의 기록습관"  type="rss" xmlUrl="http://ict-nroo.tistory.com/rss" />
+  <outline title="dyway"  type="rss" xmlUrl="http://dyway.wordpress.com/feed/" />
+  <outline title="삐멜 소프트웨어 엔지니어"  type="rss" xmlUrl="https://imasoftwareengineer.tistory.com/rss" />
+  <outline title="기술 저장소"  type="rss" xmlUrl="https://reoim.tistory.com/rss" />
+  <outline title=""  type="rss" xmlUrl="http://blog.evernote.com/ko/feed/" />
+  <outline title="코드쓰는사람"  type="rss" xmlUrl="https://taegon.kim/feed" />
+  <outline title="Jobless Han"  type="rss" xmlUrl="https://www.jobless.blog/rss/" />
+  <outline title="THE STARTUP BIBLE"  type="rss" xmlUrl="https://www.thestartupbible.com/feed" />
+  <outline title="shiren the creator"  type="rss" xmlUrl="https://blog.shiren.dev/feed.xml" />
+  <outline title="Engineering at Meta"  type="rss" xmlUrl="https://engineering.fb.com/feed/" />
+  <outline title="만화로 나누는 자유/오픈소스 소프트웨어 이야기"  type="rss" xmlUrl="https://joone.net/feed/" />
+  <outline title="Dropbox Tech Blog"  type="rss" xmlUrl="https://dropbox.tech/feed" />
+  <outline title="Latest WDRL editions via Feed"  type="rss" xmlUrl="https://wdrl.info/feed" />
+  <outline title="WebKit"  type="rss" xmlUrl="https://webkit.org/feed/" />
+  <outline title="Hyung Joo"  type="rss" xmlUrl="https://www.hyungjoo.me/feed" />
+  <outline title="web.dev"  type="rss" xmlUrl="https://web.dev/feed.xml" />
+  <outline title="W3C Blog"  type="rss" xmlUrl="https://www.w3.org/blog/feed/" />
+  <outline title="developer.chrome.com: Blog"  type="rss" xmlUrl="https://developer.chrome.com/blog/feed.xml" />
+  <outline title="Android Developers Blog"  type="rss" xmlUrl="https://android-developers.googleblog.com/feeds/posts/default?alt=rss" />
+  <outline title="독일에 있는 자동차 소프트웨어 개발자"  type="rss" xmlUrl="https://yocto.tistory.com/rss" />
+  <outline title="열린 소프트웨어 이야기"  type="rss" xmlUrl="https://opensoftware.tistory.com/rss" />
+  <outline title="Daily Improvement Framework"  type="rss" xmlUrl="https://victor-frontline.tistory.com/rss" />
+  <outline title="박재한 블로그"  type="rss" xmlUrl="https://jaypark.me/rss" />
+  <outline title="Hong Minhee on Things"  type="rss" xmlUrl="https://writings.hongminhee.org/feed.en.xml" />
+  <outline title="류기민의 작업공간"  type="rss" xmlUrl="https://workspace.ryukim.in/rss/" />
+  <outline title="Max Kim Blog RSS Feed"  type="rss" xmlUrl="https://maxkim-j.github.io/rss.xml" />
+  <outline title=""  type="rss" xmlUrl="http://www.cv-learn.com/post-sitemap.xml" />
+  <outline title="au VimEnter"  type="rss" xmlUrl="https://au-vimenter.github.io/feed.xml" />
+  <outline title=""  type="rss" xmlUrl="https://soulduse.tistory.com/sitemap.xml" />
+  <outline title="어쩐지 오늘은"  type="rss" xmlUrl="https://zzsza.github.io/feed.xml" />
+  <outline title="프로그래밍좀비"  type="rss" xmlUrl="https://soulduse.tistory.com/rss" />
+  <outline title="👨‍💻꿈꾸는 태태태의 공간"  type="rss" xmlUrl="https://taetaetae.github.io/index.xml" />
+  <outline title="Pluu Dev"  type="rss" xmlUrl="https://pluu.github.io/feed.xml" />
+  <outline title="넷마블 기술 블로그"  type="rss" xmlUrl="https://netmarble.engineering/feed/" />
+  <outline title="Devsisters 기술 블로그"  type="rss" xmlUrl="https://tech.devsisters.com/rss.xml" />
+  <outline title="카카오"  type="rss" xmlUrl="https://tech.kakao.com/blog/feed" />
+  <outline title="카카오엔터프라이즈 기술블로그 Tech&(테크앤)"  type="rss" xmlUrl="https://tech.kakaoenterprise.com/feed" />
+  <outline title="카카오페이 기술 블로그"  type="rss" xmlUrl="https://tech.kakaopay.com/rss" />
+  <outline title="Hyperconnect Tech Blog"  type="rss" xmlUrl="https://hyperconnect.github.io/feed.xml" />
+  <outline title="리디주식회사 RIDI Corporation"  type="rss" xmlUrl="https://ridicorp.com/feed/" />
+  <outline title="SOCAR Tech Blog"  type="rss" xmlUrl="https://tech.socarcorp.kr/feed.xml" />
+  <outline title="Spoqa tech blog"  type="rss" xmlUrl="https://spoqa.github.io/atom.xml" />
+  <outline title="Open All Night"  type="rss" xmlUrl="https://okelectric.blogspot.com/feeds/posts/default" />
+  <outline title="utilForever's Programming Life!"  type="rss" xmlUrl="https://utilforever.github.io/atom.xml" />
+  <outline title="운동하는 개발자"  type="rss" xmlUrl="https://singo112ok.tistory.com/rss" />
+  <outline title="Hello, There"  type="rss" xmlUrl="https://jaeyo.github.io/index.xml" />
+  <outline title="ENFJ.dev"  type="rss" xmlUrl="https://gngsn.tistory.com/rss" />
+  <outline title="Posts on 오시영"  type="rss" xmlUrl="https://siyoung.org/kr/posts/index.xml" />
+  <outline title="Steady Study"  type="rss" xmlUrl="https://www.stdy.blog/rss/" />
+  <outline title="Post RSS Feed"  type="rss" xmlUrl="https://ui.toast.com/rss.xml" />
+  <outline title="Giljae Joo (주길재)"  type="rss" xmlUrl="https://giljae.com/feed.xml" />
+  <outline title="by minieetea"  type="rss" xmlUrl="http://minieetea.com/feed" />
+  <outline title="Igalia"  type="rss" xmlUrl="https://igalia.com/feed.xml" />
+  <outline title="Ykss"  type="rss" xmlUrl="https://ykss.netlify.app/rss.xml" />
+  <outline title="1nteger 🏄🏻‍♂️"  type="rss" xmlUrl="https://www.integer.blog/rss/" />
+  <outline title="은유 개발 블로그"  type="rss" xmlUrl="https://metafor.tistory.com/rss" />
+  <outline title="Endless Learning"  type="rss" xmlUrl="https://hyeyoo.com/rss" />
+  <outline title=""  type="rss" xmlUrl="https://sangkon.com/rss.xml" />
+</outline>
+</body>
+</opml>

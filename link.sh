@@ -66,6 +66,11 @@ link_file "$DOTFILES_PATH/hermes/skills/note-taking/daily-notes-automation" ~/.h
 link_file "$DOTFILES_PATH/hermes/skills/note-taking/hermes"                 ~/.hermes/skills/note-taking/hermes
 link_file "$DOTFILES_PATH/hermes/skills/note-taking/pkm-collect"            ~/.hermes/skills/note-taking/pkm-collect
 
+# Hermes feed pipeline (whole dir symlinked; runtime files are gitignored).
+# Stable assets (config.yaml / feeds.opml / newsletter-senders.json / scripts)
+# live in the repo; rss-seen.json + state/ are written back through the symlink.
+link_file "$DOTFILES_PATH/hermes/feed-pipeline" ~/.hermes/feed-pipeline
+
 # Ghostty
 link_file "$DOTFILES_PATH/ghostty/config" ~/.config/ghostty/config
 link_dir_contents "$DOTFILES_PATH/ghostty/themes" ~/.config/ghostty/themes

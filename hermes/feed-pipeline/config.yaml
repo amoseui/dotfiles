@@ -1,0 +1,26 @@
+# Feed Pipeline 설정
+# 두 cron 잡(신규 triage / 누적 소진)이 공유하는 계정·경로·파라미터.
+
+# Gmail 계정 (토큰은 ~/.hermes/google-accounts/<id>/ 에 격리 저장됨)
+accounts:
+  gmail:
+    - amoseui
+    - prenine
+
+# Readwise Reader: 토큰은 ~/.hermes/.env 의 READWISE_TOKEN 에서 읽음
+
+paths:
+  opml: ~/.hermes/feed-pipeline/feeds.opml
+  newsletter_senders: ~/.hermes/feed-pipeline/newsletter-senders.json
+  rss_seen: ~/.hermes/feed-pipeline/rss-seen.json        # 이미 본 RSS 글 URL (중복 방지)
+  state_dir: ~/.hermes/feed-pipeline/state
+
+# 잡2 (누적 소진) 파라미터
+backlog:
+  email_per_account: 30      # 계정당 오래된 안 읽은 뉴스레터 N개
+  reader_count: 30           # Reader 안 읽은 항목 N개 (오래된 것부터)
+
+# 잡1 (신규 triage) 파라미터
+daily:
+  rss_lookback_hours: 26     # 최근 N시간 내 RSS 새 글 (12시 실행, 약 하루)
+  email_lookback: "newer_than:2d"  # 신규 뉴스레터 Gmail 검색 윈도우
