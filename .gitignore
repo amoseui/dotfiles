@@ -1,5 +1,6 @@
 # superpowers 작업 산출물 (spec/plan) — 로컬에만 보관, 커밋 제외
 docs/superpowers/
+.claude/worktrees/
 
 # Hermes 스킬 런타임 상태/캐시 — 머신별 자동생성, 커밋 제외
 hermes/skills/**/state.json
@@ -15,3 +16,24 @@ hermes/skills/**/config.yaml
 hermes/feed-pipeline/rss-seen.json
 hermes/feed-pipeline/state/
 hermes/feed-pipeline/**/__pycache__/
+
+# Hermes credentials remain local and must never be committed.
+hermes/.env
+hermes/auth.json
+**/.env
+**/.env.*
+!**/.env.example
+hermes/state.db*
+hermes/sessions/
+hermes/logs/
+hermes/webui/
+hermes/cron/output/
+hermes/cron/*.lock
+hermes/cron/*.pid
+hermes/cron/*ticker*
+hermes/memories/
+
+# Local service overrides and exported dashboard data never enter Git.
+services/services.env
+services/personal-observatory/data/
+service-data-*/

@@ -36,7 +36,7 @@
 | brief-morning | 스킬 | 자작 (Claude판 파생) | 작동 | 모름(계측 대기) | 맥미니 실물 확인은 세션 2 (스펙 §8) |
 | daily-notes-automation | 스킬 | 자작 | 작동 | 모름(계측 대기) | 〃 |
 | pkm-collect | 스킬 | 자작 (Claude판 파생) | 작동 | 유지 | 파이프라인의 맥미니 쪽 절반 |
-| (공백) Hermes 코어 설정 | config·SOUL.md·cron | — | **dotfiles 밖** | T1-3에서 편입 | `~/.hermes/config.yaml`, SOUL.md, cron 정의가 미추적 — 재현 불가 상태 |
+| Hermes 코어 설정 | config·SOUL.md·cron·script | 자작 | **dotfiles 백업됨** | 유지 | 민감값은 `${ENV_VAR}`로 치환, 원본은 atomic-write 대상이라 symlink 대신 bootstrap 복사 |
 
 ## 전통 dotfiles
 
@@ -48,7 +48,7 @@
 | zsh/zshrc | 설정 | 자작 | 작동 | 유지 | cld alias 등 상시 사용 |
 | ghostty/ (config, oceanic-dark) | 설정 | 자작 (8822f70) | 작동 | 유지 | 주 터미널 |
 | cmux/cmux.json | 설정 | 자작 (230a68a) | 작동 | 모름(계측 대기) | |
-| link.sh | 부트스트랩 | 자작 | 작동 | 수정·재설계 예정 | T1-4에서 머신 프로파일(main/laptop) 분기 |
+| link.sh + scripts/bootstrap-mac.sh | 부트스트랩 | 자작 | 작동 | 수정 완료 | Mac Studio 복원, timestamp 백업, dry-run, atomic-write 파일은 복사 |
 
 ## 판정 요약 (2026-07-19 — 사용 계측 1회차 반영)
 

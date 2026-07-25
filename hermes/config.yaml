@@ -1,0 +1,91 @@
+model:
+  provider: openai-codex
+  default: gpt-5.6-sol
+  base_url: https://chatgpt.com/backend-api/codex
+agent:
+  max_turns: 150
+  reasoning_effort: medium
+terminal:
+  backend: local
+web:
+  backend: firecrawl
+  use_gateway: false
+browser:
+  cloud_provider: local
+  use_gateway: false
+auxiliary:
+  vision:
+    provider: auto
+    model: ''
+display:
+  busy_input_mode: queue
+  tool_progress: all
+dashboard:
+  theme: mono
+  font: jetbrains-mono
+tts:
+  use_gateway: false
+skills:
+  disabled: []
+onboarding:
+  seen:
+    profile_build_offered: true
+    busy_input_prompt: true
+    tool_progress_prompt: true
+_config_version: 33
+plugins:
+  enabled:
+  - orca-status
+session_reset:
+  mode: none
+image_gen:
+  provider: openai-codex
+  use_gateway: false
+  model: gpt-image-2-medium
+platform_toolsets:
+  cli:
+  - browser
+  - clarify
+  - code_execution
+  - computer_use
+  - context_engine
+  - cronjob
+  - delegation
+  - file
+  - image_gen
+  - memory
+  - session_search
+  - skills
+  - terminal
+  - todo
+  - tts
+  - vision
+  - web
+  discord:
+  - browser
+  - clarify
+  - code_execution
+  - computer_use
+  - cronjob
+  - delegation
+  - file
+  - image_gen
+  - memory
+  - session_search
+  - skills
+  - terminal
+  - todo
+  - tts
+  - vision
+  - web
+known_plugin_toolsets:
+  cli:
+  - spotify
+  discord:
+  - spotify
+mcp_servers:
+  todoist:
+    command: mcp-todoist
+    enabled: true
+    env:
+      TODOIST_API_TOKEN: ${TODOIST_API_TOKEN}

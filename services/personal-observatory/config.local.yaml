@@ -1,0 +1,56 @@
+server:
+  host: 127.0.0.1
+  port: 8788
+obsidian:
+  enabled: true
+  vault_path: ~/Obsidian/amoseui/amoseui
+  readonly: true
+  allowed_folders:
+  - name: daily
+    path: Retrospective/1. Daily
+  - name: hermes-notes
+    path: hermes/notes
+  - name: hermes-review
+    path: hermes/review
+  - name: pkm-concepts
+    path: hermes/concepts
+  - name: pkm-queries
+    path: hermes/queries
+  - name: pkm-raw
+    path: hermes/raw
+hermes:
+  enabled: true
+  home: ~/.hermes
+feeds:
+  sources:
+  - name: Simon Willison
+    url: https://simonwillison.net/atom/everything/
+    tags:
+    - ai
+    - llm
+    - agents
+  - name: Latent Space
+    url: https://www.latent.space/feed
+    tags:
+    - ai
+    - agents
+  - name: Import AI
+    url: https://importai.substack.com/feed
+    tags:
+    - ai
+    - policy
+  - name: Obsidian Blog
+    url: https://obsidian.md/feed.xml
+    tags:
+    - pkm
+    - obsidian
+  - name: Ink & Switch
+    url: https://www.inkandswitch.com/index.xml
+    tags:
+    - local-first
+    - research
+  - name: Hacker News frontpage
+    url: https://hnrss.org/frontpage
+    tags:
+    - tech
+    - news

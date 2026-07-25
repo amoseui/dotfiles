@@ -1,79 +1,134 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
 DOTFILES_PATH=$(cd "$(dirname "$0")" && pwd)
+STAMP=$(date +%Y%m%d%H%M%S)-$$
 
-GITCONFIG_PATH="$DOTFILES_PATH/git/gitconfig"
-GITIGNORE_PATH="$DOTFILES_PATH/git/gitignore"
-TMUX_PATH="$DOTFILES_PATH/tmux/tmux.conf"
-VIMRC_PATH="$DOTFILES_PATH/vim/vimrc"
-ZSHRC_PATH="$DOTFILES_PATH/zsh/zshrc"
+# Build and prepare the complete mapping before replacing any destination. The
+# Python transaction restores files, directories, and symlinks on any failure.
+python3 - "$DOTFILES_PATH" "$HOME" "$STAMP" <<'PY'
+from pathlib import Path
+import os, sys
 
-ln -sf $GITCONFIG_PATH ~/.gitconfig
-ln -sf $GITIGNORE_PATH ~/.gitignore
-ln -sf $TMUX_PATH ~/.tmux.conf
-ln -sf $ZSHRC_PATH ~/.zshrc
+root, home = map(Path, sys.argv[1:3])
+stamp = sys.argv[3]
 
-mv -v ~/.vimrc ~/.vimrc.old 2> /dev/null
-ln -sf $VIMRC_PATH ~/.vimrc
+files = (
+    ("git/gitconfig", ".gitconfig"),
+    ("git/gitignore", ".gitignore"),
+    ("tmux/tmux.conf", ".tmux.conf"),
+    ("vim/vimrc", ".vimrc"),
+    ("zsh/zshrc", ".zshrc"),
+    ("claude/settings.json", ".claude/settings.json"),
+    ("claude/CLAUDE.md", ".claude/CLAUDE.md"),
+    ("claude/statusline-command.sh", ".claude/statusline-command.sh"),
+    ("hermes/skills/note-taking/brief-morning", ".hermes/skills/note-taking/brief-morning"),
+    ("hermes/skills/note-taking/daily-notes-automation", ".hermes/skills/note-taking/daily-notes-automation"),
+    ("hermes/skills/note-taking/hermes", ".hermes/skills/note-taking/hermes"),
+    ("hermes/skills/note-taking/pkm-collect", ".hermes/skills/note-taking/pkm-collect"),
+    ("hermes/feed-pipeline", ".hermes/feed-pipeline"),
+    ("ghostty/config", ".config/ghostty/config"),
+    ("cmux/cmux.json", ".config/cmux/cmux.json"),
+)
+directories = (
+    ("claude/agents", ".claude/agents"),
+    ("claude/commands", ".claude/commands"),
+    ("claude/skills", ".claude/skills"),
+    ("ghostty/themes", ".config/ghostty/themes"),
+)
 
-vim +PlugInstall +qall
+mappings = [(root / source, home / destination) for source, destination in files]
+for source_name, destination_name in directories:
+    source_dir = root / source_name
+    if not source_dir.is_dir():
+        raise SystemExit(f"Incomplete checkout; missing required directory: {source_dir}")
+    for entry in source_dir.iterdir():
+        if entry.name != ".gitkeep":
+            mappings.append((entry, home / destination_name / entry.name))
 
-# antigen for zsh
-curl -L git.io/antigen > ~/.antigen.zsh
+for source, _ in mappings:
+    if not source.exists():
+        raise SystemExit(f"Incomplete checkout; missing required source: {source}")
+if len({destination for _, destination in mappings}) != len(mappings):
+    raise SystemExit("Duplicate dotfile destination in link transaction")
 
-# ---- AI agent configs ----
+# Refuse destination-parent conflicts before creating directories or replacing
+# any existing dotfile.
+for _, destination in mappings:
+    ancestor = destination.parent
+    while not ancestor.exists() and not ancestor.is_symlink():
+        ancestor = ancestor.parent
+    if not ancestor.is_dir() or ancestor.is_symlink():
+        raise SystemExit(f"Destination parent is not a regular directory: {ancestor}")
 
-link_file() {
-    # link_file <src> <dst>
-    local src="$1"
-    local dst="$2"
-    [ -e "$src" ] || return 0
-    mkdir -p "$(dirname "$dst")"
-    if [ -e "$dst" ] && [ ! -L "$dst" ]; then
-        mv -v "$dst" "$dst.old"
-    fi
-    ln -sfn "$src" "$dst"
-}
+created_directories = []
+prepared = []
+states = []
+success = False
+try:
+    parents = sorted({destination.parent for _, destination in mappings}, key=lambda path: len(path.parts))
+    for parent in parents:
+        missing = []
+        cursor = parent
+        while not cursor.exists():
+            missing.append(cursor)
+            cursor = cursor.parent
+        for directory in reversed(missing):
+            directory.mkdir()
+            created_directories.append(directory)
 
-link_dir_contents() {
-    # link every file/subdir inside <src> into <dst>
-    local src="$1"
-    local dst="$2"
-    [ -d "$src" ] || return 0
-    mkdir -p "$dst"
-    for entry in "$src"/* "$src"/.[!.]*; do
-        [ -e "$entry" ] || continue
-        local name
-        name=$(basename "$entry")
-        [ "$name" = ".gitkeep" ] && continue
-        link_file "$entry" "$dst/$name"
-    done
-}
+    for index, (source, destination) in enumerate(mappings):
+        if destination.is_symlink() and os.readlink(destination) == str(source):
+            continue
+        temp = destination.with_name(f".{destination.name}.link-new-{os.getpid()}-{index}")
+        if temp.exists() or temp.is_symlink():
+            raise RuntimeError(f"Temporary link path already exists: {temp}")
+        os.symlink(source, temp)
+        if destination.is_symlink():
+            old_kind, old_value = "symlink", os.readlink(destination)
+        elif destination.exists():
+            old_kind = "entry"
+            old_value = Path(f"{destination}.old.{stamp}")
+            if old_value.exists() or old_value.is_symlink():
+                raise RuntimeError(f"Backup destination already exists: {old_value}")
+        else:
+            old_kind, old_value = "missing", None
+        prepared.append((destination, temp, old_kind, old_value))
 
-# Claude Code
-link_file "$DOTFILES_PATH/claude/settings.json" ~/.claude/settings.json
-link_file "$DOTFILES_PATH/claude/CLAUDE.md" ~/.claude/CLAUDE.md
-link_file "$DOTFILES_PATH/claude/statusline-command.sh" ~/.claude/statusline-command.sh
-link_dir_contents "$DOTFILES_PATH/claude/agents" ~/.claude/agents
-link_dir_contents "$DOTFILES_PATH/claude/commands" ~/.claude/commands
-link_dir_contents "$DOTFILES_PATH/claude/skills" ~/.claude/skills
+    for destination, temp, old_kind, old_value in prepared:
+        state = [destination, old_kind, old_value, False, False]
+        states.append(state)
+        if old_kind == "entry":
+            os.replace(destination, old_value)
+            state[3] = True
+        os.replace(temp, destination)
+        state[4] = True
+    success = True
+except Exception:
+    for destination, old_kind, old_value, backup_moved, published in reversed(states):
+        if published:
+            destination.unlink(missing_ok=True)
+        if old_kind == "entry" and backup_moved:
+            os.replace(old_value, destination)
+        elif old_kind == "symlink" and published:
+            os.symlink(old_value, destination)
+    raise
+finally:
+    for _, temp, _, _ in prepared:
+        temp.unlink(missing_ok=True)
+    if not success:
+        for directory in reversed(created_directories):
+            try:
+                directory.rmdir()
+            except OSError:
+                pass
 
-# Hermes (custom skills only — bundled skills are managed by Hermes itself)
-# Link individual skills, not whole category dirs, since custom skills live
-# inside bundled categories (e.g. note-taking/).
-link_file "$DOTFILES_PATH/hermes/skills/note-taking/brief-morning"          ~/.hermes/skills/note-taking/brief-morning
-link_file "$DOTFILES_PATH/hermes/skills/note-taking/daily-notes-automation" ~/.hermes/skills/note-taking/daily-notes-automation
-link_file "$DOTFILES_PATH/hermes/skills/note-taking/hermes"                 ~/.hermes/skills/note-taking/hermes
-link_file "$DOTFILES_PATH/hermes/skills/note-taking/pkm-collect"            ~/.hermes/skills/note-taking/pkm-collect
+for source, destination in mappings:
+    if not destination.is_symlink() or os.readlink(destination) != str(source):
+        raise SystemExit(f"Link verification failed: {destination}")
+print(f"Dotfile links installed from {root}")
+PY
 
-# Hermes feed pipeline (whole dir symlinked; runtime files are gitignored).
-# Stable assets (config.yaml / feeds.opml / newsletter-senders.json / scripts)
-# live in the repo; rss-seen.json + state/ are written back through the symlink.
-link_file "$DOTFILES_PATH/hermes/feed-pipeline" ~/.hermes/feed-pipeline
-
-# Ghostty
-link_file "$DOTFILES_PATH/ghostty/config" ~/.config/ghostty/config
-link_dir_contents "$DOTFILES_PATH/ghostty/themes" ~/.config/ghostty/themes
-
-# cmux
-link_file "$DOTFILES_PATH/cmux/cmux.json" ~/.config/cmux/cmux.json
+if command -v vim >/dev/null 2>&1; then
+    vim +silent! +PlugInstall +qall || true
+fi
