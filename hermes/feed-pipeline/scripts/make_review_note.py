@@ -7,7 +7,7 @@
   --rss /tmp/fp_rss_full.json       rss_new.py | fetch_content.py 출력
 
 출력:
-  ~/Obsidian/amoseui/amoseui/hermes/review/YYYY-MM-DD-feed-review.md
+  ~/Obsidian/amoseui/hermes/review/YYYY-MM-DD-feed-review.md
 
 체크박스 프로토콜:
   APPLY 전에는 아무것도 처리하지 않음.
@@ -16,7 +16,7 @@
 import argparse, json, pathlib, re
 from datetime import datetime
 
-VAULT = pathlib.Path.home() / "Obsidian/amoseui/amoseui"
+VAULT = pathlib.Path.home() / "Obsidian/amoseui"
 OUT_DIR = VAULT / "hermes/review"
 
 def load(path):

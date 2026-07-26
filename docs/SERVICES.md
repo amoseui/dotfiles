@@ -33,7 +33,17 @@
 - 복원 실행: `services/run-personal-observatory.sh`가 loopback HTTP로 실행되고 launchd `local.personal.observatory`가 감독한다.
 - 로컬 헬스체크: `curl -fsS http://127.0.0.1:8788/api/health`.
 
-## 4. Tailscale Serve
+## 4. Local LLM (llama.cpp)
+
+- 런타임: Homebrew `llama.cpp`, Apple Metal 전체 offload.
+- 모델: `unsloth/Qwen3.6-27B-GGUF`의 `Qwen3.6-27B-Q6_K.gguf`.
+- 모델 경로: `~/.local/share/llama.cpp/models/Qwen3.6-27B-Q6_K.gguf`.
+- 실행: launchd label `local.llama.server`, loopback `127.0.0.1:8080`.
+- 설정: 65,536 token context, Q8 KV cache, 단일 parallel slot.
+- 로컬 헬스체크: `curl -fsS http://127.0.0.1:8080/health`.
+- Hermes endpoint: `http://127.0.0.1:8080/v1`, model `qwen3.6-27b`.
+
+## 5. Tailscale Serve
 
 두 앱은 인증이 없는 LAN 공개를 막기 위해 항상 `127.0.0.1`에만 bind한다. 원격 HTTPS는
 인증서 파일을 앱에 직접 주입하지 않고 Tailscale Serve가 종료한다. Tailscale ACL/기기 인증이
@@ -48,7 +58,7 @@ tailscale serve status
 앱 wrapper는 non-loopback host를 거부하고 direct TLS 환경변수를 제거한다. 인증서 로드 실패 시
 평문 `0.0.0.0`으로 fallback하는 구성을 만들지 않는다.
 
-## 5. 설치·기동 순서
+## 6. 설치·기동 순서
 
 ```bash
 # source repositories
@@ -59,6 +69,13 @@ git clone git@github.com:amoseui/personal-observatory.git ~/Workspace/personal-o
 cd ~/Workspace/personal-observatory
 python3.12 -m venv .venv
 .venv/bin/pip install -e '.[dev]'
+
+# Local LLM runtime and model
+brew install llama.cpp
+mkdir -p ~/.local/share/llama.cpp/models
+curl -fL -C - \
+  https://huggingface.co/unsloth/Qwen3.6-27B-GGUF/resolve/main/Qwen3.6-27B-Q6_K.gguf \
+  -o ~/.local/share/llama.cpp/models/Qwen3.6-27B-Q6_K.gguf
 
 # service files only, then review local config
 cd ~/Workspace/github/dotfiles
@@ -74,7 +91,7 @@ tailscale serve --bg --https=8788 http://127.0.0.1:8788
 
 기존 수동 프로세스가 8787/8788을 점유한 상태에서 `--start`하지 않는다.
 
-## 6. 별도 데이터 이전
+## 7. 별도 데이터 이전
 
 Git에 넣지 않는 Personal Observatory 로컬 상태는 암호화 디스크/보안 채널용 디렉터리로 별도 복사한다.
 스크립트는 `config.local.yaml`의 `feeds.state_path`와 `feeds.items_path`를 해석해 실제 데이터 위치를
@@ -88,13 +105,15 @@ secret이 제거된 `services/personal-observatory/config.local.yaml`을 dotfile
 
 Hermes WebUI 세션/auth/signing state와 Hermes `state.db`, sessions, logs는 이전하지 않고 새 머신에서 재생성·재로그인한다.
 
-## 7. 상태 확인
+## 8. 상태 확인
 
 ```bash
 launchctl print gui/$(id -u)/local.hermes.webui
 launchctl print gui/$(id -u)/local.personal.observatory
+launchctl print gui/$(id -u)/local.llama.server
 curl -fsS http://127.0.0.1:8787/health
 curl -fsS http://127.0.0.1:8788/api/health
+curl -fsS http://127.0.0.1:8080/health
 tailscale serve status
 hermes gateway status
 hermes cron list

@@ -3,7 +3,7 @@ server:
   port: 8788
 obsidian:
   enabled: true
-  vault_path: ~/Obsidian/amoseui/amoseui
+  vault_path: ~/Obsidian/amoseui
   readonly: true
   allowed_folders:
   - name: daily

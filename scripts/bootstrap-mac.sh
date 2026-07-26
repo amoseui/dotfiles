@@ -72,10 +72,10 @@ if ! $DRY_RUN && [ ! -f "$HERMES_HOME_DIR/.env" ]; then
     echo "Create it from hermes/.env.example and transfer real secrets securely (never via Git)." >&2
     exit 1
 fi
-if ! $DRY_RUN && ! grep -q '^TODOIST_API_TOKEN=.' "$HERMES_HOME_DIR/.env"; then
-    echo "TODOIST_API_TOKEN is missing from $HERMES_HOME_DIR/.env" >&2
-    exit 1
-fi
+#if ! $DRY_RUN && ! grep -q '^TODOIST_API_TOKEN=.' "$HERMES_HOME_DIR/.env"; then
+#    echo "TODOIST_API_TOKEN is missing from $HERMES_HOME_DIR/.env" >&2
+#    exit 1
+#fi
 
 required_assets=(
     "$ROOT/karabiner/karabiner.json"

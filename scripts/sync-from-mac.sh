@@ -251,8 +251,8 @@ from pathlib import Path
 import sys
 src, dst = map(Path, sys.argv[1:])
 text = src.read_text().replace(
-    f"VAULT=Path({str(Path.home() / 'Obsidian/amoseui/amoseui')!r})",
-    "VAULT=Path.home()/'Obsidian/amoseui/amoseui'",
+    f"VAULT=Path({str(Path.home() / 'Obsidian/amoseui')!r})",
+    "VAULT=Path.home()/'Obsidian/amoseui'",
 )
 dst.write_text(text)
 PY

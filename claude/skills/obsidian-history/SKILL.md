@@ -46,7 +46,7 @@ Amos는 Obsidian vault를 개인 지식 관리 시스템으로 사용하고 있�
 
 vault 루트 기준 `wiki/log.md` 파일에도 변경 사항을 기록한다.
 
-- 파일 경로: `/Users/amoseui/Obsidian/amoseui/amoseui/wiki/log.md`
+- 파일 경로: `/Users/amoseui/Obsidian/amoseui/wiki/log.md`
 - `# Change Log` 헤딩 바로 아래(기존 항목 위)에 새 줄을 삽입한다. 즉 **최신 항목이 항상 맨 위**에 온다.
 - **예외**: `wiki/log.md` 자체를 수정하는 경우에는 log.md에 중복 기록하지 않는다.
 
@@ -83,7 +83,7 @@ vault 루트 기준 `wiki/log.md` 파일에도 변경 사항을 기록한다.
 
 ## 적용 범위
 
-- **대상**: `/Users/amoseui/Obsidian/amoseui/amoseui/` 하위의 모든 `.md` 파일
+- **대상**: `/Users/amoseui/Obsidian/amoseui/` 하위의 모든 `.md` 파일
 - **제외**: `wiki/log.md`를 수정할 때는 log.md 자체에 대한 로그를 log.md에 중복 기록하지 않음 (파일 내 History 섹션은 기록함)
 - **제외**: 새 파일을 처음 생성(Write)하는 경우, History의 첫 항목은 "최초 생성"으로 기록
 

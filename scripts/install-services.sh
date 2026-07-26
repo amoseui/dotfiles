@@ -11,7 +11,7 @@ TMP_FILES=()
 TRANSACTION_ACTIVE=false
 TRANSACTION_MANIFEST=""
 PRIOR_LOADED=()
-labels=(local.hermes.webui local.personal.observatory)
+labels=(local.hermes.webui local.personal.observatory local.llama.server)
 
 usage() { echo "Usage: $0 [--dry-run] [--start]"; }
 while [ $# -gt 0 ]; do
@@ -53,9 +53,11 @@ required=(
     "$ROOT/services/load-services-env.sh"
     "$ROOT/services/run-hermes-webui.sh"
     "$ROOT/services/run-personal-observatory.sh"
+    "$ROOT/services/run-llama-server.sh"
     "$ROOT/services/personal-observatory/config.local.yaml"
     "$ROOT/launchd/local.hermes.webui.plist.template"
     "$ROOT/launchd/local.personal.observatory.plist.template"
+    "$ROOT/launchd/local.llama.server.plist.template"
     "$ROOT/scripts/file_install_transaction.py"
 )
 for path in "${required[@]}"; do [ -f "$path" ] || { echo "Missing service asset: $path" >&2; exit 1; }; done

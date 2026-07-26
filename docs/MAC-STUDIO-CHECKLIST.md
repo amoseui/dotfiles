@@ -19,7 +19,7 @@ Mac mini에서 확인한 앱과 데이터. Homebrew Cask가 확인된 앱은 `Br
 
 ## 별도 데이터와 인증
 
-- `~/Obsidian/amoseui/amoseui` vault
+- `~/Obsidian/amoseui` vault
 - `~/.ssh/` 중 public/private key와 config (암호화 전송)
 - `~/.hermes/.env`, `auth.json` (Git 금지, 가능하면 destination에서 재로그인)
 - `~/.hermes/google-accounts/`의 Gmail/Calendar OAuth token

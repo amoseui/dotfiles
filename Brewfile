@@ -21,6 +21,8 @@ brew "gh"
 brew "git"
 # Git extension for versioning large files
 brew "git-lfs"
+# LLM inference in C/C++
+brew "llama.cpp"
 # GUI for vim, made for macOS
 brew "macvim"
 # Utility for directing compilation

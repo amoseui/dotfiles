@@ -7,7 +7,7 @@ Mac 설정과 AI-agent 환경을 재현하기 위한 개인 dotfiles 저장소.
 - Git, Vim, Tmux, Zsh
 - Claude Code 설정·스킬
 - Hermes의 비밀값을 제거한 config, SOUL, custom skills, cron 정의, feed pipeline
-- Hermes Gateway, Hermes WebUI, Personal Observatory 서비스 정의와 복원 절차
+- Hermes Gateway, Hermes WebUI, Personal Observatory, llama.cpp 서비스 정의와 복원 절차
 - Ghostty, cmux, Karabiner
 - Homebrew formula/cask/tap, VS Code extensions, global npm packages (`Brewfile`)
 
@@ -111,7 +111,7 @@ claude auth status --text
 - Hermes/OpenAI/Claude OAuth 로그인
 - Google Gmail/Calendar 계정 토큰
 - GitHub 및 SSH 인증
-- Obsidian vault 경로: `~/Obsidian/amoseui/amoseui`
+- Obsidian vault 경로: `~/Obsidian/amoseui`
 - Tailscale 로그인
 - Xcode license와 command-line tools
 - Android SDK/Android Studio

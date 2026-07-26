@@ -1,7 +1,9 @@
 model:
-  provider: openai-codex
-  default: gpt-5.6-sol
-  base_url: https://chatgpt.com/backend-api/codex
+  provider: custom
+  default: qwen3.6-27b
+  base_url: http://127.0.0.1:8080/v1
+  context_length: 65536
+  api_mode: chat_completions
 agent:
   max_turns: 150
   reasoning_effort: medium

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import urllib.request, json, hashlib, datetime, os, tempfile
 from pathlib import Path
-VAULT=Path.home()/'Obsidian/amoseui/amoseui'
+VAULT=Path.home()/'Obsidian/amoseui'
 STATE=VAULT/'hermes/state/chromium-docs.json'
 BASE=VAULT/'hermes/notes/chromium-docs'
 def raw_url(path): return f'https://raw.githubusercontent.com/chromium/chromium/main/{path}'
