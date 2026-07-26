@@ -21,7 +21,53 @@
     lg = log --color --graph --pretty=format:'%C(yellow)%ci%Creset %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ai) %C(bold blue)%ae%Creset' --abbrev-commit
     prev = reset --hard HEAD^
     s = status
-[http]
-    cookiefile = ~/.gitcookies
 [pull]
     rebase = true
+[credential "https://android.googlesource.com"]
+	helper = 
+	useHttpPath = yes
+	helper = luci
+[credential "https://aomedia.googlesource.com"]
+	helper = 
+	useHttpPath = yes
+	helper = luci
+[credential "https://beto-core.googlesource.com"]
+	helper = 
+	useHttpPath = yes
+	helper = luci
+[credential "https://boringssl.googlesource.com"]
+	helper = 
+	useHttpPath = yes
+	helper = luci
+[credential "https://chromium.googlesource.com"]
+	helper = 
+	useHttpPath = yes
+	helper = luci
+[credential "https://chrome-internal.googlesource.com"]
+	helper = 
+	useHttpPath = yes
+	helper = luci
+[credential "https://dawn.googlesource.com"]
+	helper = 
+	useHttpPath = yes
+	helper = luci
+[credential "https://pdfium.googlesource.com"]
+	helper = 
+	useHttpPath = yes
+	helper = luci
+[credential "https://quiche.googlesource.com"]
+	helper = 
+	useHttpPath = yes
+	helper = luci
+[credential "https://skia.googlesource.com"]
+	helper = 
+	useHttpPath = yes
+	helper = luci
+[credential "https://swiftshader.googlesource.com"]
+	helper = 
+	useHttpPath = yes
+	helper = luci
+[credential "https://webrtc.googlesource.com"]
+	helper = 
+	useHttpPath = yes
+	helper = luci
