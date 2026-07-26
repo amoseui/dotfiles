@@ -4,7 +4,7 @@
 # config.yaml은 머신-로컬 설정이므로 dotfiles repo에 commit하지 않는다(.gitignore).
 #
 # ── 환경 프로파일 프리셋 ──
-# personal-laptop — 개인 맥북. 아침 브리핑(캘린더·메일·일지)은 맥미니 Hermes가
+# personal-laptop — 개인 맥북. 아침 브리핑(캘린더·메일·일지)은 맥스튜디오 Hermes가
 #   담당하므로 여기서는 끄고, Hermes가 볼 수 없는 로컬 git 상태 + PR 현황만
 #   켠 가벼운 "작업 시작 브리핑"으로 쓴다. (아래 기본값이 이 프리셋)
 # work — 회사 머신. Hermes·Google MCP가 없는 분리 환경. calendar/gmail은 끄고

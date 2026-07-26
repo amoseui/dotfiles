@@ -7,7 +7,7 @@ description: |
   트리거: "아침 브리핑", "모닝 브리핑", "morning brief", "업무 시작",
   "작업 시작 브리핑", "/brief-morning" 등.
   config.yaml이 없으면 사용자에게 설정을 묻고 파일을 생성한 뒤 진행한다.
-  개인 맥북에서는 캘린더·메일 브리핑을 Hermes(맥미니)가 담당하므로 이 스킬은
+  개인 맥북에서는 캘린더·메일 브리핑을 Hermes(맥스튜디오)가 담당하므로 이 스킬은
   로컬 git 중심의 경량 브리핑으로 동작한다(config 프리셋 참고).
 ---
 
@@ -20,7 +20,7 @@ description: |
 
 | 프로파일 | 환경 | 켜는 것 |
 |---|---|---|
-| personal-laptop | 개인 맥북 — 아침 브리핑은 Hermes(맥미니)가 담당 | git_status·github_pr (로컬 git은 Hermes가 못 봄) |
+| personal-laptop | 개인 맥북 — 아침 브리핑은 Hermes(맥스튜디오)가 담당 | git_status·github_pr (로컬 git은 Hermes가 못 봄) |
 | work | 회사 — Hermes·Google MCP 없음, 분리 계정 | git_status·github_pr·github_issues(이메일 라벨 issue = 받은편지함) |
 
 프리셋 상세는 `config.example.yaml` 주석 참고. vault가 없는 머신은
