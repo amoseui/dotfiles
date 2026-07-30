@@ -155,11 +155,3 @@ export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 [[ -f /opt/homebrew/opt/asdf/libexec/asdf.sh ]] && . /opt/homebrew/opt/asdf/libexec/asdf.sh
 alias cld='claude --dangerously-skip-permissions'
-
-# Resolve the dotfiles repo root from this file's real location, so this
-# works wherever the repo is cloned (~/.zshrc is a symlink into the repo).
-export DOTFILES_PATH="${${:-$HOME/.zshrc}:A:h:h}"
-
-# Gerrit ReAuth: use locally patched FIDO2 plugin (TrustKey T120 does not
-# match U2F-registered credentials via CTAP2; patched copy forces CTAP1)
-export GOOGLE_AUTH_WEBAUTHN_PLUGIN="$DOTFILES_PATH/depot_tools/luci-auth-fido2-plugin-u2f"
