@@ -25,6 +25,18 @@ def main():
         assert out["broken_count"] == 1, out
         assert out["broken"][0]["target"] == "missing", out
 
+        # Create agents/review/ with proposal links (excluded from broken-link scan)
+        (v / "agents" / "review").mkdir(parents=True)
+        (v / "agents" / "review" / "r.md").write_text("proposal: [[nonexistent-proposal]]", encoding="utf-8")
+
+        # vault_lint: md_count rises to 4, broken_count still 1 (review proposals excluded)
+        r = run("vault_lint.py", str(v))
+        assert r.returncode == 0, r.stderr
+        out = json.loads(r.stdout)
+        assert out["md_count"] == 4, out
+        assert out["broken_count"] == 1, out
+        assert out["broken"][0]["target"] == "missing", out
+
         # Create .obsidian file to test exclusion filter
         (v / ".obsidian").mkdir()
         (v / ".obsidian" / "x.md").write_text("obsidian config file", encoding="utf-8")
@@ -32,12 +44,12 @@ def main():
         # add_author: adds to files without author, idempotent on rerun
         r = run("add_author.py", str(v), "claude")
         assert r.returncode == 0, r.stderr
-        assert "changed=3 skipped=0" in r.stdout, r.stdout
+        assert "changed=4 skipped=0" in r.stdout, r.stdout
         assert "author: claude" in (v / "b.md").read_text(encoding="utf-8")
         assert (v / "b.md").read_text(encoding="utf-8").count("---") == 2  # frontmatter intact
         assert "author:" not in (v / ".obsidian" / "x.md").read_text(encoding="utf-8")  # .obsidian excluded
         r = run("add_author.py", str(v), "claude")
-        assert "changed=0 skipped=3" in r.stdout, r.stdout
+        assert "changed=0 skipped=4" in r.stdout, r.stdout
     print("ALL TESTS PASSED")
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ from pathlib import Path
 
 WIKILINK = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]*)?(?:\|[^\]]*)?\]\]")
 SKIP_PARTS = {".obsidian", ".trash"}
+PROPOSAL_DIRS = ("agents/review",)
 
 def scan(vault: Path) -> dict:
     md_files = [p for p in vault.rglob("*.md") if not SKIP_PARTS & set(p.parts)]
@@ -12,6 +13,10 @@ def scan(vault: Path) -> dict:
     relpaths = {str(p.relative_to(vault).with_suffix("")) for p in md_files}
     broken = []
     for p in md_files:
+        # Skip link scanning for APPLY-gated proposal directories
+        rel_str = str(p.relative_to(vault)).replace("\\", "/")
+        if any(rel_str.startswith(pd + "/") for pd in PROPOSAL_DIRS):
+            continue
         text = p.read_text(encoding="utf-8", errors="replace")
         for m in WIKILINK.finditer(text):
             target = m.group(1).strip()
