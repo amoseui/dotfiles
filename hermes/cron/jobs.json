@@ -16,7 +16,7 @@
         "expr": "0 6 * * *",
         "display": "0 6 * * *"
       },
-      "enabled": false,
+      "enabled": true,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -53,7 +53,7 @@
         "expr": "50 23 * * *",
         "display": "50 23 * * *"
       },
-      "enabled": false,
+      "enabled": true,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -90,7 +90,7 @@
         "expr": "55 23 * * *",
         "display": "55 23 * * *"
       },
-      "enabled": false,
+      "enabled": true,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -128,7 +128,7 @@
         "expr": "0 12 * * *",
         "display": "0 12 * * *"
       },
-      "enabled": false,
+      "enabled": true,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -166,7 +166,7 @@
         "expr": "5 12 * * *",
         "display": "5 12 * * *"
       },
-      "enabled": false,
+      "enabled": true,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -208,7 +208,7 @@
         "times": 365,
         "completed": 6
       },
-      "enabled": false,
+      "enabled": true,
       "deliver": "origin",
       "origin": {
         "platform": "webui",
@@ -245,7 +245,7 @@
         "expr": "0 10 * * 0",
         "display": "0 10 * * 0"
       },
-      "enabled": false,
+      "enabled": true,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -282,7 +282,7 @@
         "expr": "0 22 * * 0",
         "display": "0 22 * * 0"
       },
-      "enabled": false,
+      "enabled": true,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
