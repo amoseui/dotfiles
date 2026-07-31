@@ -2,8 +2,8 @@
   "jobs": [
     {
       "id": "e40f006feebb",
-      "name": "daily-note 아침 통합 (06:00)",
-      "prompt": "daily-notes-automation 스킬을 로드해 \"작업 A — 아침 통합 (06:00)\" 절차를 그대로 수행하라.\n\n요약: 오늘(KST) 일일 회고 노트(~/Obsidian/amoseui/journal/daily/YYYY-MM-DD.md)가 없으면 템플릿(Templates/template-retrospective-1-daily.md, History 섹션 제외)으로 생성하고, 있으면 덮어쓰지 말고 그대로 사용한다. 그 다음 아침 브리핑 섹션을 채운다:\n- ### 오늘 일정 ← python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/calendar_today.py (prenine 캘린더)\n- ### 오늘 할 일 (Todoist) ← Todoist MCP todoist_task_get, filter \"(today | overdue) & p1\" (오늘+기한지난 최고우선순위 전부)\n- ### 이메일/Readwise 요약 ← python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/starred_mail.py (amoseui+prenine 별표편지함 전체 합침)\n\n각 헤딩 아래 \"* \" bullet 라인만 patch로 교체하고 다른 구조는 건드리지 마라. 대괄호 [ ]·위키링크·마크다운 링크 금지, 순수 텍스트와 bullet(*)만. 데이터 소스가 실패하면 중단하지 말고 해당 섹션을 \"…없음\"으로 채우고 계속 진행하라.\n\n마지막에 스킬의 \"공통: 감사 로그 기록\" 절차로 TZ=Asia/Seoul 기준 당월 감사 로그 `agents/state/changelog/YYYY-MM.md`(없으면 \"# Change Log\" 헤딩으로 새로 생성)에만 기록한다: \"- YYYY-MM-DD HH:MM `journal/daily/YYYY-MM-DD.md` — 아침 브리핑 자동 업데이트 (캘린더 일정, Todoist p1, 별표 메일)\" 삽입(최신이 맨 위, 기존 항목 보존). **노트 하단 ## History에는 기록하지 않는다**(cron 자동 반복 갱신 예외 — daily-notes-automation 스킬 참고). 시각은 반드시 TZ=Asia/Seoul date 로 확인.\n\n최종 응답은 무엇을 채웠는지 한국어 3~5줄 요약(일정 N건, 할일 N건, 메일 N건, 파일 생성/갱신 여부)으로 간결히.",
+      "name": "daily-note \uc544\uce68 \ud1b5\ud569 (06:00)",
+      "prompt": "daily-notes-automation \uc2a4\ud0ac\uc744 \ub85c\ub4dc\ud574 \"\uc791\uc5c5 A \u2014 \uc544\uce68 \ud1b5\ud569 (06:00)\" \uc808\ucc28\ub97c \uadf8\ub300\ub85c \uc218\ud589\ud558\ub77c.\n\n\uc694\uc57d: \uc624\ub298(KST) \uc77c\uc77c \ud68c\uace0 \ub178\ud2b8(~/Obsidian/amoseui/journal/daily/YYYY-MM-DD.md)\uac00 \uc5c6\uc73c\uba74 \ud15c\ud50c\ub9bf(Templates/template-retrospective-1-daily.md, History \uc139\uc158 \uc81c\uc678)\uc73c\ub85c \uc0dd\uc131\ud558\uace0, \uc788\uc73c\uba74 \ub36e\uc5b4\uc4f0\uc9c0 \ub9d0\uace0 \uadf8\ub300\ub85c \uc0ac\uc6a9\ud55c\ub2e4. \uadf8 \ub2e4\uc74c \uc544\uce68 \ube0c\ub9ac\ud551 \uc139\uc158\uc744 \ucc44\uc6b4\ub2e4:\n- ### \uc624\ub298 \uc77c\uc815 \u2190 python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/calendar_today.py (prenine \uce98\ub9b0\ub354)\n- ### \uc624\ub298 \ud560 \uc77c (Todoist) \u2190 Todoist MCP todoist_task_get, filter \"(today | overdue) & p1\" (\uc624\ub298+\uae30\ud55c\uc9c0\ub09c \ucd5c\uace0\uc6b0\uc120\uc21c\uc704 \uc804\ubd80)\n- ### \uc774\uba54\uc77c/Readwise \uc694\uc57d \u2190 python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/starred_mail.py (amoseui+prenine \ubcc4\ud45c\ud3b8\uc9c0\ud568 \uc804\uccb4 \ud569\uce68)\n\n\uac01 \ud5e4\ub529 \uc544\ub798 \"* \" bullet \ub77c\uc778\ub9cc patch\ub85c \uad50\uccb4\ud558\uace0 \ub2e4\ub978 \uad6c\uc870\ub294 \uac74\ub4dc\ub9ac\uc9c0 \ub9c8\ub77c. \ub300\uad04\ud638 [ ]\u00b7\uc704\ud0a4\ub9c1\ud06c\u00b7\ub9c8\ud06c\ub2e4\uc6b4 \ub9c1\ud06c \uae08\uc9c0, \uc21c\uc218 \ud14d\uc2a4\ud2b8\uc640 bullet(*)\ub9cc. \ub370\uc774\ud130 \uc18c\uc2a4\uac00 \uc2e4\ud328\ud558\uba74 \uc911\ub2e8\ud558\uc9c0 \ub9d0\uace0 \ud574\ub2f9 \uc139\uc158\uc744 \"\u2026\uc5c6\uc74c\"\uc73c\ub85c \ucc44\uc6b0\uace0 \uacc4\uc18d \uc9c4\ud589\ud558\ub77c.\n\n\ub9c8\uc9c0\ub9c9\uc5d0 \uc2a4\ud0ac\uc758 \"\uacf5\ud1b5: \uac10\uc0ac \ub85c\uadf8 \uae30\ub85d\" \uc808\ucc28\ub85c TZ=Asia/Seoul \uae30\uc900 \ub2f9\uc6d4 \uac10\uc0ac \ub85c\uadf8 `agents/state/changelog/YYYY-MM.md`(\uc5c6\uc73c\uba74 \"# Change Log\" \ud5e4\ub529\uc73c\ub85c \uc0c8\ub85c \uc0dd\uc131)\uc5d0\ub9cc \uae30\ub85d\ud55c\ub2e4: \"- YYYY-MM-DD HH:MM `journal/daily/YYYY-MM-DD.md` \u2014 \uc544\uce68 \ube0c\ub9ac\ud551 \uc790\ub3d9 \uc5c5\ub370\uc774\ud2b8 (\uce98\ub9b0\ub354 \uc77c\uc815, Todoist p1, \ubcc4\ud45c \uba54\uc77c)\" \uc0bd\uc785(\ucd5c\uc2e0\uc774 \ub9e8 \uc704, \uae30\uc874 \ud56d\ubaa9 \ubcf4\uc874). **\ub178\ud2b8 \ud558\ub2e8 ## History\uc5d0\ub294 \uae30\ub85d\ud558\uc9c0 \uc54a\ub294\ub2e4**(cron \uc790\ub3d9 \ubc18\ubcf5 \uac31\uc2e0 \uc608\uc678 \u2014 daily-notes-automation \uc2a4\ud0ac \ucc38\uace0). \uc2dc\uac01\uc740 \ubc18\ub4dc\uc2dc TZ=Asia/Seoul date \ub85c \ud655\uc778.\n\n\ucd5c\uc885 \uc751\ub2f5\uc740 \ubb34\uc5c7\uc744 \ucc44\uc6e0\ub294\uc9c0 \ud55c\uad6d\uc5b4 3~5\uc904 \uc694\uc57d(\uc77c\uc815 N\uac74, \ud560\uc77c N\uac74, \uba54\uc77c N\uac74, \ud30c\uc77c \uc0dd\uc131/\uac31\uc2e0 \uc5ec\ubd80)\uc73c\ub85c \uac04\uacb0\ud788.",
       "skills": [
         "daily-notes-automation"
       ],
@@ -16,7 +16,7 @@
         "expr": "0 6 * * *",
         "display": "0 6 * * *"
       },
-      "enabled": false,
+      "enabled": true,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -28,17 +28,19 @@
         "file"
       ],
       "next_run_at": "2026-08-01T06:00:00+09:00",
-      "last_run_at": "2026-07-31T06:01:57.788886+09:00",
+      "last_run_at": "2026-07-31T13:49:28.925791+09:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
       "fire_claim": null,
-      "state": "scheduled"
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null
     },
     {
       "id": "d36562c85f40",
-      "name": "daily-note 밤 회고 (23:50)",
-      "prompt": "daily-notes-automation 스킬을 로드해 \"작업 B — 밤 회고 (23:50)\" 절차를 그대로 수행하라.\n\n요약: 오늘(KST) 일일 회고 노트(~/Obsidian/amoseui/journal/daily/YYYY-MM-DD.md)를 read_file로 연다. 파일이 없으면 스킬의 작업 A 생성 단계를 먼저 수행한 뒤 진행한다. 그 다음 일일 회고(🌙) 섹션을 채운다:\n- ### Git 커밋 ← python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/git_commits_today.py (amoseui GitHub atom 피드, * repo: 커밋메시지)\n- ### Todoist 완료 항목 ← Todoist MCP todoist_activity_by_date_range (since 전날 T15:00:00Z, until 당일 T14:59:59Z, event_type completed, object_type item). 반환값을 KST로 변환해 오늘 항목만 필터, extra.content에서 제목 추출, 중복 제거. * 작업 제목\n- ### 캘린더 지난 일정 ← python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/calendar_today.py (prenine, * HH:MM 제목)\n- ### YouTube 시청 기록 ← 소스 없음, 손대지 않음\n\n각 헤딩 아래 \"* \" bullet만 patch로 교체하고 다른 구조는 건드리지 마라. 대괄호 [ ] 절대 금지, 링크 필요시 URL을 괄호 없이 평문으로. 데이터 소스 실패 시 중단하지 말고 \"…없음\"으로 채우고 계속 진행하라.\n\n마지막에 스킬의 \"공통: 감사 로그 기록\" 절차로 TZ=Asia/Seoul 기준 당월 감사 로그 `agents/state/changelog/YYYY-MM.md`(없으면 \"# Change Log\" 헤딩으로 새로 생성)에만 기록: \"- YYYY-MM-DD HH:MM `journal/daily/YYYY-MM-DD.md` — 일일 회고 자동 업데이트 (Git 커밋, Todoist 완료 항목, 캘린더 지난 일정)\" 삽입(최신이 맨 위, 기존 보존). **노트 하단 ## History에는 기록하지 않는다**(cron 자동 반복 갱신 예외 — daily-notes-automation 스킬 참고). 시각은 반드시 TZ=Asia/Seoul date 로 확인.\n\n최종 응답은 한국어 3~5줄 요약(커밋 N건, 완료 N건, 지난 일정 N건, 갱신 여부)으로 간결히.",
+      "name": "daily-note \ubc24 \ud68c\uace0 (23:50)",
+      "prompt": "daily-notes-automation \uc2a4\ud0ac\uc744 \ub85c\ub4dc\ud574 \"\uc791\uc5c5 B \u2014 \ubc24 \ud68c\uace0 (23:50)\" \uc808\ucc28\ub97c \uadf8\ub300\ub85c \uc218\ud589\ud558\ub77c.\n\n\uc694\uc57d: \uc624\ub298(KST) \uc77c\uc77c \ud68c\uace0 \ub178\ud2b8(~/Obsidian/amoseui/journal/daily/YYYY-MM-DD.md)\ub97c read_file\ub85c \uc5f0\ub2e4. \ud30c\uc77c\uc774 \uc5c6\uc73c\uba74 \uc2a4\ud0ac\uc758 \uc791\uc5c5 A \uc0dd\uc131 \ub2e8\uacc4\ub97c \uba3c\uc800 \uc218\ud589\ud55c \ub4a4 \uc9c4\ud589\ud55c\ub2e4. \uadf8 \ub2e4\uc74c \uc77c\uc77c \ud68c\uace0(\ud83c\udf19) \uc139\uc158\uc744 \ucc44\uc6b4\ub2e4:\n- ### Git \ucee4\ubc0b \u2190 python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/git_commits_today.py (amoseui GitHub atom \ud53c\ub4dc, * repo: \ucee4\ubc0b\uba54\uc2dc\uc9c0)\n- ### Todoist \uc644\ub8cc \ud56d\ubaa9 \u2190 Todoist MCP todoist_activity_by_date_range (since \uc804\ub0a0 T15:00:00Z, until \ub2f9\uc77c T14:59:59Z, event_type completed, object_type item). \ubc18\ud658\uac12\uc744 KST\ub85c \ubcc0\ud658\ud574 \uc624\ub298 \ud56d\ubaa9\ub9cc \ud544\ud130, extra.content\uc5d0\uc11c \uc81c\ubaa9 \ucd94\ucd9c, \uc911\ubcf5 \uc81c\uac70. * \uc791\uc5c5 \uc81c\ubaa9\n- ### \uce98\ub9b0\ub354 \uc9c0\ub09c \uc77c\uc815 \u2190 python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/calendar_today.py (prenine, * HH:MM \uc81c\ubaa9)\n- ### YouTube \uc2dc\uccad \uae30\ub85d \u2190 \uc18c\uc2a4 \uc5c6\uc74c, \uc190\ub300\uc9c0 \uc54a\uc74c\n\n\uac01 \ud5e4\ub529 \uc544\ub798 \"* \" bullet\ub9cc patch\ub85c \uad50\uccb4\ud558\uace0 \ub2e4\ub978 \uad6c\uc870\ub294 \uac74\ub4dc\ub9ac\uc9c0 \ub9c8\ub77c. \ub300\uad04\ud638 [ ] \uc808\ub300 \uae08\uc9c0, \ub9c1\ud06c \ud544\uc694\uc2dc URL\uc744 \uad04\ud638 \uc5c6\uc774 \ud3c9\ubb38\uc73c\ub85c. \ub370\uc774\ud130 \uc18c\uc2a4 \uc2e4\ud328 \uc2dc \uc911\ub2e8\ud558\uc9c0 \ub9d0\uace0 \"\u2026\uc5c6\uc74c\"\uc73c\ub85c \ucc44\uc6b0\uace0 \uacc4\uc18d \uc9c4\ud589\ud558\ub77c.\n\n\ub9c8\uc9c0\ub9c9\uc5d0 \uc2a4\ud0ac\uc758 \"\uacf5\ud1b5: \uac10\uc0ac \ub85c\uadf8 \uae30\ub85d\" \uc808\ucc28\ub85c TZ=Asia/Seoul \uae30\uc900 \ub2f9\uc6d4 \uac10\uc0ac \ub85c\uadf8 `agents/state/changelog/YYYY-MM.md`(\uc5c6\uc73c\uba74 \"# Change Log\" \ud5e4\ub529\uc73c\ub85c \uc0c8\ub85c \uc0dd\uc131)\uc5d0\ub9cc \uae30\ub85d: \"- YYYY-MM-DD HH:MM `journal/daily/YYYY-MM-DD.md` \u2014 \uc77c\uc77c \ud68c\uace0 \uc790\ub3d9 \uc5c5\ub370\uc774\ud2b8 (Git \ucee4\ubc0b, Todoist \uc644\ub8cc \ud56d\ubaa9, \uce98\ub9b0\ub354 \uc9c0\ub09c \uc77c\uc815)\" \uc0bd\uc785(\ucd5c\uc2e0\uc774 \ub9e8 \uc704, \uae30\uc874 \ubcf4\uc874). **\ub178\ud2b8 \ud558\ub2e8 ## History\uc5d0\ub294 \uae30\ub85d\ud558\uc9c0 \uc54a\ub294\ub2e4**(cron \uc790\ub3d9 \ubc18\ubcf5 \uac31\uc2e0 \uc608\uc678 \u2014 daily-notes-automation \uc2a4\ud0ac \ucc38\uace0). \uc2dc\uac01\uc740 \ubc18\ub4dc\uc2dc TZ=Asia/Seoul date \ub85c \ud655\uc778.\n\n\ucd5c\uc885 \uc751\ub2f5\uc740 \ud55c\uad6d\uc5b4 3~5\uc904 \uc694\uc57d(\ucee4\ubc0b N\uac74, \uc644\ub8cc N\uac74, \uc9c0\ub09c \uc77c\uc815 N\uac74, \uac31\uc2e0 \uc5ec\ubd80)\uc73c\ub85c \uac04\uacb0\ud788.",
       "skills": [
         "daily-notes-automation"
       ],
@@ -51,7 +53,7 @@
         "expr": "50 23 * * *",
         "display": "50 23 * * *"
       },
-      "enabled": false,
+      "enabled": true,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -63,17 +65,19 @@
         "file"
       ],
       "next_run_at": "2026-07-31T23:50:00+09:00",
-      "last_run_at": "2026-07-30T23:51:48.993218+09:00",
+      "last_run_at": "2026-07-31T13:51:15.433952+09:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
       "fire_claim": null,
-      "state": "scheduled"
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null
     },
     {
       "id": "a9b0ddd29da7",
-      "name": "pkm-collect 작업내역 수집 (23:55)",
-      "prompt": "pkm-collect 스킬을 로드해 그 절차를 수행하라. 오늘(KST) Claude Code + Codex 사용 내역(이 맥 로컬 ~/.claude·~/.codex + 동기 vault 인박스 ~/Obsidian/amoseui/agents/inbox/codex-claude/*.json)을 collect.py로 수집해 기록 가치 있는 작업만 agents/notes 에 노트로 만들고, 오늘 daily note의 \"## 🤖 Hermes 작업 로그\" 섹션에 백링크를 건다.\n\n비대화(cron) 실행이므로 사용자 승인 게이트(4단계)는 건너뛰고, 명백한 CREATE 후보(triviality=substantial, 즉 편집/커밋/PR이 있는 작업)만 자동 생성하라. 애매하거나 trivial/borderline 항목은 만들지 말고 SKIP으로 보고만 하라. 원본 트랜스크립트 전체는 절대 읽지 말고 digest 메타(source, project, user_prompts, edited_files, inbox_origin)만 사용하라.\n\n노트 생성·daily 백링크 후 hermes 스킬의 변경 이력 규칙대로 daily note의 ## History와 TZ=Asia/Seoul 기준 당월 감사 로그 `agents/state/changelog/YYYY-MM.md`(없으면 \"# Change Log\" 헤딩으로 새로 생성)에 기록하라(agents/notes의 새 노트는 노트 내 ## History만). 처리한 맥북 인박스 digest 파일은 재처리 방지를 위해 agents/inbox/codex-claude/_processed/ 로 이동하고, collect.py --update-marker 로 마커를 갱신하라. 시각은 TZ=Asia/Seoul date로 확인. AI 노트는 agents/notes 밖으로 내보내지 마라.\n\n최종 응답은 한국어 3~6줄: 생성한 노트 제목 목록, SKIP한 항목 수/사유, 처리한 인박스 파일 수를 간결히.",
+      "name": "pkm-collect \uc791\uc5c5\ub0b4\uc5ed \uc218\uc9d1 (23:55)",
+      "prompt": "pkm-collect \uc2a4\ud0ac\uc744 \ub85c\ub4dc\ud574 \uadf8 \uc808\ucc28\ub97c \uc218\ud589\ud558\ub77c. \uc624\ub298(KST) Claude Code + Codex \uc0ac\uc6a9 \ub0b4\uc5ed(\uc774 \ub9e5 \ub85c\uceec ~/.claude\u00b7~/.codex + \ub3d9\uae30 vault \uc778\ubc15\uc2a4 ~/Obsidian/amoseui/agents/inbox/codex-claude/*.json)\uc744 collect.py\ub85c \uc218\uc9d1\ud574 \uae30\ub85d \uac00\uce58 \uc788\ub294 \uc791\uc5c5\ub9cc agents/notes \uc5d0 \ub178\ud2b8\ub85c \ub9cc\ub4e4\uace0, \uc624\ub298 daily note\uc758 \"## \ud83e\udd16 Hermes \uc791\uc5c5 \ub85c\uadf8\" \uc139\uc158\uc5d0 \ubc31\ub9c1\ud06c\ub97c \uac74\ub2e4.\n\n\ube44\ub300\ud654(cron) \uc2e4\ud589\uc774\ubbc0\ub85c \uc0ac\uc6a9\uc790 \uc2b9\uc778 \uac8c\uc774\ud2b8(4\ub2e8\uacc4)\ub294 \uac74\ub108\ub6f0\uace0, \uba85\ubc31\ud55c CREATE \ud6c4\ubcf4(triviality=substantial, \uc989 \ud3b8\uc9d1/\ucee4\ubc0b/PR\uc774 \uc788\ub294 \uc791\uc5c5)\ub9cc \uc790\ub3d9 \uc0dd\uc131\ud558\ub77c. \uc560\ub9e4\ud558\uac70\ub098 trivial/borderline \ud56d\ubaa9\uc740 \ub9cc\ub4e4\uc9c0 \ub9d0\uace0 SKIP\uc73c\ub85c \ubcf4\uace0\ub9cc \ud558\ub77c. \uc6d0\ubcf8 \ud2b8\ub79c\uc2a4\ud06c\ub9bd\ud2b8 \uc804\uccb4\ub294 \uc808\ub300 \uc77d\uc9c0 \ub9d0\uace0 digest \uba54\ud0c0(source, project, user_prompts, edited_files, inbox_origin)\ub9cc \uc0ac\uc6a9\ud558\ub77c.\n\n\ub178\ud2b8 \uc0dd\uc131\u00b7daily \ubc31\ub9c1\ud06c \ud6c4 hermes \uc2a4\ud0ac\uc758 \ubcc0\uacbd \uc774\ub825 \uaddc\uce59\ub300\ub85c daily note\uc758 ## History\uc640 TZ=Asia/Seoul \uae30\uc900 \ub2f9\uc6d4 \uac10\uc0ac \ub85c\uadf8 `agents/state/changelog/YYYY-MM.md`(\uc5c6\uc73c\uba74 \"# Change Log\" \ud5e4\ub529\uc73c\ub85c \uc0c8\ub85c \uc0dd\uc131)\uc5d0 \uae30\ub85d\ud558\ub77c(agents/notes\uc758 \uc0c8 \ub178\ud2b8\ub294 \ub178\ud2b8 \ub0b4 ## History\ub9cc). \ucc98\ub9ac\ud55c \ub9e5\ubd81 \uc778\ubc15\uc2a4 digest \ud30c\uc77c\uc740 \uc7ac\ucc98\ub9ac \ubc29\uc9c0\ub97c \uc704\ud574 agents/inbox/codex-claude/_processed/ \ub85c \uc774\ub3d9\ud558\uace0, collect.py --update-marker \ub85c \ub9c8\ucee4\ub97c \uac31\uc2e0\ud558\ub77c. \uc2dc\uac01\uc740 TZ=Asia/Seoul date\ub85c \ud655\uc778. AI \ub178\ud2b8\ub294 agents/notes \ubc16\uc73c\ub85c \ub0b4\ubcf4\ub0b4\uc9c0 \ub9c8\ub77c.\n\n\ucd5c\uc885 \uc751\ub2f5\uc740 \ud55c\uad6d\uc5b4 3~6\uc904: \uc0dd\uc131\ud55c \ub178\ud2b8 \uc81c\ubaa9 \ubaa9\ub85d, SKIP\ud55c \ud56d\ubaa9 \uc218/\uc0ac\uc720, \ucc98\ub9ac\ud55c \uc778\ubc15\uc2a4 \ud30c\uc77c \uc218\ub97c \uac04\uacb0\ud788.",
       "skills": [
         "pkm-collect"
       ],
@@ -86,7 +90,7 @@
         "expr": "55 23 * * *",
         "display": "55 23 * * *"
       },
-      "enabled": false,
+      "enabled": true,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -98,17 +102,19 @@
         "file"
       ],
       "next_run_at": "2026-07-31T23:55:00+09:00",
-      "last_run_at": "2026-07-31T00:01:00.564862+09:00",
+      "last_run_at": "2026-07-31T13:55:05.186895+09:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
       "fire_claim": null,
-      "state": "scheduled"
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null
     },
     {
       "id": "d9b51c66615a",
-      "name": "피드 신규 triage (매일 12시)",
-      "prompt": "매일 12시 \"신규 피드 triage\" 작업이다. Discord 리액션을 읽을 수 없으므로, 실제 선택 UI는 Obsidian 체크박스 리뷰 노트로 만든다. 한국어로 간결하게.\n\n## 1. 수집 + 리뷰 노트 생성\n반드시 Hermes venv Python 사용:\n```\nWORKDIR=$(mktemp -d \"${TMPDIR:-/tmp}/hermes-cron.XXXXXX\")\ntrap 'rm -f \"$WORKDIR/fp_gmail.json\" \"$WORKDIR/fp_rss.json\" \"$WORKDIR/fp_rss_full.json\"; rmdir \"$WORKDIR\"' EXIT\nPY=~/.hermes/hermes-agent/venv/bin/python\nPIPE=~/.hermes/feed-pipeline/scripts\nDATE=$(TZ=Asia/Seoul date +%Y-%m-%d)-new\n$PY $PIPE/rss_new.py 26 > $WORKDIR/fp_rss.json\n$PY $PIPE/gmail_backlog.py 40 > $WORKDIR/fp_gmail.json\ncat $WORKDIR/fp_rss.json | $PY $PIPE/fetch_content.py > $WORKDIR/fp_rss_full.json\n$PY $PIPE/make_review_note.py --gmail $WORKDIR/fp_gmail.json --rss $WORKDIR/fp_rss_full.json --date \"$DATE\"\n```\n생성 위치: `~/Obsidian/amoseui/agents/review/YYYY-MM-DD-new-feed-review.md`\n\n## 2. 사용자에게 Discord로 알림\n긴 목록을 Discord에 다 붙이지 말고, 리뷰 노트 경로만 알려라.\n메시지에 포함:\n- 생성된 Obsidian 리뷰 노트 경로\n- 각 항목 체크박스: NL+/NL-/KEEP/MERGE/SKIP/READ\n- 상단 APPLY 체크 후 여기서 \"리뷰 처리해\"라고 말하면 반영\n- APPLY 전에는 whitelist, Gmail unread, Reader archive, wiki ingest 모두 변경 없음\n\n## 3. 실제 처리\n이 cron은 리뷰 노트 생성만 한다. 사용자가 체크 후 요청하면 별도 세션에서 반영한다.",
+      "name": "\ud53c\ub4dc \uc2e0\uaddc triage (\ub9e4\uc77c 12\uc2dc)",
+      "prompt": "\ub9e4\uc77c 12\uc2dc \"\uc2e0\uaddc \ud53c\ub4dc triage\" \uc791\uc5c5\uc774\ub2e4. Discord \ub9ac\uc561\uc158\uc744 \uc77d\uc744 \uc218 \uc5c6\uc73c\ubbc0\ub85c, \uc2e4\uc81c \uc120\ud0dd UI\ub294 Obsidian \uccb4\ud06c\ubc15\uc2a4 \ub9ac\ubdf0 \ub178\ud2b8\ub85c \ub9cc\ub4e0\ub2e4. \ud55c\uad6d\uc5b4\ub85c \uac04\uacb0\ud558\uac8c.\n\n## 1. \uc218\uc9d1 + \ub9ac\ubdf0 \ub178\ud2b8 \uc0dd\uc131\n\ubc18\ub4dc\uc2dc Hermes venv Python \uc0ac\uc6a9:\n```\nWORKDIR=$(mktemp -d \"${TMPDIR:-/tmp}/hermes-cron.XXXXXX\")\ntrap 'rm -f \"$WORKDIR/fp_gmail.json\" \"$WORKDIR/fp_rss.json\" \"$WORKDIR/fp_rss_full.json\"; rmdir \"$WORKDIR\"' EXIT\nPY=~/.hermes/hermes-agent/venv/bin/python\nPIPE=~/.hermes/feed-pipeline/scripts\nDATE=$(TZ=Asia/Seoul date +%Y-%m-%d)-new\n$PY $PIPE/rss_new.py 26 > $WORKDIR/fp_rss.json\n$PY $PIPE/gmail_backlog.py 40 > $WORKDIR/fp_gmail.json\ncat $WORKDIR/fp_rss.json | $PY $PIPE/fetch_content.py > $WORKDIR/fp_rss_full.json\n$PY $PIPE/make_review_note.py --gmail $WORKDIR/fp_gmail.json --rss $WORKDIR/fp_rss_full.json --date \"$DATE\"\n```\n\uc0dd\uc131 \uc704\uce58: `~/Obsidian/amoseui/agents/review/YYYY-MM-DD-new-feed-review.md`\n\n## 2. \uc0ac\uc6a9\uc790\uc5d0\uac8c Discord\ub85c \uc54c\ub9bc\n\uae34 \ubaa9\ub85d\uc744 Discord\uc5d0 \ub2e4 \ubd99\uc774\uc9c0 \ub9d0\uace0, \ub9ac\ubdf0 \ub178\ud2b8 \uacbd\ub85c\ub9cc \uc54c\ub824\ub77c.\n\uba54\uc2dc\uc9c0\uc5d0 \ud3ec\ud568:\n- \uc0dd\uc131\ub41c Obsidian \ub9ac\ubdf0 \ub178\ud2b8 \uacbd\ub85c\n- \uac01 \ud56d\ubaa9 \uccb4\ud06c\ubc15\uc2a4: NL+/NL-/KEEP/MERGE/SKIP/READ\n- \uc0c1\ub2e8 APPLY \uccb4\ud06c \ud6c4 \uc5ec\uae30\uc11c \"\ub9ac\ubdf0 \ucc98\ub9ac\ud574\"\ub77c\uace0 \ub9d0\ud558\uba74 \ubc18\uc601\n- APPLY \uc804\uc5d0\ub294 whitelist, Gmail unread, Reader archive, wiki ingest \ubaa8\ub450 \ubcc0\uacbd \uc5c6\uc74c\n\n## 3. \uc2e4\uc81c \ucc98\ub9ac\n\uc774 cron\uc740 \ub9ac\ubdf0 \ub178\ud2b8 \uc0dd\uc131\ub9cc \ud55c\ub2e4. \uc0ac\uc6a9\uc790\uac00 \uccb4\ud06c \ud6c4 \uc694\uccad\ud558\uba74 \ubcc4\ub3c4 \uc138\uc158\uc5d0\uc11c \ubc18\uc601\ud55c\ub2e4.",
       "skills": [
         "rss-triage-ingest",
         "hermes"
@@ -122,7 +128,7 @@
         "expr": "0 12 * * *",
         "display": "0 12 * * *"
       },
-      "enabled": false,
+      "enabled": true,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -134,18 +140,20 @@
         "file",
         "web"
       ],
-      "next_run_at": "2026-07-31T12:00:00+09:00",
+      "next_run_at": "2026-08-01T12:00:00+09:00",
       "fire_claim": null,
-      "last_run_at": "2026-07-30T12:01:50.647203+09:00",
+      "last_run_at": "2026-07-31T14:05:12.811259+09:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
-      "state": "scheduled"
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null
     },
     {
       "id": "5b07ded82e4a",
-      "name": "누적 backlog 소진 (매일 12시)",
-      "prompt": "매일 \"누적 backlog 소진\" 작업이다. Discord에서 반응을 받을 수 없으므로, 실제 선택 UI는 Obsidian 체크박스 리뷰 노트로 만든다. 한국어로 간결하게.\n\n## 1. 수집 + 리뷰 노트 생성\n반드시 Hermes venv Python을 사용한다(시스템 python3는 google_api 의존성/문법 문제로 실패):\n```\nWORKDIR=$(mktemp -d \"${TMPDIR:-/tmp}/hermes-cron.XXXXXX\")\ntrap 'rm -f \"$WORKDIR/fp_gmail.json\" \"$WORKDIR/fp_reader.json\" \"$WORKDIR/fp_reader_full.json\"; rmdir \"$WORKDIR\"' EXIT\nPY=~/.hermes/hermes-agent/venv/bin/python\nPIPE=~/.hermes/feed-pipeline/scripts\nDATE=$(TZ=Asia/Seoul date +%Y-%m-%d)\n$PY $PIPE/gmail_backlog.py 30 > $WORKDIR/fp_gmail.json\n$PY $PIPE/reader_backlog.py 30 > $WORKDIR/fp_reader.json\ncat $WORKDIR/fp_reader.json | $PY $PIPE/fetch_content.py > $WORKDIR/fp_reader_full.json\n$PY $PIPE/make_review_note.py --gmail $WORKDIR/fp_gmail.json --reader $WORKDIR/fp_reader_full.json --date \"$DATE\"\n```\n생성 위치: `~/Obsidian/amoseui/agents/review/YYYY-MM-DD-feed-review.md`\n\n## 2. 사용자에게 Discord로 알림\n긴 목록을 Discord에 다 붙이지 말고, 리뷰 노트 경로만 알려라.\n메시지 형식:\n- 생성된 Obsidian 리뷰 노트 경로\n- 사용법: 각 항목의 NL+/NL-/KEEP/MERGE/SKIP/READ 체크박스 선택 → 상단 APPLY 체크\n- APPLY 전에는 아무 변경 없음\n- \"체크 후 여기서 '리뷰 처리해'라고 말하면 내가 반영한다\" 안내\n\n## 3. 읽음/ingest 처리\n이 cron은 생성만 한다. 실제 처리는 사용자가 체크 후 별도로 요청할 때 수행한다.\n수집 0건이어도 노트는 만들 수 있으며, 빈 섹션이면 \"backlog 비었음\" 알림.",
+      "name": "\ub204\uc801 backlog \uc18c\uc9c4 (\ub9e4\uc77c 12\uc2dc)",
+      "prompt": "\ub9e4\uc77c \"\ub204\uc801 backlog \uc18c\uc9c4\" \uc791\uc5c5\uc774\ub2e4. Discord\uc5d0\uc11c \ubc18\uc751\uc744 \ubc1b\uc744 \uc218 \uc5c6\uc73c\ubbc0\ub85c, \uc2e4\uc81c \uc120\ud0dd UI\ub294 Obsidian \uccb4\ud06c\ubc15\uc2a4 \ub9ac\ubdf0 \ub178\ud2b8\ub85c \ub9cc\ub4e0\ub2e4. \ud55c\uad6d\uc5b4\ub85c \uac04\uacb0\ud558\uac8c.\n\n## 1. \uc218\uc9d1 + \ub9ac\ubdf0 \ub178\ud2b8 \uc0dd\uc131\n\ubc18\ub4dc\uc2dc Hermes venv Python\uc744 \uc0ac\uc6a9\ud55c\ub2e4(\uc2dc\uc2a4\ud15c python3\ub294 google_api \uc758\uc874\uc131/\ubb38\ubc95 \ubb38\uc81c\ub85c \uc2e4\ud328):\n```\nWORKDIR=$(mktemp -d \"${TMPDIR:-/tmp}/hermes-cron.XXXXXX\")\ntrap 'rm -f \"$WORKDIR/fp_gmail.json\" \"$WORKDIR/fp_reader.json\" \"$WORKDIR/fp_reader_full.json\"; rmdir \"$WORKDIR\"' EXIT\nPY=~/.hermes/hermes-agent/venv/bin/python\nPIPE=~/.hermes/feed-pipeline/scripts\nDATE=$(TZ=Asia/Seoul date +%Y-%m-%d)\n$PY $PIPE/gmail_backlog.py 30 > $WORKDIR/fp_gmail.json\n$PY $PIPE/reader_backlog.py 30 > $WORKDIR/fp_reader.json\ncat $WORKDIR/fp_reader.json | $PY $PIPE/fetch_content.py > $WORKDIR/fp_reader_full.json\n$PY $PIPE/make_review_note.py --gmail $WORKDIR/fp_gmail.json --reader $WORKDIR/fp_reader_full.json --date \"$DATE\"\n```\n\uc0dd\uc131 \uc704\uce58: `~/Obsidian/amoseui/agents/review/YYYY-MM-DD-feed-review.md`\n\n## 2. \uc0ac\uc6a9\uc790\uc5d0\uac8c Discord\ub85c \uc54c\ub9bc\n\uae34 \ubaa9\ub85d\uc744 Discord\uc5d0 \ub2e4 \ubd99\uc774\uc9c0 \ub9d0\uace0, \ub9ac\ubdf0 \ub178\ud2b8 \uacbd\ub85c\ub9cc \uc54c\ub824\ub77c.\n\uba54\uc2dc\uc9c0 \ud615\uc2dd:\n- \uc0dd\uc131\ub41c Obsidian \ub9ac\ubdf0 \ub178\ud2b8 \uacbd\ub85c\n- \uc0ac\uc6a9\ubc95: \uac01 \ud56d\ubaa9\uc758 NL+/NL-/KEEP/MERGE/SKIP/READ \uccb4\ud06c\ubc15\uc2a4 \uc120\ud0dd \u2192 \uc0c1\ub2e8 APPLY \uccb4\ud06c\n- APPLY \uc804\uc5d0\ub294 \uc544\ubb34 \ubcc0\uacbd \uc5c6\uc74c\n- \"\uccb4\ud06c \ud6c4 \uc5ec\uae30\uc11c '\ub9ac\ubdf0 \ucc98\ub9ac\ud574'\ub77c\uace0 \ub9d0\ud558\uba74 \ub0b4\uac00 \ubc18\uc601\ud55c\ub2e4\" \uc548\ub0b4\n\n## 3. \uc77d\uc74c/ingest \ucc98\ub9ac\n\uc774 cron\uc740 \uc0dd\uc131\ub9cc \ud55c\ub2e4. \uc2e4\uc81c \ucc98\ub9ac\ub294 \uc0ac\uc6a9\uc790\uac00 \uccb4\ud06c \ud6c4 \ubcc4\ub3c4\ub85c \uc694\uccad\ud560 \ub54c \uc218\ud589\ud55c\ub2e4.\n\uc218\uc9d1 0\uac74\uc774\uc5b4\ub3c4 \ub178\ud2b8\ub294 \ub9cc\ub4e4 \uc218 \uc788\uc73c\uba70, \ube48 \uc139\uc158\uc774\uba74 \"backlog \ube44\uc5c8\uc74c\" \uc54c\ub9bc.",
       "skills": [
         "rss-triage-ingest"
       ],
@@ -158,7 +166,7 @@
         "expr": "5 12 * * *",
         "display": "5 12 * * *"
       },
-      "enabled": false,
+      "enabled": true,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -170,18 +178,20 @@
         "file",
         "web"
       ],
-      "next_run_at": "2026-07-31T12:05:00+09:00",
-      "last_run_at": "2026-07-30T12:06:39.414329+09:00",
+      "next_run_at": "2026-08-01T12:05:00+09:00",
+      "last_run_at": "2026-07-31T14:07:09.385395+09:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
       "fire_claim": null,
-      "state": "scheduled"
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null
     },
     {
       "id": "b60801d34906",
-      "name": "Chromium docs PKM 전체번역 업데이트",
-      "prompt": "매일 Chromium 주요 문서 PKM 전체번역 업데이트 작업이다. 한국어로 간결하게 보고하라.\n\n중요 사용자 규칙:\n- 요약본 금지. 번역 노트는 원문 구조를 유지한 한국어 전체 번역이어야 한다.\n- 저장 위치는 `~/Obsidian/amoseui/wiki/references/chromium-docs/` 하위만 사용한다.\n- 상태 파일은 `~/Obsidian/amoseui/agents/state/chromium-docs.json` 이다.\n- 원문은 `https://raw.githubusercontent.com/chromium/chromium/main/{source_path}` 에서 가져온다.\n- vault 변경 시 hermes PKM 규칙에 따라 각 노트 `## History`와 TZ=Asia/Seoul 기준 당월 감사 로그 `~/Obsidian/amoseui/agents/state/changelog/YYYY-MM.md`(없으면 \"# Change Log\" 헤딩으로 새로 생성)에 변경 이력을 남긴다.\n\n절차:\n1. `python3 ~/.hermes/scripts/chromium_docs_check.py` 를 실행해 changed / untranslated_queue / errors를 확인한다.\n2. changed가 있으면, 이미 번역 완료된 문서라도 원문 전체를 다시 가져와 해당 노트를 원문 전체 번역으로 갱신한다. 변경분 요약만 추가하지 말고 전체 번역 상태를 유지한다.\n3. changed가 없고 untranslated_queue가 있으면, 대기열 맨 앞 문서 1개만 선택해 원문 전체를 가져와 한국어 전체 번역 노트를 새로 만든다. 긴 문서도 요약하지 말고 제목/섹션/목록/코드블록 구조를 유지해 전체 번역한다. 너무 길어 한 번에 어렵다면 파일을 만들지 말고 '길이 때문에 보류'로 보고하라.\n4. 번역 완료 후 상태 파일에서 해당 doc의 `status`를 `translated`로 바꾸고, `translated_at`을 현재 시각으로 기록한다. 인덱스 `~/Obsidian/amoseui/wiki/references/chromium-docs/Chromium 문서 번역 인덱스.md`의 완료 목록/대기열 체크도 갱신한다.\n5. 최종 보고에는 변경 감지 여부, 새로 번역/갱신한 노트, 남은 대기 수, 에러를 짧게 적는다.",
+      "name": "Chromium docs PKM \uc804\uccb4\ubc88\uc5ed \uc5c5\ub370\uc774\ud2b8",
+      "prompt": "\ub9e4\uc77c Chromium \uc8fc\uc694 \ubb38\uc11c PKM \uc804\uccb4\ubc88\uc5ed \uc5c5\ub370\uc774\ud2b8 \uc791\uc5c5\uc774\ub2e4. \ud55c\uad6d\uc5b4\ub85c \uac04\uacb0\ud558\uac8c \ubcf4\uace0\ud558\ub77c.\n\n\uc911\uc694 \uc0ac\uc6a9\uc790 \uaddc\uce59:\n- \uc694\uc57d\ubcf8 \uae08\uc9c0. \ubc88\uc5ed \ub178\ud2b8\ub294 \uc6d0\ubb38 \uad6c\uc870\ub97c \uc720\uc9c0\ud55c \ud55c\uad6d\uc5b4 \uc804\uccb4 \ubc88\uc5ed\uc774\uc5b4\uc57c \ud55c\ub2e4.\n- \uc800\uc7a5 \uc704\uce58\ub294 `~/Obsidian/amoseui/wiki/references/chromium-docs/` \ud558\uc704\ub9cc \uc0ac\uc6a9\ud55c\ub2e4.\n- \uc0c1\ud0dc \ud30c\uc77c\uc740 `~/Obsidian/amoseui/agents/state/chromium-docs.json` \uc774\ub2e4.\n- \uc6d0\ubb38\uc740 `https://raw.githubusercontent.com/chromium/chromium/main/{source_path}` \uc5d0\uc11c \uac00\uc838\uc628\ub2e4.\n- vault \ubcc0\uacbd \uc2dc hermes PKM \uaddc\uce59\uc5d0 \ub530\ub77c \uac01 \ub178\ud2b8 `## History`\uc640 TZ=Asia/Seoul \uae30\uc900 \ub2f9\uc6d4 \uac10\uc0ac \ub85c\uadf8 `~/Obsidian/amoseui/agents/state/changelog/YYYY-MM.md`(\uc5c6\uc73c\uba74 \"# Change Log\" \ud5e4\ub529\uc73c\ub85c \uc0c8\ub85c \uc0dd\uc131)\uc5d0 \ubcc0\uacbd \uc774\ub825\uc744 \ub0a8\uae34\ub2e4.\n\n\uc808\ucc28:\n1. `python3 ~/.hermes/scripts/chromium_docs_check.py` \ub97c \uc2e4\ud589\ud574 changed / untranslated_queue / errors\ub97c \ud655\uc778\ud55c\ub2e4.\n2. changed\uac00 \uc788\uc73c\uba74, \uc774\ubbf8 \ubc88\uc5ed \uc644\ub8cc\ub41c \ubb38\uc11c\ub77c\ub3c4 \uc6d0\ubb38 \uc804\uccb4\ub97c \ub2e4\uc2dc \uac00\uc838\uc640 \ud574\ub2f9 \ub178\ud2b8\ub97c \uc6d0\ubb38 \uc804\uccb4 \ubc88\uc5ed\uc73c\ub85c \uac31\uc2e0\ud55c\ub2e4. \ubcc0\uacbd\ubd84 \uc694\uc57d\ub9cc \ucd94\uac00\ud558\uc9c0 \ub9d0\uace0 \uc804\uccb4 \ubc88\uc5ed \uc0c1\ud0dc\ub97c \uc720\uc9c0\ud55c\ub2e4.\n3. changed\uac00 \uc5c6\uace0 untranslated_queue\uac00 \uc788\uc73c\uba74, \ub300\uae30\uc5f4 \ub9e8 \uc55e \ubb38\uc11c 1\uac1c\ub9cc \uc120\ud0dd\ud574 \uc6d0\ubb38 \uc804\uccb4\ub97c \uac00\uc838\uc640 \ud55c\uad6d\uc5b4 \uc804\uccb4 \ubc88\uc5ed \ub178\ud2b8\ub97c \uc0c8\ub85c \ub9cc\ub4e0\ub2e4. \uae34 \ubb38\uc11c\ub3c4 \uc694\uc57d\ud558\uc9c0 \ub9d0\uace0 \uc81c\ubaa9/\uc139\uc158/\ubaa9\ub85d/\ucf54\ub4dc\ube14\ub85d \uad6c\uc870\ub97c \uc720\uc9c0\ud574 \uc804\uccb4 \ubc88\uc5ed\ud55c\ub2e4. \ub108\ubb34 \uae38\uc5b4 \ud55c \ubc88\uc5d0 \uc5b4\ub835\ub2e4\uba74 \ud30c\uc77c\uc744 \ub9cc\ub4e4\uc9c0 \ub9d0\uace0 '\uae38\uc774 \ub54c\ubb38\uc5d0 \ubcf4\ub958'\ub85c \ubcf4\uace0\ud558\ub77c.\n4. \ubc88\uc5ed \uc644\ub8cc \ud6c4 \uc0c1\ud0dc \ud30c\uc77c\uc5d0\uc11c \ud574\ub2f9 doc\uc758 `status`\ub97c `translated`\ub85c \ubc14\uafb8\uace0, `translated_at`\uc744 \ud604\uc7ac \uc2dc\uac01\uc73c\ub85c \uae30\ub85d\ud55c\ub2e4. \uc778\ub371\uc2a4 `~/Obsidian/amoseui/wiki/references/chromium-docs/Chromium \ubb38\uc11c \ubc88\uc5ed \uc778\ub371\uc2a4.md`\uc758 \uc644\ub8cc \ubaa9\ub85d/\ub300\uae30\uc5f4 \uccb4\ud06c\ub3c4 \uac31\uc2e0\ud55c\ub2e4.\n5. \ucd5c\uc885 \ubcf4\uace0\uc5d0\ub294 \ubcc0\uacbd \uac10\uc9c0 \uc5ec\ubd80, \uc0c8\ub85c \ubc88\uc5ed/\uac31\uc2e0\ud55c \ub178\ud2b8, \ub0a8\uc740 \ub300\uae30 \uc218, \uc5d0\ub7ec\ub97c \uc9e7\uac8c \uc801\ub294\ub2e4.",
       "skills": [
         "hermes"
       ],
@@ -196,9 +206,9 @@
       },
       "repeat": {
         "times": 365,
-        "completed": 5
+        "completed": 6
       },
-      "enabled": false,
+      "enabled": true,
       "deliver": "origin",
       "origin": {
         "platform": "webui",
@@ -210,13 +220,15 @@
         "file"
       ],
       "next_run_at": "2026-08-01T09:00:00+09:00",
-      "last_run_at": "2026-07-31T09:03:45.369032+09:00",
+      "last_run_at": "2026-07-31T14:09:24.669112+09:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": "unknown platform 'webui'",
       "fire_claim": null,
-      "state": "scheduled"
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null
     }
   ],
-  "updated_at": "2026-07-31T09:03:45.369600+09:00"
+  "updated_at": "2026-07-31T14:09:24.669433+09:00"
 }
