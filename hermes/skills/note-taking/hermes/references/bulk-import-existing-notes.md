@@ -8,16 +8,16 @@ llm-wiki SKILL의 "Bulk Ingest"는 단일 에이전트·소량 가정이라 100+
 사용자가 "기존 노트를 hermes로 다 복사해서 정리"를 요청해도 그건 llm-wiki 플로우가 **아니다**.
 - **복사**: 파일 더미. 교차참조·모순정리·종합이 없음 → 위키 가치 0.
 - **컴파일**: raw를 읽어 *주제별로 새로 종합한* concept 페이지 생성.
-- 기존 노트의 성격을 먼저 분류: ① 외부 소스 클리핑/하이라이트(Readwise 등) → `raw/`로 흡수 후 컴파일. ② 잡다 메모 → `notes/`로 단순 이동. ③ 이미 정리된 지식 → 소스로 삼아 재종합.
+- 기존 노트의 성격을 먼저 분류: ① 외부 소스 클리핑/하이라이트(Readwise 등) → `raw/`로 흡수 후 컴파일. ② 잡다 메모 → `agents/notes/`로 단순 이동. ③ 이미 정리된 지식 → 소스로 삼아 재종합.
 - Readwise 익스포트는 `## Metadata`(Author/Full Title/Category/Summary/URL) + `## Highlights` 구조 → 명백히 **레이어1(raw source)**. "내가 정리한 지식"처럼 보여도 실제론 외부 글의 발췌다.
 
 ## 1단계: raw 흡수 (기계적, 안전, execute_code 한 번)
 
-원본 폴더는 **보존**(읽기만), `hermes/raw/articles|books/`로 복사 + raw frontmatter 부착.
+원본 폴더는 **보존**(읽기만), `wiki/raw/articles|books/`로 복사 + raw frontmatter 부착.
 
 ```python
 import hashlib, re, os
-src_dir = "<원본 폴더>"; raw_dir = "<vault>/hermes/raw/articles"; os.makedirs(raw_dir, exist_ok=True)
+src_dir = "<원본 폴더>"; raw_dir = "<vault>/wiki/raw/articles"; os.makedirs(raw_dir, exist_ok=True)
 for f in sorted(os.listdir(src_dir)):
     if not f.endswith(".md"): continue
     with open(os.path.join(src_dir,f),encoding="utf-8") as fh: body=fh.read()

@@ -1,8 +1,8 @@
 # 노트 구조 레퍼런스 (hermes 스킬용)
 
-> 이 템플릿의 노트는 config.yaml의 `note_dir`(기본 `hermes/notes/`) 또는
-> `media_dir`(책/영화, 기본 `hermes/media/`)에만 생성한다.
-> 사람이 쓴 노트나 다른 에이전트 폴더(`5. Claude/` 등)와 섞지 않는다.
+> 이 템플릿의 노트는 config.yaml의 `note_dir`(기본 `agents/notes/`) 또는
+> `media_dir`(책/영화, 기본 `agents/media/`)에만 생성한다.
+> `agents/notes/`는 Claude/Codex 등 다른 에이전트와 공유하는 폴더다(author frontmatter로 구분) — 섞지 않는 대상은 사람이 쓴 노트다.
 > 파일명과 같은 H1 은 쓰지 않는다(파일명이 제목 역할).
 > created/modified/date/History 시각은 추측하지 말고 `date` 명령으로 확인해 넣는다.
 

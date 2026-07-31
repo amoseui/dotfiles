@@ -19,12 +19,12 @@ metadata:
 
 # Daily Notes Automation — 아침 브리핑 + 밤 회고
 
-매일 정해진 시각에 Obsidian의 일일 회고 노트(`Retrospective/1. Daily/YYYY-MM-DD.md`)를
+매일 정해진 시각에 Obsidian의 일일 회고 노트(`journal/daily/YYYY-MM-DD.md`)를
 자동으로 만들고 외부 데이터로 채우는 **cron 작업 전용** 스킬이다.
 사람이 직접 호출하기보다 cron job이 이 스킬을 로드해 절차를 그대로 수행한다.
 
 > 이 스킬은 `hermes` PKM 스킬의 **변경 이력 규칙**(노트 하단 `## History` +
-> `wiki/log.md` 통합 로그)을 그대로 따른다. vault 경로/규칙이 헷갈리면 `hermes` 스킬과
+> 감사 로그 `agents/state/changelog/{month}.md`)을 그대로 따른다. vault 경로/규칙이 헷갈리면 `hermes` 스킬과
 > 그 `config.yaml`을 기준으로 삼는다.
 
 ## 0. 고정 환경 (검증 완료 — 추측 금지)
@@ -37,9 +37,9 @@ metadata:
 | 항목 | 값 |
 |------|----|
 | Vault 루트 | `<vault_path>` (config) |
-| 일일 노트 | `{vault}/Retrospective/1. Daily/YYYY-MM-DD.md` |
+| 일일 노트 | `{vault}/journal/daily/YYYY-MM-DD.md` |
 | 템플릿 | `{vault}/Templates/template-retrospective-1-daily.md` |
-| 통합 로그 | `{vault}/wiki/log.md` (헤딩 `# Change Log`, 최신이 맨 위) |
+| 감사 로그 | `{vault}/agents/state/changelog/{month}.md` (`{month}`=YYYY-MM 당월, 헤딩 `# Change Log`, 최신이 맨 위) |
 | 타임존 | Asia/Seoul (KST) — 날짜/시각은 항상 `TZ=Asia/Seoul date` |
 | 스킬 스크립트 | `~/.hermes/skills/note-taking/daily-notes-automation/scripts/` |
 
@@ -103,15 +103,15 @@ TZ=Asia/Seoul date +"%Y-%m-%d %H:%M"   # → DATE, TIME
 ```
 
 ### A-2. 노트 존재 확인 / 생성
-- 대상: `{vault}/Retrospective/1. Daily/{DATE}.md`
+- 대상: `{vault}/journal/daily/{DATE}.md`
 - **이미 있으면** 새로 만들지 않고(절대 덮어쓰지 않음) 기존 파일을 그대로 쓴다(아래 채움 단계로).
 - **없으면** 템플릿으로 생성:
   1. `{vault}/Templates/template-retrospective-1-daily.md` 를 `read_file`.
   2. **마지막 `---` 이후 `## History` 섹션은 제외**하고 본문만 복사해 새 파일로 `write_file`.
-  3. 폴더(`Retrospective/1. Daily/`)가 없으면 write_file이 자동 생성한다.
+  3. 폴더(`journal/daily/`)가 없으면 write_file이 자동 생성한다.
   4. 새 파일이므로 본문 끝에 `## History`를 새로 만들고 첫 항목:
      `- {DATE} {TIME} 일일 회고 노트 자동 생성` (변경 이력 규칙은 아래 공통 절차).
-  5. 통합 로그에도 기록: `- {DATE} \`Retrospective/1. Daily/{DATE}.md\` — 일일 회고 노트 자동 생성`.
+  5. 감사 로그에도 기록: `- {DATE} \`journal/daily/{DATE}.md\` — 일일 회고 노트 자동 생성`.
 
 ### A-3. 데이터 수집 (병렬로 한 번에)
 ```bash
@@ -148,7 +148,7 @@ python3 "$SC/starred_mail.py"       # 별표 메일 합침
 ```bash
 TZ=Asia/Seoul date +"%Y-%m-%d %H:%M"
 ```
-- `{vault}/Retrospective/1. Daily/{DATE}.md` 를 `read_file`.
+- `{vault}/journal/daily/{DATE}.md` 를 `read_file`.
 - **파일이 없으면 작업 중단**(아침에 생성됐어야 함). 단, cron 안정성을 위해 없으면 작업 A의 생성 단계를 먼저 수행한 뒤 진행해도 된다.
 
 ### B-2. 데이터 수집
@@ -188,10 +188,10 @@ python3 "$SC/calendar_today.py"      # 캘린더 지난 일정 (오늘 일정과
 1. **수정한 파일의 `## History`** (파일 하단):
    - `## History` 헤딩 바로 아래(기존 항목 위)에 `- {DATE} {TIME} {action}` 삽입.
    - `## History`가 없으면 파일 맨 끝에 빈 줄 2개 + `---` + `## History` 헤딩과 함께 새로 만든다.
-2. **통합 로그** `{vault}/wiki/log.md`:
+2. **감사 로그** `{vault}/agents/state/changelog/{month}.md`(`{month}`=YYYY-MM, TZ=Asia/Seoul 기준 당월 파일):
    - `# Change Log` 헤딩 바로 아래에 다음 한 줄 삽입:
-     `- {DATE} {TIME} \`Retrospective/1. Daily/{DATE}.md\` — {action}`
-   - log.md가 없으면 `# Change Log` 헤딩으로 새로 만든다.
+     `- {DATE} {TIME} \`journal/daily/{DATE}.md\` — {action}`
+   - 파일이 없으면 `# Change Log` 헤딩으로 새로 만든다.
 
 ## 중요 규칙
 
@@ -212,7 +212,7 @@ python3 "$SC/calendar_today.py"      # 캘린더 지난 일정 (오늘 일정과
 - **Google 계정 혼동 금지** — 캘린더=PRIMARY, 메일=PRIMARY+SECOND 합침(계정 id는 config). 스크립트가 알아서 처리하니 직접 토큰 경로를 만지지 말 것.
 - **atom 피드의 커밋 메시지**는 `<content>` HTML의 `<blockquote>`에 있다(events API payload는 비어 옴). 스크립트가 처리하므로 직접 gh를 호출할 필요 없다.
 - **vault root 경로는 config `vault_path` 기준** — 한 단계 위로 잘못 쓰지 말 것(상위 경로와 헷갈리기 쉬움).
-- **공백 포함 경로**(`1. Daily`) 따옴표 처리 주의.
+- **경로 표기 시 따옴표 처리 주의**(공백·특수문자가 있는 경로).
 
 ## 의존성
 - `read_file` / `write_file` / `patch` / `terminal` (vault 파일 조작)
