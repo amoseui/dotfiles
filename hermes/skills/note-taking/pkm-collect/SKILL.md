@@ -96,9 +96,10 @@ digest.sessions를 읽고:
    - 이미 같은 링크 있으면 스킵(멱등). 시간대 헤딩 없으면 만든다. AI 섹션 자체가 없으면 daily note 맨 끝에
      `## 🤖 Hermes 작업 로그`를 새로 만들고 그 아래 추가(사람이 쓴 다른 섹션은 건드리지 않는다).
    - daily note 파일이 없으면 `Templates/template-retrospective-1-daily.md` 참고로 stub 생성 후 추가.
-4. **변경 이력**: daily note(사람 파일) 편집했으므로 `hermes` 스킬 "변경 이력 규칙"에 따라 daily note의
-   `## History` + 감사 로그(`agents/state/changelog/{month}.md`)에 기록. `agents/notes/`의 생성 노트는 AI 전용이므로 노트 내 `## History`
-   (최초 생성)만 남기고 감사 로그에는 중복 기록하지 않는다.
+4. **감사 로그 기록**: daily note 백링크 추가는 cron이 트리거하는 **자동 반복 작업**이므로 `hermes` 스킬의
+   변경 이력 규칙 중 "cron 자동 반복 기입 예외"가 적용된다 — **daily note 자신의 `## History`에는 기록하지
+   않고** 감사 로그(`agents/state/changelog/{month}.md`)에만 남긴다. `agents/notes/`의 생성 노트는 AI
+   전용이므로 위 2번의 노트 내 `## History`(최초 생성)는 그대로 유지하고, 감사 로그에는 중복 기록하지 않는다.
 
 ### 6. 마커 갱신 + 인박스 정리
 1단계에서 기억한 generated_at으로 마커를 저장하고, 처리한 인박스 파일을 보관 폴더로 옮긴다:
