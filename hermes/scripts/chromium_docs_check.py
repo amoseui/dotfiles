@@ -2,8 +2,8 @@
 import urllib.request, json, hashlib, datetime, os, tempfile
 from pathlib import Path
 VAULT=Path.home()/'Obsidian/amoseui'
-STATE=VAULT/'hermes/state/chromium-docs.json'
-BASE=VAULT/'hermes/notes/chromium-docs'
+STATE=VAULT/'agents/state/chromium-docs.json'
+BASE=VAULT/'wiki/references/chromium-docs'
 def raw_url(path): return f'https://raw.githubusercontent.com/chromium/chromium/main/{path}'
 def fetch(path):
     return urllib.request.urlopen(urllib.request.Request(raw_url(path),headers={'User-Agent':'Hermes/1.0'}),timeout=30).read().decode('utf-8','replace')
