@@ -36,7 +36,7 @@ Mac mini에서 확인한 앱과 데이터. Homebrew Cask가 확인된 앱은 `Br
 - [ ] `gh auth status`와 SSH Git clone 확인
 - [ ] `claude auth status --text` 확인
 - [ ] `hermes doctor` 통과
-- [ ] `hermes cron list`에서 6개 job 확인
+- [ ] `hermes cron list`에서 8개 job 확인
 - [ ] `hermes gateway start` 후 Discord 응답 확인
 - [ ] `local.hermes.webui` launchd와 loopback HTTP 8787 health 확인
 - [ ] `local.personal.observatory` launchd와 loopback HTTP 8788 health 확인
