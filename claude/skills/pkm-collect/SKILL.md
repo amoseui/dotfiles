@@ -2,7 +2,7 @@
 name: pkm-collect
 description: |
   [수동 폴백] 이 맥북에서 Claude Code 대화 기록을 직접 분석해 PKM vault의
-  "5. Claude/notes"에 노트로 합성하고 daily note에 백링크를 건다.
+  "agents/notes"에 노트로 합성하고 daily note에 백링크를 건다.
   ★ 평시 경로가 아니다: 평소에는 pkm-push가 digest를 인박스로 밀고 맥스튜디오
   Hermes의 pkm-collect가 노트를 합성한다(단일 경로). 이 스킬은 Hermes가
   장애·부재 중일 때, 또는 사용자가 "맥북에서 직접" 정리를 원할 때만 쓴다.
@@ -22,7 +22,7 @@ collect.py, 의미 판단·작성은 LLM**.
 
 ## 전제
 - vault: `/Users/amoseui/Obsidian/amoseui` (config.yaml의 vault_path). cwd와 무관하게 이 vault에 작성한다.
-- ★ **Claude가 자동 생성하는 노트는 사람 노트와 분리한다**: 노트 본체는 항상 **`5. Claude/notes/`** 안에만 만든다. 다른 PARA 폴더(`0. Inbox`, `1. Projects`, `3. Resources` 등)에 쓰지 않는다.
+- ★ **Claude가 자동 생성하는 노트는 사람 노트와 분리한다**: 노트 본체는 항상 **`agents/notes/`** 안에만 만든다. 다른 PARA 폴더(`0. Inbox`, `1. Projects`, `3. Resources` 등)에 쓰지 않는다.
 - 작성 전 반드시 **선정안 미리보기 + 사용자 승인**(4단계)을 거친다.
 - vault `.md`를 만들거나 고칠 때는 `[[obsidian-history]]` 규칙을 따른다(아래 5단계 참고).
 
@@ -37,7 +37,7 @@ mktemp로 임시 파일을 만들고(zsh noclobber → `>|`) digest를 받는다
 DIGEST=$(mktemp /tmp/pkm_collect.XXXXXX)
 python3 ~/.claude/skills/pkm-collect/scripts/collect.py \
   --vault "/Users/amoseui/Obsidian/amoseui" \
-  --note-dir "5. Claude/notes" \
+  --note-dir "agents/notes" \
   --exclude-keywords "의료,병원,보험,건강검진,진료,대장내시경" >| "$DIGEST"
 echo "$DIGEST"
 ```
@@ -63,18 +63,18 @@ digest.sessions를 읽고:
      ```bash
      ls "$PROJECT"/docs/superpowers/specs/*.md "$PROJECT"/docs/superpowers/plans/*.md 2>/dev/null
      ```
-2. `references/note-template.md` 구조로 **`/Users/amoseui/Obsidian/amoseui/5. Claude/notes/<한글 자연어 제목>.md`**를 **Write 도구로** 생성.
-   - 폴더가 없으면 만든다(`5. Claude/notes/`).
+2. `references/note-template.md` 구조로 **`/Users/amoseui/Obsidian/amoseui/agents/notes/<한글 자연어 제목>.md`**를 **Write 도구로** 생성.
+   - 폴더가 없으면 만든다(`agents/notes/`).
    - frontmatter: created/modified(`date "+%Y-%m-%d %H:%M:%S"`)/date/tags.
    - tags: base(work|personal) 1개 + 주제태그. 업무 repo→work, 개인 dev→personal.
    - 파일명 한글, 영문 케밥케이스 금지. 동명 파일 있으면 제목 보강.
    - 템플릿대로 노트 맨 끝에 `## History`(최초 생성) 한 줄을 남긴다.
-3. 오늘 daily note `/Users/amoseui/Obsidian/amoseui/Retrospective/1. Daily/$(date +%Y-%m-%d).md`에 백링크 추가:
+3. 오늘 daily note `/Users/amoseui/Obsidian/amoseui/journal/daily/$(date +%Y-%m-%d).md`에 백링크 추가:
    - 작업항목 대표 시각(started_at 로컬 시:분)으로 버킷 결정: <12:00 Morning / <18:00 Afternoon / 그 외 Evening.
    - config의 `journal_logs_heading`(기본 `## 🤖 Claude 작업 로그`) 섹션의 해당 `### Morning/Afternoon/Evening` 아래에 `- [[노트 제목]]` 추가(Edit 도구).
    - 이미 같은 링크가 있으면 추가하지 않는다(멱등). 해당 시간대 헤딩이 없으면 만든다. AI 전용 섹션이 없으면 daily note 맨 끝에 `## 🤖 Claude 작업 로그`를 새로 만들고 그 아래에 추가한다(사람이 쓴 다른 섹션은 건드리지 않는다).
    - daily note 파일 자체가 없으면 `Templates/template-retrospective-1-daily.md`를 참고해 stub을 만든 뒤 추가한다.
-4. **obsidian-history 적용**: daily note(사람 파일)를 편집했으므로 `[[obsidian-history]]` 규칙에 따라 daily note의 `## History`와 `wiki/log.md`에 변경을 기록한다. `5. Claude/notes/`의 생성 노트는 AI 전용 영역이므로 노트 내 `## History`(최초 생성)만 남기고 `wiki/log.md`에는 중복 기록하지 않는다.
+4. **obsidian-history 적용**: daily note(사람 파일)를 편집했으므로 `[[obsidian-history]]` 규칙에 따라 daily note의 `## History`와 감사 로그(`agents/state/changelog/YYYY-MM.md`)에 변경을 기록한다. `agents/notes/`의 생성 노트는 AI 전용 영역이므로 노트 내 `## History`(최초 생성)만 남기고 감사 로그에는 중복 기록하지 않는다.
 
 ### 6. 마커 갱신
 1단계에서 기억한 generated_at으로 마커를 저장:
@@ -88,4 +88,4 @@ rm -f "$DIGEST"
 ## 주의
 - 민감(의료/개인) 세션은 collect.py가 digest에서 이미 제외 → LLM에 노출되지 않는다.
 - 절대 원본 트랜스크립트 전체를 컨텍스트로 읽지 않는다. digest와 타깃 grep만 사용.
-- Claude 생성 노트는 반드시 `5. Claude/` 아래에만 둔다(사람 노트 영역 오염 금지).
+- Claude 생성 노트는 반드시 `agents/notes/` 아래에만 둔다(사람 노트 영역 오염 금지).

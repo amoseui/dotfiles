@@ -170,7 +170,7 @@ PKM 노트에 포함: A등급 전체, B등급 중 길이>50자 또는 다수 도
 ## 7. PKM 문서 업데이트
 
 PR 생성 성공 시 **반드시** `pkm` 스킬을 실행해 PR 노트를 vault에 기록한다.
-- PR URL을 컨텍스트로 제공하며 `pkm` 스킬 호출 → pkm이 PR 노트를 **`5. Claude/notes/`**(AI 전용 폴더)에 생성하고 `[[obsidian-history]]` 규칙을 적용한다.
+- PR URL을 컨텍스트로 제공하며 `pkm` 스킬 호출 → pkm이 PR 노트를 **`agents/notes/`**(AI 전용 폴더)에 생성하고 `[[obsidian-history]]` 규칙을 적용한다.
 - Step 6의 Prompt Journal이 있으면 노트에 함께 포함:
 
 ```markdown

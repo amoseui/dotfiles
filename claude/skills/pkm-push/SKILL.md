@@ -3,7 +3,7 @@ name: pkm-push
 description: |
   맥북(또는 보조 머신)에서 작업 종료 시 그날의 Claude Code + Codex 사용 내역을
   결정론적으로 수집해 digest JSON으로 만들고, 동기되는 Obsidian vault의 공유 인박스
-  (hermes/inbox/codex-claude/)에 밀어넣는다. 실제 노트 합성·daily 백링크는 이 머신이
+  (agents/inbox/codex-claude/)에 밀어넣는다. 실제 노트 합성·daily 백링크는 이 머신이
   아니라 Hermes가 도는 메인 맥에서 pkm-collect가 수행한다(역할 분리).
   트리거: "pkm push", "작업 내역 밀어줘", "오늘 내역 vault로", "push digest",
   하루 작업을 마치며 이 머신의 AI 사용 내역을 메인 머신으로 보내달라는 요청 시.
@@ -20,7 +20,7 @@ description: |
   (Claude `~/.claude/projects` + Codex `~/.codex/sessions`,`~/.codex/history.jsonl`을 함께 수집).
 - vault 루트는 머신마다 다를 수 있다 → **`~/.claude/skills/pkm-push/config.yaml`의 `vault_path`에서 읽는다**.
   (이 머신의 vault 경로 한 줄만 맞추면 됨. config가 없으면 사용자에게 묻고 만든다.)
-- 인박스: `{vault}/hermes/inbox/codex-claude/`. 파일명 `{hostname}-{YYYY-MM-DD-HHMM}.json`.
+- 인박스: `{vault}/agents/inbox/codex-claude/`. 파일명 `{hostname}-{YYYY-MM-DD-HHMM}.json`.
 - digest는 raw 수집물이다(민감 세션은 collect.py가 이미 제외). 인박스 파일은 메인 머신이
   처리 후 보관/이동하므로 여기서는 덮어쓰지 않고 매번 새 타임스탬프 파일로 남긴다.
 
@@ -38,7 +38,7 @@ cat ~/.claude/skills/pkm-push/config.yaml 2>/dev/null || echo "NO_CONFIG"
 mktemp로 임시 파일을 만들고(zsh noclobber → `>|`) digest를 받아 내용/세션 수를 확인한다:
 ```bash
 VAULT="<config의 vault_path>"
-INBOX="$VAULT/hermes/inbox/codex-claude"
+INBOX="$VAULT/agents/inbox/codex-claude"
 mkdir -p "$INBOX"
 HOST=$(hostname -s)
 STAMP=$(date +%Y-%m-%d-%H%M)
@@ -46,7 +46,7 @@ OUT="$INBOX/$HOST-$STAMP.json"
 
 python3 ~/.claude/skills/pkm-collect/scripts/collect.py \
   --vault "$VAULT" \
-  --note-dir "hermes/notes" \
+  --note-dir "agents/notes" \
   --exclude-keywords "의료,병원,보험,건강검진,진료,대장내시경" >| "$OUT"
 
 # 수집 결과 확인 (세션 수). 0이면 보고만 하고 빈 파일은 지운다.
@@ -69,7 +69,7 @@ PY
 (선택). 노트 본체 합성은 메인 머신 pkm-collect가 하므로 여기서는 강요하지 않는다.
 
 ### 3. 동기 확인 + 보고
-- 파일이 `{vault}/hermes/inbox/codex-claude/`에 생성됐는지 `ls`로 확인.
+- 파일이 `{vault}/agents/inbox/codex-claude/`에 생성됐는지 `ls`로 확인.
 - vault가 iCloud/Obsidian Sync로 동기되므로, **메인 맥의 Hermes pkm-collect가 다음 실행 때
   이 인박스를 읽어 노트로 합성**한다고 사용자에게 안내.
 - 보고: 생성한 파일 경로, 수집 세션 수, since 시각.
