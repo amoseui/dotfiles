@@ -13,7 +13,7 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         v = Path(td)
         (v / "sub").mkdir()
-        (v / "a.md").write_text("links: [[b]] [[sub/c]] [[missing]] ![[img.png]]", encoding="utf-8")
+        (v / "a.md").write_text("links: [[b]] [[sub/c]] [[missing]] ![[img.png]] [[b|별칭]] [[b#섹션]]", encoding="utf-8")
         (v / "b.md").write_text("---\ntitle: b\n---\nbody [[a]]", encoding="utf-8")
         (v / "sub" / "c.md").write_text("no links", encoding="utf-8")
 
@@ -25,12 +25,17 @@ def main():
         assert out["broken_count"] == 1, out
         assert out["broken"][0]["target"] == "missing", out
 
+        # Create .obsidian file to test exclusion filter
+        (v / ".obsidian").mkdir()
+        (v / ".obsidian" / "x.md").write_text("obsidian config file", encoding="utf-8")
+
         # add_author: adds to files without author, idempotent on rerun
         r = run("add_author.py", str(v), "claude")
         assert r.returncode == 0, r.stderr
         assert "changed=3 skipped=0" in r.stdout, r.stdout
         assert "author: claude" in (v / "b.md").read_text(encoding="utf-8")
         assert (v / "b.md").read_text(encoding="utf-8").count("---") == 2  # frontmatter intact
+        assert "author:" not in (v / ".obsidian" / "x.md").read_text(encoding="utf-8")  # .obsidian excluded
         r = run("add_author.py", str(v), "claude")
         assert "changed=0 skipped=3" in r.stdout, r.stdout
     print("ALL TESTS PASSED")

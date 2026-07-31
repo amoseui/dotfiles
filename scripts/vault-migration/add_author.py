@@ -3,9 +3,12 @@
 import re, sys
 from pathlib import Path
 
+SKIP_PARTS = {".obsidian", ".trash"}
+
 def process(root: Path, author: str) -> tuple[int, int]:
     changed = skipped = 0
-    for p in sorted(root.rglob("*.md")):
+    md_files = [p for p in sorted(root.rglob("*.md")) if not SKIP_PARTS & set(p.parts)]
+    for p in md_files:
         text = p.read_text(encoding="utf-8")
         if text.startswith("---\n"):
             end = text.find("\n---\n", 4)
