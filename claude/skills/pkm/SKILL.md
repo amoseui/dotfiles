@@ -27,7 +27,7 @@ Claude가 만드는 모든 노트는 사람이 쓴 노트와 섞지 않고 **전
 | 책/영화 노트 | `agents/media/` |
 | Daily Journal 백링크 | `journal/daily/YYYY-MM-DD.md`의 `## 🤖 Claude 작업 로그` 섹션 (백링크만, 노트 본체는 위 폴더에) |
 
-다른 PARA 폴더(`0. Inbox`, `1. Projects`, `2. Areas`, `3. Resources` 등)에 직접 쓰지 않는다.
+사람 존 폴더(`inbox/`, `projects/`, `areas/`, `journal/`)에 직접 쓰지 않는다 (daily note의 지정 섹션 편집은 예외).
 
 ## 도구 사용 규칙 (obsidian-cli 미사용)
 

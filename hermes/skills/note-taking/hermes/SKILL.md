@@ -72,7 +72,7 @@ echo "VAULT=$VAULT"
 > - **Hermes가 만드는 모든 노트는 사람 노트와 섞지 않고 config의 `note_dir`·`media_dir`
 >   (기본 `agents/notes`·`agents/media`)에만 둔다.** 다른 에이전트(Claude/Codex 등)와는
 >   이 폴더를 공유하며 frontmatter `author: hermes`로 구분한다(폴더 자체를 나누지 않는다).
-> - 다른 PARA 폴더(`0. Inbox`, `1. Projects`, `2. Areas`, `3. Resources` 등)에 직접 쓰지 않는다.
+> - 사람 존 폴더(`inbox/`, `projects/`, `areas/`, `journal/`)에 직접 쓰지 않는다 (daily note의 지정 섹션 편집은 예외).
 
 | 종류 | 위치 |
 |------|------|
@@ -257,7 +257,7 @@ cron으로 도는 자동 반복 작업(아침/밤 daily 갱신 등)이 넣는 �
 
 ## 7. llm-wiki — 지식 베이스 (ingest / query / lint)
 
-`hermes/`(config `wiki_dir`)에 사는 상호연결 위키. 소스를 한 번 컴파일해두고 최신으로 유지한다.
+`wiki/`(config `wiki_dir`)에 사는 상호연결 위키. 소스를 한 번 컴파일해두고 최신으로 유지한다.
 RAG와 달리 교차참조·모순·종합이 이미 페이지에 반영돼 있다. 도메인은 `wiki_schema`(SCHEMA.md) 참조.
 
 > [!CRITICAL] 위치/충돌 주의

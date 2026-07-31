@@ -22,7 +22,7 @@ collect.py, 의미 판단·작성은 LLM**.
 
 ## 전제
 - vault: `/Users/amoseui/Obsidian/amoseui` (config.yaml의 vault_path). cwd와 무관하게 이 vault에 작성한다.
-- ★ **Claude가 자동 생성하는 노트는 사람 노트와 분리한다**: 노트 본체는 항상 **`agents/notes/`** 안에만 만든다. 다른 PARA 폴더(`0. Inbox`, `1. Projects`, `3. Resources` 등)에 쓰지 않는다.
+- ★ **Claude가 자동 생성하는 노트는 사람 노트와 분리한다**: 노트 본체는 항상 **`agents/notes/`** 안에만 만든다. 사람 존 폴더(`inbox/`, `projects/`, `areas/`, `journal/`)에 직접 쓰지 않는다 (daily note의 지정 섹션 편집은 예외).
 - 작성 전 반드시 **선정안 미리보기 + 사용자 승인**(4단계)을 거친다.
 - vault `.md`를 만들거나 고칠 때는 `[[obsidian-history]]` 규칙을 따른다(아래 5단계 참고).
 
