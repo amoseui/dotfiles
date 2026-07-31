@@ -116,7 +116,7 @@ cat ~/.claude/skills/brief-morning/config.yaml 2>/dev/null || echo "NO_CONFIG"
 
 > **건너뛰기 조건**: `tasks.on_this_day: false`
 
-오늘과 **같은 월-일(MM-DD)** 의 과거 연도 daily note를 모두 조회한다. 내 vault는 daily note가 **단일 폴더 평면 구조**(`journal/daily/YYYY-MM-DD.md`, 연도 폴더 없음)이므로 파일명 기준으로 글롭한다.
+오늘과 **같은 월-일(MM-DD)** 의 과거 연도 daily note를 모두 조회한다. 내 vault는 daily note가 **단일 폴더 평면 구조**(`2-journal/daily/YYYY-MM-DD.md`, 연도 폴더 없음)이므로 파일명 기준으로 글롭한다.
 
 > ⚡ TASK E(최신 일지)의 파일 탐색과 **단일 Bash 호출로 동시 수행**한다.
 
@@ -128,7 +128,7 @@ setopt null_glob 2>/dev/null; shopt -s nullglob 2>/dev/null
 
 VAULT_ROOT=""   # config: vault.path (비어 있으면 이 블록 전체 skip)
 [ -n "$VAULT_ROOT" ] && [ -d "$VAULT_ROOT" ] || { echo "NO_VAULT"; exit 0; }
-VAULT="$VAULT_ROOT/journal/daily"
+VAULT="$VAULT_ROOT/2-journal/daily"
 TODAY_MMDD=$(date '+%m-%d')
 CUR_YEAR=$(date '+%Y')
 
@@ -388,4 +388,4 @@ _(미커밋·미푸시가 있는 worktree만 표시. 전부 깨끗하면 "정리
 
 ## 날짜 / 환경 확인
 
-오늘 날짜·요일은 `date`로 확인한다(시간대 Asia/Seoul, KST). 과거 날짜 오프셋 계산·주말 판정이 필요하므로(`journal/daily`) Glob tool 대신 항상 Bash로 파일을 탐색한다.
+오늘 날짜·요일은 `date`로 확인한다(시간대 Asia/Seoul, KST). 과거 날짜 오프셋 계산·주말 판정이 필요하므로(`2-journal/daily`) Glob tool 대신 항상 Bash로 파일을 탐색한다.

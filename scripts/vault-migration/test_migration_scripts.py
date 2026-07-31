@@ -25,9 +25,9 @@ def main():
         assert out["broken_count"] == 1, out
         assert out["broken"][0]["target"] == "missing", out
 
-        # Create agents/review/ with proposal links (excluded from broken-link scan)
-        (v / "agents" / "review").mkdir(parents=True)
-        (v / "agents" / "review" / "r.md").write_text("proposal: [[nonexistent-proposal]]", encoding="utf-8")
+        # Create 6-agents/review/ with proposal links (excluded from broken-link scan)
+        (v / "6-agents" / "review").mkdir(parents=True)
+        (v / "6-agents" / "review" / "r.md").write_text("proposal: [[nonexistent-proposal]]", encoding="utf-8")
 
         # vault_lint: md_count rises to 4, broken_count still 1 (review proposals excluded)
         r = run("vault_lint.py", str(v))

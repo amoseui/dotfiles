@@ -37,14 +37,14 @@ metadata:
 | 키 | 의미 |
 |----|------|
 | `vault_path` | vault 루트 절대 경로 (이 하위에서만 작업) |
-| `note_dir` | 일반/PR 노트 폴더 (vault 상대, 기본 `agents/notes` — 전 에이전트 공유, `author`로 구분) |
-| `media_dir` | 책/영화 노트 폴더 (vault 상대, 기본 `agents/media`) |
-| `wiki_dir` | llm-wiki 루트 폴더 (vault 상대, 기본 `wiki`) — SCHEMA/index/log/raw/entities/… 가 여기 산다 |
+| `note_dir` | 일반/PR 노트 폴더 (vault 상대, 기본 `6-agents/notes` — 전 에이전트 공유, `author`로 구분) |
+| `media_dir` | 책/영화 노트 폴더 (vault 상대, 기본 `6-agents/media`) |
+| `wiki_dir` | llm-wiki 루트 폴더 (vault 상대, 기본 `5-wiki`) — SCHEMA/index/log/raw/entities/… 가 여기 산다 |
 | `journal_glob` | daily note 경로 패턴, `{date}`=YYYY-MM-DD |
 | `journal_logs_heading` | daily note 내 Hermes 작업 백링크 섹션 헤딩 |
 | `journal_time_buckets` | morning_end / afternoon_end (시간대 버킷 경계) |
 | `daily_template` | daily note 없을 때 참고할 stub 템플릿 (vault 상대) |
-| `history_log` | 감사 로그 파일 (vault 상대, 기본 `agents/state/changelog/{month}.md`, `{month}`=YYYY-MM 당월) |
+| `history_log` | 감사 로그 파일 (vault 상대, 기본 `6-agents/state/changelog/{month}.md`, `{month}`=YYYY-MM 당월) |
 | `history_log_heading` | 이력 파일 최상단 헤딩 (이 아래에 최신 항목 삽입) |
 | `wiki_schema` / `wiki_index` / `wiki_log` | 위키 SCHEMA/index/log 경로 (vault 상대) |
 | `timezone` | 시각 기준 (기본 Asia/Seoul) |
@@ -70,9 +70,9 @@ echo "VAULT=$VAULT"
 > [!CRITICAL] 절대 경로 — 반드시 준수
 > - 모든 파일 작업은 `{vault}` 하위에서만 수행한다.
 > - **Hermes가 만드는 모든 노트는 사람 노트와 섞지 않고 config의 `note_dir`·`media_dir`
->   (기본 `agents/notes`·`agents/media`)에만 둔다.** 다른 에이전트(Claude/Codex 등)와는
+>   (기본 `6-agents/notes`·`6-agents/media`)에만 둔다.** 다른 에이전트(Claude/Codex 등)와는
 >   이 폴더를 공유하며 frontmatter `author: hermes`로 구분한다(폴더 자체를 나누지 않는다).
-> - 사람 존 폴더(`inbox/`, `projects/`, `areas/`, `journal/`)에 직접 쓰지 않는다 (daily note의 지정 섹션 편집은 예외).
+> - 사람 존 폴더(`1-inbox/`, `3-projects/`, `4-areas/`, `2-journal/`)에 직접 쓰지 않는다 (daily note의 지정 섹션 편집은 예외).
 
 | 종류 | 위치 |
 |------|------|
@@ -125,18 +125,18 @@ vault는 4개 존으로 나뉜다. Hermes는 이 중 **에이전트 존**에 노
 
 | 존 | 위치 | 역할 |
 |----|------|------|
-| 사람 존 | `journal/`·`projects/`·`areas/`·`inbox/` | 사람이 직접 관리. Hermes는 daily note의 `journal_logs_heading` 섹션 등 **지정된 섹션만** 편집(전체 소유 아님) |
-| 지식 존 | `wiki/`(config `wiki_dir`) | 소스를 컴파일한 상호연결 지식 베이스. **전 에이전트 공용** — 정합성 관리는 큐레이터(cron)가 담당 |
-| 에이전트 존 | `agents/`(`note_dir`·`media_dir` 등) | 에이전트 생성물 전용 |
-| 아카이브 존 | `archive/` | 완결·보관된 과거 자료 |
+| 사람 존 | `2-journal/`·`3-projects/`·`4-areas/`·`1-inbox/` | 사람이 직접 관리. Hermes는 daily note의 `journal_logs_heading` 섹션 등 **지정된 섹션만** 편집(전체 소유 아님) |
+| 지식 존 | `5-wiki/`(config `wiki_dir`) | 소스를 컴파일한 상호연결 지식 베이스. **전 에이전트 공용** — 정합성 관리는 큐레이터(cron)가 담당 |
+| 에이전트 존 | `6-agents/`(`note_dir`·`media_dir` 등) | 에이전트 생성물 전용 |
+| 아카이브 존 | `7-archive/` | 완결·보관된 과거 자료 |
 
 | 레이어 | 위치 | 역할 |
 |--------|------|------|
-| PKM 노트 | `agents/notes`, `agents/media` | 작업/PR/책/영화 등 개별 노트(이 SKILL.md의 1~6절). `agents/notes`는 Claude/Codex/Grok과 공유하며 `author` frontmatter로 구분 |
-| llm-wiki | `wiki/`(`SCHEMA.md`·`index.md`·`log.md`·`raw/`·`entities/`·`concepts/`·`comparisons/`·`queries/`·`references/`·`drafts/`) | 소스를 컴파일한 상호연결 지식 베이스(도메인 PKM) |
+| PKM 노트 | `6-agents/notes`, `6-agents/media` | 작업/PR/책/영화 등 개별 노트(이 SKILL.md의 1~6절). `6-agents/notes`는 Claude/Codex/Grok과 공유하며 `author` frontmatter로 구분 |
+| llm-wiki | `5-wiki/`(`SCHEMA.md`·`index.md`·`log.md`·`raw/`·`entities/`·`concepts/`·`comparisons/`·`queries/`·`references/`·`drafts/`) | 소스를 컴파일한 상호연결 지식 베이스(도메인 PKM) |
 
-- llm-wiki 레이어의 ingest/query/lint 절차·SCHEMA·frontmatter 규칙은 `[[llm-wiki]]` 스킬을 그대로 따른다. **단, WIKI 경로는 `WIKI_PATH` 기본값이 아니라 이 vault의 `wiki/`**(아래 config `wiki_dir`)다.
-- `wiki_log`(위키 작업 로그, 기본 `wiki/log.md`)와 감사 로그(`history_log`, 기본 `agents/state/changelog/{month}.md`)는 **경로·용도가 완전히 별개** — 헷갈리지 말 것.
+- llm-wiki 레이어의 ingest/query/lint 절차·SCHEMA·frontmatter 규칙은 `[[llm-wiki]]` 스킬을 그대로 따른다. **단, WIKI 경로는 `WIKI_PATH` 기본값이 아니라 이 vault의 `5-wiki/`**(아래 config `wiki_dir`)다.
+- `wiki_log`(위키 작업 로그, 기본 `5-wiki/log.md`)와 감사 로그(`history_log`, 기본 `6-agents/state/changelog/{month}.md`)는 **경로·용도가 완전히 별개** — 헷갈리지 말 것.
 - 어떤 입력이 "개별 노트"인지 "위키 페이지(2+ 소스/핵심)"인지는 SCHEMA의 Page Thresholds로 판단: 스쳐가는 건 노트, 반복·핵심이면 위키 페이지로 승격.
 
 ---
@@ -165,7 +165,7 @@ vault는 4개 존으로 나뉜다. Hermes는 이 중 **에이전트 존**에 노
 ## 4. Daily Journal 백링크
 
 ### 위치
-config의 `journal_glob`에서 `{date}`를 대상 날짜로 치환: `{vault}/journal/daily/YYYY-MM-DD.md`
+config의 `journal_glob`에서 `{date}`를 대상 날짜로 치환: `{vault}/2-journal/daily/YYYY-MM-DD.md`
 
 ### 시간대 판단
 - 00:00~05:59 (새벽) → **전날** 날짜의 Evening (아직 안 잔 것으로 간주)
@@ -238,7 +238,7 @@ vault 내 `.md`를 만들거나 고칠 때마다 **두 곳**에 이력을 남긴
 - 없으면 파일 맨 끝에 `---` + `## History`로 새로 만든다. 기존 항목은 수정/삭제 금지.
 - 형식: `- YYYY-MM-DD HH:MM 변경 내용 한 줄 요약`
 
-### 2) 감사 로그 (config `history_log`, 기본 `{vault}/agents/state/changelog/{month}.md`)
+### 2) 감사 로그 (config `history_log`, 기본 `{vault}/6-agents/state/changelog/{month}.md`)
 - `{month}`=YYYY-MM(TZ=Asia/Seoul 기준 당월). 파일이 없으면 `history_log_heading`(기본 `# Change Log`) 헤딩으로 새로 만든다.
 - 헤딩 바로 아래에 새 줄 삽입 → **최신이 맨 위**.
 - 형식: `- YYYY-MM-DD HH:MM \`vault 루트 기준 상대 경로\` — 변경 내용 요약`
@@ -257,12 +257,12 @@ cron으로 도는 자동 반복 작업(아침/밤 daily 갱신 등)이 넣는 �
 
 ## 7. llm-wiki — 지식 베이스 (ingest / query / lint)
 
-`wiki/`(config `wiki_dir`)에 사는 상호연결 위키. 소스를 한 번 컴파일해두고 최신으로 유지한다.
+`5-wiki/`(config `wiki_dir`)에 사는 상호연결 위키. 소스를 한 번 컴파일해두고 최신으로 유지한다.
 RAG와 달리 교차참조·모순·종합이 이미 페이지에 반영돼 있다. 도메인은 `wiki_schema`(SCHEMA.md) 참조.
 
 > [!CRITICAL] 위치/충돌 주의
-> - 위키 루트 = `{vault}/{wiki_dir}`. 위키 작업 로그는 `wiki_log`(기본 `wiki/log.md`)이며
->   **감사 로그인 `history_log`(기본 `agents/state/changelog/{month}.md`)와 별개**다. 둘을 혼동하지 않는다.
+> - 위키 루트 = `{vault}/{wiki_dir}`. 위키 작업 로그는 `wiki_log`(기본 `5-wiki/log.md`)이며
+>   **감사 로그인 `history_log`(기본 `6-agents/state/changelog/{month}.md`)와 별개**다. 둘을 혼동하지 않는다.
 > - `raw/` 안의 원본 소스는 **불변**. 수정/삭제하지 않는다(정정은 위키 페이지에).
 
 ### 7.0 오리엔테이션 (위키 작업마다 먼저)
@@ -342,7 +342,7 @@ ingest/query/lint 전에 항상 순서대로 읽어 자신을 맞춘다(중복 �
 - **시각은 `date`로 확인** — 추측 금지.
 - **`raw/`나 사람 노트를 임의 수정하지 않는다** — daily note 등 사람 파일은 지정된 섹션만 건드린다.
 - **이력 누락 금지** — vault `.md` 변경 시 `## History` + `history_log` 둘 다 기록.
-- **위키 로그 ≠ 감사 로그** — llm-wiki 작업은 `wiki_log`(기본 `wiki/log.md`)에, obsidian-history의 변경 감사는 `history_log`(기본 `agents/state/changelog/{month}.md`)에. 혼동 금지.
+- **위키 로그 ≠ 감사 로그** — llm-wiki 작업은 `wiki_log`(기본 `5-wiki/log.md`)에, obsidian-history의 변경 감사는 `history_log`(기본 `6-agents/state/changelog/{month}.md`)에. 혼동 금지.
 - **`raw/`는 불변** — 위키 원본 소스는 수정/삭제하지 않는다. 정정은 위키 페이지에서.
 - **고립 페이지 금지** — 위키 페이지는 `[[wikilinks]]` 최소 2개로 연결. index.md·log.md 갱신 누락 금지.
 - **vault root 경로 확인** — 실제 root는 `/Users/amoseui/Obsidian/amoseui`(중첩 아님), config.yaml의 `vault_path`와 일치한다. Claude Code의 `pkm` 스킬도 동일한 값을 쓴다(과거 문서 간 불일치가 있었으나 해소됨) — 서로 다른 값으로 베끼지 않는다.

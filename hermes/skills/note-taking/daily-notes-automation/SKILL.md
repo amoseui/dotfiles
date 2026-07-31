@@ -19,13 +19,13 @@ metadata:
 
 # Daily Notes Automation — 아침 브리핑 + 밤 회고
 
-매일 정해진 시각에 Obsidian의 일일 회고 노트(`journal/daily/YYYY-MM-DD.md`)를
+매일 정해진 시각에 Obsidian의 일일 회고 노트(`2-journal/daily/YYYY-MM-DD.md`)를
 자동으로 만들고 외부 데이터로 채우는 **cron 작업 전용** 스킬이다.
 사람이 직접 호출하기보다 cron job이 이 스킬을 로드해 절차를 그대로 수행한다.
 
 > 이 스킬의 실행은 전부 cron이 트리거하는 **자동 반복 작업**이므로 `hermes` PKM 스킬의 변경 이력 규칙 중
 > "cron 자동 반복 기입 예외"가 적용된다 — **daily note 자신의 `## History`에는 기록하지 않고**
-> 감사 로그(`agents/state/changelog/{month}.md`)에만 남긴다. vault 경로/규칙이 헷갈리면 `hermes` 스킬과
+> 감사 로그(`6-agents/state/changelog/{month}.md`)에만 남긴다. vault 경로/규칙이 헷갈리면 `hermes` 스킬과
 > 그 `config.yaml`을 기준으로 삼는다.
 
 ## 0. 고정 환경 (검증 완료 — 추측 금지)
@@ -38,9 +38,9 @@ metadata:
 | 항목 | 값 |
 |------|----|
 | Vault 루트 | `<vault_path>` (config) |
-| 일일 노트 | `{vault}/journal/daily/YYYY-MM-DD.md` |
+| 일일 노트 | `{vault}/2-journal/daily/YYYY-MM-DD.md` |
 | 템플릿 | `{vault}/Templates/template-retrospective-1-daily.md` |
-| 감사 로그 | `{vault}/agents/state/changelog/{month}.md` (`{month}`=YYYY-MM 당월, 헤딩 `# Change Log`, 최신이 맨 위) |
+| 감사 로그 | `{vault}/6-agents/state/changelog/{month}.md` (`{month}`=YYYY-MM 당월, 헤딩 `# Change Log`, 최신이 맨 위) |
 | 타임존 | Asia/Seoul (KST) — 날짜/시각은 항상 `TZ=Asia/Seoul date` |
 | 스킬 스크립트 | `~/.hermes/skills/note-taking/daily-notes-automation/scripts/` |
 
@@ -104,14 +104,14 @@ TZ=Asia/Seoul date +"%Y-%m-%d %H:%M"   # → DATE, TIME
 ```
 
 ### A-2. 노트 존재 확인 / 생성
-- 대상: `{vault}/journal/daily/{DATE}.md`
+- 대상: `{vault}/2-journal/daily/{DATE}.md`
 - **이미 있으면** 새로 만들지 않고(절대 덮어쓰지 않음) 기존 파일을 그대로 쓴다(아래 채움 단계로).
 - **없으면** 템플릿으로 생성:
   1. `{vault}/Templates/template-retrospective-1-daily.md` 를 `read_file`.
   2. **마지막 `---` 이후 `## History` 섹션은 제외**하고 본문만 복사해 새 파일로 `write_file`.
-  3. 폴더(`journal/daily/`)가 없으면 write_file이 자동 생성한다.
+  3. 폴더(`2-journal/daily/`)가 없으면 write_file이 자동 생성한다.
   4. **`## History`는 만들지 않는다**(cron 자동 반복 기입 예외 — 아래 "공통: 감사 로그 기록" 참고).
-     감사 로그에만 기록: `- {DATE} \`journal/daily/{DATE}.md\` — 일일 회고 노트 자동 생성`.
+     감사 로그에만 기록: `- {DATE} \`2-journal/daily/{DATE}.md\` — 일일 회고 노트 자동 생성`.
 
 ### A-3. 데이터 수집 (병렬로 한 번에)
 ```bash
@@ -148,7 +148,7 @@ python3 "$SC/starred_mail.py"       # 별표 메일 합침
 ```bash
 TZ=Asia/Seoul date +"%Y-%m-%d %H:%M"
 ```
-- `{vault}/journal/daily/{DATE}.md` 를 `read_file`.
+- `{vault}/2-journal/daily/{DATE}.md` 를 `read_file`.
 - **파일이 없으면 작업 중단**(아침에 생성됐어야 함). 단, cron 안정성을 위해 없으면 작업 A의 생성 단계를 먼저 수행한 뒤 진행해도 된다.
 
 ### B-2. 데이터 수집
@@ -188,9 +188,9 @@ python3 "$SC/calendar_today.py"      # 캘린더 지난 일정 (오늘 일정과
 일반 규칙대로 `## History`에도 기록한다).
 
 `TZ=Asia/Seoul date +"%Y-%m-%d %H:%M"`로 `{DATE} {TIME}`를 구해 감사 로그
-`{vault}/agents/state/changelog/{month}.md`(`{month}`=YYYY-MM, TZ=Asia/Seoul 기준 당월 파일)에 기록한다:
+`{vault}/6-agents/state/changelog/{month}.md`(`{month}`=YYYY-MM, TZ=Asia/Seoul 기준 당월 파일)에 기록한다:
 - `# Change Log` 헤딩 바로 아래(기존 항목 위)에 다음 한 줄 삽입 → **최신이 맨 위**:
-  `- {DATE} {TIME} \`journal/daily/{DATE}.md\` — {action}`
+  `- {DATE} {TIME} \`2-journal/daily/{DATE}.md\` — {action}`
 - 파일이 없으면 `# Change Log` 헤딩으로 새로 만든다.
 - 기존 항목은 절대 수정/삭제하지 않는다.
 

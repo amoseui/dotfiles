@@ -5,7 +5,7 @@ from pathlib import Path
 
 WIKILINK = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]*)?(?:\|[^\]]*)?\]\]")
 SKIP_PARTS = {".obsidian", ".trash"}
-PROPOSAL_DIRS = ("agents/review",)
+PROPOSAL_DIRS = ("6-agents/review",)
 
 def scan(vault: Path) -> dict:
     md_files = [p for p in vault.rglob("*.md") if not SKIP_PARTS & set(p.parts)]

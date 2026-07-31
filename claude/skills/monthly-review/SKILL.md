@@ -39,8 +39,8 @@ python3 ~/.claude/skills/monthly-review/scripts/usage_audit.py
   프로젝트별 세션·프롬프트 수, 월별 추이.
 - **한계를 함께 보고한다**: transcript는 주기 cleanup으로 최근 분량만 남는다.
   `.last-cleanup` 시각과 잔존 프로젝트 수를 결과에 명시한다.
-- **에이전트 활동 로그도 데이터 소스로 읽는다**: `~/Obsidian/amoseui/agents/state/changelog/*.md`
-  (월별 감사 로그)에서 A 소비 계측 항목(wiki/queries 생성 수, entities 참조 흔적, agents/review
+- **에이전트 활동 로그도 데이터 소스로 읽는다**: `~/Obsidian/amoseui/6-agents/state/changelog/*.md`
+  (월별 감사 로그)에서 A 소비 계측 항목(5-wiki/queries 생성 수, entities 참조 흔적, 6-agents/review
   생성 대비 APPLY 처리율)을 집계한다.
 
 ## 2. INVENTORY 소화 판정 갱신

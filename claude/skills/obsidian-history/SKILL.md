@@ -5,7 +5,7 @@ description: |
   이 스킬은 Claude가 Obsidian vault(amoseui) 안의 마크다운 파일을 편집(Edit/Write)할 때 반드시 함께 적용해야 한다.
   모든 Obsidian 파일 수정, 노트 편집, 템플릿 변경, 일일 노트 업데이트, wiki 문서 수정 등
   vault 내 .md 파일에 변경이 발생하는 모든 상황에서 자동으로 트리거된다.
-  단, 감사 로그(agents/state/changelog/YYYY-MM.md) 자체를 수정할 때는 중복 기록하지 않는다.
+  단, 감사 로그(6-agents/state/changelog/YYYY-MM.md) 자체를 수정할 때는 중복 기록하지 않는다.
 ---
 
 # obsidian-history — vault 수정 이력 관리
@@ -42,11 +42,11 @@ Amos는 Obsidian vault를 개인 지식 관리 시스템으로 사용하고 있�
 - 2026-04-13 06:38 아침 일정 메모에 회의 장소 보완
 ```
 
-### 2. 감사 로그 (`agents/state/changelog/YYYY-MM.md`)
+### 2. 감사 로그 (`6-agents/state/changelog/YYYY-MM.md`)
 
-`agents/state/changelog/` 아래 당월(TZ=Asia/Seoul 기준) 파일에도 변경 사항을 기록한다.
+`6-agents/state/changelog/` 아래 당월(TZ=Asia/Seoul 기준) 파일에도 변경 사항을 기록한다.
 
-- 파일 경로: `/Users/amoseui/Obsidian/amoseui/agents/state/changelog/YYYY-MM.md` (`YYYY-MM`은 TZ=Asia/Seoul 기준 당월)
+- 파일 경로: `/Users/amoseui/Obsidian/amoseui/6-agents/state/changelog/YYYY-MM.md` (`YYYY-MM`은 TZ=Asia/Seoul 기준 당월)
 - 파일이 없으면 `# Change Log` 헤딩과 함께 새로 만든다.
 - `# Change Log` 헤딩 바로 아래(기존 항목 위)에 새 줄을 삽입한다. 즉 **최신 항목이 항상 맨 위**에 온다.
 - **예외**: 감사 로그 자체를 수정하는 경우에는 감사 로그에 중복 기록하지 않는다.
@@ -61,12 +61,12 @@ Amos는 Obsidian vault를 개인 지식 관리 시스템으로 사용하고 있�
 # Change Log
 
 - 2026-04-13 14:30 `Templates/template-retrospective-1-daily.md` — 저녁 루틴 항목 수정
-- 2026-04-13 06:38 `journal/daily/2026-04-13.md` — 아침 브리핑 자동 업데이트
+- 2026-04-13 06:38 `2-journal/daily/2026-04-13.md` — 아침 브리핑 자동 업데이트
 ```
 
 ### 3. 예외: cron 자동 반복 기입
 
-cron으로 도는 자동 반복 작업(아침/밤 daily 갱신 등)이 넣는 반복 기입은 파일 내 `## History`에 쌓지 않고 감사 로그(`agents/state/changelog/YYYY-MM.md`)에만 남긴다. 매일 반복되는 자동 기입까지 `## History`에 쌓이면 노트 본문이 금방 지저분해지기 때문이다. 사람이 직접 요청한 편집이나 1회성 변경은 기존대로 두 곳 모두에 기록한다.
+cron으로 도는 자동 반복 작업(아침/밤 daily 갱신 등)이 넣는 반복 기입은 파일 내 `## History`에 쌓지 않고 감사 로그(`6-agents/state/changelog/YYYY-MM.md`)에만 남긴다. 매일 반복되는 자동 기입까지 `## History`에 쌓이면 노트 본문이 금방 지저분해지기 때문이다. 사람이 직접 요청한 편집이나 1회성 변경은 기존대로 두 곳 모두에 기록한다.
 
 ## 변경 내용 요약 작성 가이드
 
@@ -84,12 +84,12 @@ cron으로 도는 자동 반복 작업(아침/밤 daily 갱신 등)이 넣는 �
 
 1. 본문 내용을 먼저 수정한다.
 2. 해당 파일의 `## History` 섹션에 항목을 추가한다 (cron 등 자동 반복 기입은 이 단계를 건너뛴다 — 위 예외 참고).
-3. 감사 로그(`agents/state/changelog/YYYY-MM.md`)에 항목을 추가한다 (감사 로그 자체 수정이 아닌 경우).
+3. 감사 로그(`6-agents/state/changelog/YYYY-MM.md`)에 항목을 추가한다 (감사 로그 자체 수정이 아닌 경우).
 
 ## 적용 범위
 
 - **대상**: `/Users/amoseui/Obsidian/amoseui/` 하위의 모든 `.md` 파일
-- **제외**: 감사 로그(`agents/state/changelog/YYYY-MM.md`)를 수정할 때는 그 자체에 대한 로그를 감사 로그에 중복 기록하지 않음 (파일 내 History 섹션은 기록함)
+- **제외**: 감사 로그(`6-agents/state/changelog/YYYY-MM.md`)를 수정할 때는 그 자체에 대한 로그를 감사 로그에 중복 기록하지 않음 (파일 내 History 섹션은 기록함)
 - **제외**: cron 등 자동 반복 작업(아침/밤 daily 갱신 등)의 반복 기입은 파일 내 `## History`에 쌓지 않고 감사 로그에만 남긴다
 - **제외**: 새 파일을 처음 생성(Write)하는 경우, History의 첫 항목은 "최초 생성"으로 기록
 

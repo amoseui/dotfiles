@@ -3,9 +3,9 @@
 
 vault_path: /Users/amoseui/Obsidian/amoseui
 
-# ★ Claude가 자동 생성하는 노트는 사람 노트와 섞지 않고 전용 폴더(agents/notes)에만 둔다.
-note_dir: "agents/notes"              # vault 기준 상대 (AI 전용)
-journal_glob: "journal/daily/{date}.md"  # {date}=YYYY-MM-DD (내 daily note)
+# ★ Claude가 자동 생성하는 노트는 사람 노트와 섞지 않고 전용 폴더(6-agents/notes)에만 둔다.
+note_dir: "6-agents/notes"              # vault 기준 상대 (AI 전용)
+journal_glob: "2-journal/daily/{date}.md"  # {date}=YYYY-MM-DD (내 daily note)
 
 # 트랜스크립트 소스
 claude_projects: ~/.claude/projects

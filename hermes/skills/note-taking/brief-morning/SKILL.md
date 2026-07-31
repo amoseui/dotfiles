@@ -30,7 +30,7 @@ vault·repo를 수정하지 않는다(daily note를 채우는 건 daily-notes-au
 | 항목 | 값 |
 |------|----|
 | Vault 루트 | `$CFG_vault_path` (config) |
-| daily note | `{vault}/journal/daily/YYYY-MM-DD.md` (연도 폴더 없는 평면 구조) |
+| daily note | `{vault}/2-journal/daily/YYYY-MM-DD.md` (연도 폴더 없는 평면 구조) |
 | Git workspace | `$CFG_git_workspace` (config, recent_days=30) |
 | 캘린더 | PRIMARY 계정 `$CFG_accounts_primary` (scripts via daily-notes-automation) |
 | 메일 | PRIMARY+SECOND 별표 + 받은편지함 |
@@ -52,7 +52,7 @@ TASK E와 단일 terminal 호출로 동시 수행:
 ```bash
 eval "$(python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/_config.py --shell)"
 setopt null_glob 2>/dev/null; shopt -s nullglob 2>/dev/null
-VAULT="$CFG_vault_path/journal/daily"
+VAULT="$CFG_vault_path/2-journal/daily"
 TODAY_MMDD=$(TZ=Asia/Seoul date '+%m-%d'); CUR_YEAR=$(TZ=Asia/Seoul date '+%Y')
 echo "=== ON_THIS_DAY ==="
 for f in "$VAULT"/*-"$TODAY_MMDD".md; do
@@ -155,7 +155,7 @@ enabled 섹션만 출력, 비어있으면 해당 섹션 생략.
 
 ## Pitfalls
 - **읽기 전용** — vault/repo 수정 금지. daily note는 daily-notes-automation cron이 채운다.
-- 시각은 `TZ=Asia/Seoul date`. 과거 날짜 오프셋 계산·주말 판정이 필요하므로(`journal/daily`) Glob 대신 terminal로 탐색.
+- 시각은 `TZ=Asia/Seoul date`. 과거 날짜 오프셋 계산·주말 판정이 필요하므로(`2-journal/daily`) Glob 대신 terminal로 탐색.
 - Todoist MCP는 새 세션에서만 보임.
 - 캘린더=PRIMARY, 메일=PRIMARY+SECOND(계정 id는 config). gh는 별도 로그인 계정 사용.
 

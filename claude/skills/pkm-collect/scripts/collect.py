@@ -53,7 +53,7 @@ def is_sensitive(digest, keywords, paths):
 def main(argv=None):
     ap = argparse.ArgumentParser(description="pkm-collect digest builder")
     ap.add_argument("--vault", required=True)
-    # vault 기준 노트 인덱스 디렉터리(중복 감지용). 공백 포함 경로 허용(예: "agents/notes").
+    # vault 기준 노트 인덱스 디렉터리(중복 감지용). 공백 포함 경로 허용(예: "6-agents/notes").
     ap.add_argument("--note-dir", default="source/note")
     ap.add_argument("--claude-projects", default=str(Path.home() / ".claude/projects"))
     ap.add_argument("--codex-sessions", default=str(Path.home() / ".codex/sessions"))
@@ -61,7 +61,7 @@ def main(argv=None):
     ap.add_argument("--marker", default=str(Path(__file__).resolve().parent.parent / "state.json"))
     # 동기 vault 인박스: 보조 머신이 pkm-push로 밀어넣은 digest JSON들을 함께 합친다.
     ap.add_argument("--inbox-dir", default=None,
-                    help="보조 머신 digest JSON 폴더(예: <vault>/agents/inbox/codex-claude). "
+                    help="보조 머신 digest JSON 폴더(예: <vault>/6-agents/inbox/codex-claude). "
                          "이 안의 *.json sessions를 since 이후만 합친다.")
     ap.add_argument("--since", default=None)
     ap.add_argument("--min-prompts", type=int, default=2)
@@ -137,7 +137,7 @@ def main(argv=None):
 
     kept.sort(key=lambda x: x["started_at"])
 
-    # 공백 포함 상대경로(예: "agents/notes")를 안전하게 결합
+    # 공백 포함 상대경로(예: "6-agents/notes")를 안전하게 결합
     note_index_dir = Path(args.vault).joinpath(*Path(args.note_dir).parts)
     idx = notes_index.build_notes_index(note_index_dir)
     pr_urls = notes_index.pr_url_set(idx)

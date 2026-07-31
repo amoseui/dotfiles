@@ -3,7 +3,7 @@
     {
       "id": "e40f006feebb",
       "name": "daily-note 아침 통합 (06:00)",
-      "prompt": "daily-notes-automation 스킬을 로드해 \"작업 A — 아침 통합 (06:00)\" 절차를 그대로 수행하라.\n\n요약: 오늘(KST) 일일 회고 노트(~/Obsidian/amoseui/journal/daily/YYYY-MM-DD.md)가 없으면 템플릿(Templates/template-retrospective-1-daily.md, History 섹션 제외)으로 생성하고, 있으면 덮어쓰지 말고 그대로 사용한다. 그 다음 아침 브리핑 섹션을 채운다:\n- ### 오늘 일정 ← python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/calendar_today.py (prenine 캘린더)\n- ### 오늘 할 일 (Todoist) ← Todoist MCP todoist_task_get, filter \"(today | overdue) & p1\" (오늘+기한지난 최고우선순위 전부)\n- ### 이메일/Readwise 요약 ← python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/starred_mail.py (amoseui+prenine 별표편지함 전체 합침)\n\n각 헤딩 아래 \"* \" bullet 라인만 patch로 교체하고 다른 구조는 건드리지 마라. 대괄호 [ ]·위키링크·마크다운 링크 금지, 순수 텍스트와 bullet(*)만. 데이터 소스가 실패하면 중단하지 말고 해당 섹션을 \"…없음\"으로 채우고 계속 진행하라.\n\n마지막에 스킬의 \"공통: 감사 로그 기록\" 절차로 TZ=Asia/Seoul 기준 당월 감사 로그 `agents/state/changelog/YYYY-MM.md`(없으면 \"# Change Log\" 헤딩으로 새로 생성)에만 기록한다: \"- YYYY-MM-DD HH:MM `journal/daily/YYYY-MM-DD.md` — 아침 브리핑 자동 업데이트 (캘린더 일정, Todoist p1, 별표 메일)\" 삽입(최신이 맨 위, 기존 항목 보존). **노트 하단 ## History에는 기록하지 않는다**(cron 자동 반복 갱신 예외 — daily-notes-automation 스킬 참고). 시각은 반드시 TZ=Asia/Seoul date 로 확인.\n\n최종 응답은 무엇을 채웠는지 한국어 3~5줄 요약(일정 N건, 할일 N건, 메일 N건, 파일 생성/갱신 여부)으로 간결히.",
+      "prompt": "daily-notes-automation 스킬을 로드해 \"작업 A — 아침 통합 (06:00)\" 절차를 그대로 수행하라.\n\n요약: 오늘(KST) 일일 회고 노트(~/Obsidian/amoseui/2-journal/daily/YYYY-MM-DD.md)가 없으면 템플릿(Templates/template-retrospective-1-daily.md, History 섹션 제외)으로 생성하고, 있으면 덮어쓰지 말고 그대로 사용한다. 그 다음 아침 브리핑 섹션을 채운다:\n- ### 오늘 일정 ← python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/calendar_today.py (prenine 캘린더)\n- ### 오늘 할 일 (Todoist) ← Todoist MCP todoist_task_get, filter \"(today | overdue) & p1\" (오늘+기한지난 최고우선순위 전부)\n- ### 이메일/Readwise 요약 ← python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/starred_mail.py (amoseui+prenine 별표편지함 전체 합침)\n\n각 헤딩 아래 \"* \" bullet 라인만 patch로 교체하고 다른 구조는 건드리지 마라. 대괄호 [ ]·위키링크·마크다운 링크 금지, 순수 텍스트와 bullet(*)만. 데이터 소스가 실패하면 중단하지 말고 해당 섹션을 \"…없음\"으로 채우고 계속 진행하라.\n\n마지막에 스킬의 \"공통: 감사 로그 기록\" 절차로 TZ=Asia/Seoul 기준 당월 감사 로그 `6-agents/state/changelog/YYYY-MM.md`(없으면 \"# Change Log\" 헤딩으로 새로 생성)에만 기록한다: \"- YYYY-MM-DD HH:MM `2-journal/daily/YYYY-MM-DD.md` — 아침 브리핑 자동 업데이트 (캘린더 일정, Todoist p1, 별표 메일)\" 삽입(최신이 맨 위, 기존 항목 보존). **노트 하단 ## History에는 기록하지 않는다**(cron 자동 반복 갱신 예외 — daily-notes-automation 스킬 참고). 시각은 반드시 TZ=Asia/Seoul date 로 확인.\n\n최종 응답은 무엇을 채웠는지 한국어 3~5줄 요약(일정 N건, 할일 N건, 메일 N건, 파일 생성/갱신 여부)으로 간결히.",
       "skills": [
         "daily-notes-automation"
       ],
@@ -16,7 +16,7 @@
         "expr": "0 6 * * *",
         "display": "0 6 * * *"
       },
-      "enabled": true,
+      "enabled": false,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -40,7 +40,7 @@
     {
       "id": "d36562c85f40",
       "name": "daily-note 밤 회고 (23:50)",
-      "prompt": "daily-notes-automation 스킬을 로드해 \"작업 B — 밤 회고 (23:50)\" 절차를 그대로 수행하라.\n\n요약: 오늘(KST) 일일 회고 노트(~/Obsidian/amoseui/journal/daily/YYYY-MM-DD.md)를 read_file로 연다. 파일이 없으면 스킬의 작업 A 생성 단계를 먼저 수행한 뒤 진행한다. 그 다음 일일 회고(🌙) 섹션을 채운다:\n- ### Git 커밋 ← python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/git_commits_today.py (amoseui GitHub atom 피드, * repo: 커밋메시지)\n- ### Todoist 완료 항목 ← Todoist MCP todoist_activity_by_date_range (since 전날 T15:00:00Z, until 당일 T14:59:59Z, event_type completed, object_type item). 반환값을 KST로 변환해 오늘 항목만 필터, extra.content에서 제목 추출, 중복 제거. * 작업 제목\n- ### 캘린더 지난 일정 ← python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/calendar_today.py (prenine, * HH:MM 제목)\n- ### YouTube 시청 기록 ← 소스 없음, 손대지 않음\n\n각 헤딩 아래 \"* \" bullet만 patch로 교체하고 다른 구조는 건드리지 마라. 대괄호 [ ] 절대 금지, 링크 필요시 URL을 괄호 없이 평문으로. 데이터 소스 실패 시 중단하지 말고 \"…없음\"으로 채우고 계속 진행하라.\n\n마지막에 스킬의 \"공통: 감사 로그 기록\" 절차로 TZ=Asia/Seoul 기준 당월 감사 로그 `agents/state/changelog/YYYY-MM.md`(없으면 \"# Change Log\" 헤딩으로 새로 생성)에만 기록: \"- YYYY-MM-DD HH:MM `journal/daily/YYYY-MM-DD.md` — 일일 회고 자동 업데이트 (Git 커밋, Todoist 완료 항목, 캘린더 지난 일정)\" 삽입(최신이 맨 위, 기존 보존). **노트 하단 ## History에는 기록하지 않는다**(cron 자동 반복 갱신 예외 — daily-notes-automation 스킬 참고). 시각은 반드시 TZ=Asia/Seoul date 로 확인.\n\n최종 응답은 한국어 3~5줄 요약(커밋 N건, 완료 N건, 지난 일정 N건, 갱신 여부)으로 간결히.",
+      "prompt": "daily-notes-automation 스킬을 로드해 \"작업 B — 밤 회고 (23:50)\" 절차를 그대로 수행하라.\n\n요약: 오늘(KST) 일일 회고 노트(~/Obsidian/amoseui/2-journal/daily/YYYY-MM-DD.md)를 read_file로 연다. 파일이 없으면 스킬의 작업 A 생성 단계를 먼저 수행한 뒤 진행한다. 그 다음 일일 회고(🌙) 섹션을 채운다:\n- ### Git 커밋 ← python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/git_commits_today.py (amoseui GitHub atom 피드, * repo: 커밋메시지)\n- ### Todoist 완료 항목 ← Todoist MCP todoist_activity_by_date_range (since 전날 T15:00:00Z, until 당일 T14:59:59Z, event_type completed, object_type item). 반환값을 KST로 변환해 오늘 항목만 필터, extra.content에서 제목 추출, 중복 제거. * 작업 제목\n- ### 캘린더 지난 일정 ← python3 ~/.hermes/skills/note-taking/daily-notes-automation/scripts/calendar_today.py (prenine, * HH:MM 제목)\n- ### YouTube 시청 기록 ← 소스 없음, 손대지 않음\n\n각 헤딩 아래 \"* \" bullet만 patch로 교체하고 다른 구조는 건드리지 마라. 대괄호 [ ] 절대 금지, 링크 필요시 URL을 괄호 없이 평문으로. 데이터 소스 실패 시 중단하지 말고 \"…없음\"으로 채우고 계속 진행하라.\n\n마지막에 스킬의 \"공통: 감사 로그 기록\" 절차로 TZ=Asia/Seoul 기준 당월 감사 로그 `6-agents/state/changelog/YYYY-MM.md`(없으면 \"# Change Log\" 헤딩으로 새로 생성)에만 기록: \"- YYYY-MM-DD HH:MM `2-journal/daily/YYYY-MM-DD.md` — 일일 회고 자동 업데이트 (Git 커밋, Todoist 완료 항목, 캘린더 지난 일정)\" 삽입(최신이 맨 위, 기존 보존). **노트 하단 ## History에는 기록하지 않는다**(cron 자동 반복 갱신 예외 — daily-notes-automation 스킬 참고). 시각은 반드시 TZ=Asia/Seoul date 로 확인.\n\n최종 응답은 한국어 3~5줄 요약(커밋 N건, 완료 N건, 지난 일정 N건, 갱신 여부)으로 간결히.",
       "skills": [
         "daily-notes-automation"
       ],
@@ -53,7 +53,7 @@
         "expr": "50 23 * * *",
         "display": "50 23 * * *"
       },
-      "enabled": true,
+      "enabled": false,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -77,7 +77,7 @@
     {
       "id": "a9b0ddd29da7",
       "name": "pkm-collect 작업내역 수집 (23:55)",
-      "prompt": "pkm-collect 스킬을 로드해 그 절차를 수행하라. 오늘(KST) Claude Code + Codex 사용 내역(이 맥 로컬 ~/.claude·~/.codex + 동기 vault 인박스 ~/Obsidian/amoseui/agents/inbox/codex-claude/*.json)을 collect.py로 수집해 기록 가치 있는 작업만 agents/notes 에 노트로 만들고, 오늘 daily note의 \"## 🤖 Hermes 작업 로그\" 섹션에 백링크를 건다.\n\n비대화(cron) 실행이므로 사용자 승인 게이트(4단계)는 건너뛰고, 명백한 CREATE 후보(triviality=substantial, 즉 편집/커밋/PR이 있는 작업)만 자동 생성하라. 애매하거나 trivial/borderline 항목은 만들지 말고 SKIP으로 보고만 하라. 원본 트랜스크립트 전체는 절대 읽지 말고 digest 메타(source, project, user_prompts, edited_files, inbox_origin)만 사용하라.\n\n노트 생성·daily 백링크 후 hermes 스킬의 변경 이력 규칙대로 기록하되, 이 작업은 cron 자동 반복 기입 예외에 해당하므로 daily note의 ## History에는 기록하지 않고 TZ=Asia/Seoul 기준 당월 감사 로그 `agents/state/changelog/YYYY-MM.md`(없으면 \"# Change Log\" 헤딩으로 새로 생성)에만 기록하라(agents/notes의 새 노트는 노트 내 ## History만). 처리한 맥북 인박스 digest 파일은 재처리 방지를 위해 agents/inbox/codex-claude/_processed/ 로 이동하고, collect.py --update-marker 로 마커를 갱신하라. 시각은 TZ=Asia/Seoul date로 확인. AI 노트는 agents/notes 밖으로 내보내지 마라.\n\n최종 응답은 한국어 3~6줄: 생성한 노트 제목 목록, SKIP한 항목 수/사유, 처리한 인박스 파일 수를 간결히.",
+      "prompt": "pkm-collect 스킬을 로드해 그 절차를 수행하라. 오늘(KST) Claude Code + Codex 사용 내역(이 맥 로컬 ~/.claude·~/.codex + 동기 vault 인박스 ~/Obsidian/amoseui/6-agents/inbox/codex-claude/*.json)을 collect.py로 수집해 기록 가치 있는 작업만 6-agents/notes 에 노트로 만들고, 오늘 daily note의 \"## 🤖 Hermes 작업 로그\" 섹션에 백링크를 건다.\n\n비대화(cron) 실행이므로 사용자 승인 게이트(4단계)는 건너뛰고, 명백한 CREATE 후보(triviality=substantial, 즉 편집/커밋/PR이 있는 작업)만 자동 생성하라. 애매하거나 trivial/borderline 항목은 만들지 말고 SKIP으로 보고만 하라. 원본 트랜스크립트 전체는 절대 읽지 말고 digest 메타(source, project, user_prompts, edited_files, inbox_origin)만 사용하라.\n\n노트 생성·daily 백링크 후 hermes 스킬의 변경 이력 규칙대로 기록하되, 이 작업은 cron 자동 반복 기입 예외에 해당하므로 daily note의 ## History에는 기록하지 않고 TZ=Asia/Seoul 기준 당월 감사 로그 `6-agents/state/changelog/YYYY-MM.md`(없으면 \"# Change Log\" 헤딩으로 새로 생성)에만 기록하라(6-agents/notes의 새 노트는 노트 내 ## History만). 처리한 맥북 인박스 digest 파일은 재처리 방지를 위해 6-agents/inbox/codex-claude/_processed/ 로 이동하고, collect.py --update-marker 로 마커를 갱신하라. 시각은 TZ=Asia/Seoul date로 확인. AI 노트는 6-agents/notes 밖으로 내보내지 마라.\n\n최종 응답은 한국어 3~6줄: 생성한 노트 제목 목록, SKIP한 항목 수/사유, 처리한 인박스 파일 수를 간결히.",
       "skills": [
         "pkm-collect"
       ],
@@ -90,7 +90,7 @@
         "expr": "55 23 * * *",
         "display": "55 23 * * *"
       },
-      "enabled": true,
+      "enabled": false,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -114,7 +114,7 @@
     {
       "id": "d9b51c66615a",
       "name": "피드 신규 triage (매일 12시)",
-      "prompt": "매일 12시 \"신규 피드 triage\" 작업이다. Discord 리액션을 읽을 수 없으므로, 실제 선택 UI는 Obsidian 체크박스 리뷰 노트로 만든다. 한국어로 간결하게.\n\n## 1. 수집 + 리뷰 노트 생성\n반드시 Hermes venv Python 사용:\n```\nWORKDIR=$(mktemp -d \"${TMPDIR:-/tmp}/hermes-cron.XXXXXX\")\ntrap 'rm -f \"$WORKDIR/fp_gmail.json\" \"$WORKDIR/fp_rss.json\" \"$WORKDIR/fp_rss_full.json\"; rmdir \"$WORKDIR\"' EXIT\nPY=~/.hermes/hermes-agent/venv/bin/python\nPIPE=~/.hermes/feed-pipeline/scripts\nDATE=$(TZ=Asia/Seoul date +%Y-%m-%d)-new\n$PY $PIPE/rss_new.py 26 > $WORKDIR/fp_rss.json\n$PY $PIPE/gmail_backlog.py 40 > $WORKDIR/fp_gmail.json\ncat $WORKDIR/fp_rss.json | $PY $PIPE/fetch_content.py > $WORKDIR/fp_rss_full.json\n$PY $PIPE/make_review_note.py --gmail $WORKDIR/fp_gmail.json --rss $WORKDIR/fp_rss_full.json --date \"$DATE\"\n```\n생성 위치: `~/Obsidian/amoseui/agents/review/YYYY-MM-DD-new-feed-review.md`\n\n## 2. 사용자에게 Discord로 알림\n긴 목록을 Discord에 다 붙이지 말고, 리뷰 노트 경로만 알려라.\n메시지에 포함:\n- 생성된 Obsidian 리뷰 노트 경로\n- 각 항목 체크박스: NL+/NL-/KEEP/MERGE/SKIP/READ\n- 상단 APPLY 체크 후 여기서 \"리뷰 처리해\"라고 말하면 반영\n- APPLY 전에는 whitelist, Gmail unread, Reader archive, wiki ingest 모두 변경 없음\n\n## 3. 실제 처리\n이 cron은 리뷰 노트 생성만 한다. 사용자가 체크 후 요청하면 별도 세션에서 반영한다.",
+      "prompt": "매일 12시 \"신규 피드 triage\" 작업이다. Discord 리액션을 읽을 수 없으므로, 실제 선택 UI는 Obsidian 체크박스 리뷰 노트로 만든다. 한국어로 간결하게.\n\n## 1. 수집 + 리뷰 노트 생성\n반드시 Hermes venv Python 사용:\n```\nWORKDIR=$(mktemp -d \"${TMPDIR:-/tmp}/hermes-cron.XXXXXX\")\ntrap 'rm -f \"$WORKDIR/fp_gmail.json\" \"$WORKDIR/fp_rss.json\" \"$WORKDIR/fp_rss_full.json\"; rmdir \"$WORKDIR\"' EXIT\nPY=~/.hermes/hermes-agent/venv/bin/python\nPIPE=~/.hermes/feed-pipeline/scripts\nDATE=$(TZ=Asia/Seoul date +%Y-%m-%d)-new\n$PY $PIPE/rss_new.py 26 > $WORKDIR/fp_rss.json\n$PY $PIPE/gmail_backlog.py 40 > $WORKDIR/fp_gmail.json\ncat $WORKDIR/fp_rss.json | $PY $PIPE/fetch_content.py > $WORKDIR/fp_rss_full.json\n$PY $PIPE/make_review_note.py --gmail $WORKDIR/fp_gmail.json --rss $WORKDIR/fp_rss_full.json --date \"$DATE\"\n```\n생성 위치: `~/Obsidian/amoseui/6-agents/review/YYYY-MM-DD-new-feed-review.md`\n\n## 2. 사용자에게 Discord로 알림\n긴 목록을 Discord에 다 붙이지 말고, 리뷰 노트 경로만 알려라.\n메시지에 포함:\n- 생성된 Obsidian 리뷰 노트 경로\n- 각 항목 체크박스: NL+/NL-/KEEP/MERGE/SKIP/READ\n- 상단 APPLY 체크 후 여기서 \"리뷰 처리해\"라고 말하면 반영\n- APPLY 전에는 whitelist, Gmail unread, Reader archive, wiki ingest 모두 변경 없음\n\n## 3. 실제 처리\n이 cron은 리뷰 노트 생성만 한다. 사용자가 체크 후 요청하면 별도 세션에서 반영한다.",
       "skills": [
         "rss-triage-ingest",
         "hermes"
@@ -128,7 +128,7 @@
         "expr": "0 12 * * *",
         "display": "0 12 * * *"
       },
-      "enabled": true,
+      "enabled": false,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -153,7 +153,7 @@
     {
       "id": "5b07ded82e4a",
       "name": "누적 backlog 소진 (매일 12시)",
-      "prompt": "매일 \"누적 backlog 소진\" 작업이다. Discord에서 반응을 받을 수 없으므로, 실제 선택 UI는 Obsidian 체크박스 리뷰 노트로 만든다. 한국어로 간결하게.\n\n## 1. 수집 + 리뷰 노트 생성\n반드시 Hermes venv Python을 사용한다(시스템 python3는 google_api 의존성/문법 문제로 실패):\n```\nWORKDIR=$(mktemp -d \"${TMPDIR:-/tmp}/hermes-cron.XXXXXX\")\ntrap 'rm -f \"$WORKDIR/fp_gmail.json\" \"$WORKDIR/fp_reader.json\" \"$WORKDIR/fp_reader_full.json\"; rmdir \"$WORKDIR\"' EXIT\nPY=~/.hermes/hermes-agent/venv/bin/python\nPIPE=~/.hermes/feed-pipeline/scripts\nDATE=$(TZ=Asia/Seoul date +%Y-%m-%d)\n$PY $PIPE/gmail_backlog.py 30 > $WORKDIR/fp_gmail.json\n$PY $PIPE/reader_backlog.py 30 > $WORKDIR/fp_reader.json\ncat $WORKDIR/fp_reader.json | $PY $PIPE/fetch_content.py > $WORKDIR/fp_reader_full.json\n$PY $PIPE/make_review_note.py --gmail $WORKDIR/fp_gmail.json --reader $WORKDIR/fp_reader_full.json --date \"$DATE\"\n```\n생성 위치: `~/Obsidian/amoseui/agents/review/YYYY-MM-DD-feed-review.md`\n\n## 2. 사용자에게 Discord로 알림\n긴 목록을 Discord에 다 붙이지 말고, 리뷰 노트 경로만 알려라.\n메시지 형식:\n- 생성된 Obsidian 리뷰 노트 경로\n- 사용법: 각 항목의 NL+/NL-/KEEP/MERGE/SKIP/READ 체크박스 선택 → 상단 APPLY 체크\n- APPLY 전에는 아무 변경 없음\n- \"체크 후 여기서 '리뷰 처리해'라고 말하면 내가 반영한다\" 안내\n\n## 3. 읽음/ingest 처리\n이 cron은 생성만 한다. 실제 처리는 사용자가 체크 후 별도로 요청할 때 수행한다.\n수집 0건이어도 노트는 만들 수 있으며, 빈 섹션이면 \"backlog 비었음\" 알림.",
+      "prompt": "매일 \"누적 backlog 소진\" 작업이다. Discord에서 반응을 받을 수 없으므로, 실제 선택 UI는 Obsidian 체크박스 리뷰 노트로 만든다. 한국어로 간결하게.\n\n## 1. 수집 + 리뷰 노트 생성\n반드시 Hermes venv Python을 사용한다(시스템 python3는 google_api 의존성/문법 문제로 실패):\n```\nWORKDIR=$(mktemp -d \"${TMPDIR:-/tmp}/hermes-cron.XXXXXX\")\ntrap 'rm -f \"$WORKDIR/fp_gmail.json\" \"$WORKDIR/fp_reader.json\" \"$WORKDIR/fp_reader_full.json\"; rmdir \"$WORKDIR\"' EXIT\nPY=~/.hermes/hermes-agent/venv/bin/python\nPIPE=~/.hermes/feed-pipeline/scripts\nDATE=$(TZ=Asia/Seoul date +%Y-%m-%d)\n$PY $PIPE/gmail_backlog.py 30 > $WORKDIR/fp_gmail.json\n$PY $PIPE/reader_backlog.py 30 > $WORKDIR/fp_reader.json\ncat $WORKDIR/fp_reader.json | $PY $PIPE/fetch_content.py > $WORKDIR/fp_reader_full.json\n$PY $PIPE/make_review_note.py --gmail $WORKDIR/fp_gmail.json --reader $WORKDIR/fp_reader_full.json --date \"$DATE\"\n```\n생성 위치: `~/Obsidian/amoseui/6-agents/review/YYYY-MM-DD-feed-review.md`\n\n## 2. 사용자에게 Discord로 알림\n긴 목록을 Discord에 다 붙이지 말고, 리뷰 노트 경로만 알려라.\n메시지 형식:\n- 생성된 Obsidian 리뷰 노트 경로\n- 사용법: 각 항목의 NL+/NL-/KEEP/MERGE/SKIP/READ 체크박스 선택 → 상단 APPLY 체크\n- APPLY 전에는 아무 변경 없음\n- \"체크 후 여기서 '리뷰 처리해'라고 말하면 내가 반영한다\" 안내\n\n## 3. 읽음/ingest 처리\n이 cron은 생성만 한다. 실제 처리는 사용자가 체크 후 별도로 요청할 때 수행한다.\n수집 0건이어도 노트는 만들 수 있으며, 빈 섹션이면 \"backlog 비었음\" 알림.",
       "skills": [
         "rss-triage-ingest"
       ],
@@ -166,7 +166,7 @@
         "expr": "5 12 * * *",
         "display": "5 12 * * *"
       },
-      "enabled": true,
+      "enabled": false,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -191,7 +191,7 @@
     {
       "id": "b60801d34906",
       "name": "Chromium docs PKM 전체번역 업데이트",
-      "prompt": "매일 Chromium 주요 문서 PKM 전체번역 업데이트 작업이다. 한국어로 간결하게 보고하라.\n\n중요 사용자 규칙:\n- 요약본 금지. 번역 노트는 원문 구조를 유지한 한국어 전체 번역이어야 한다.\n- 저장 위치는 `~/Obsidian/amoseui/wiki/references/chromium-docs/` 하위만 사용한다.\n- 상태 파일은 `~/Obsidian/amoseui/agents/state/chromium-docs.json` 이다.\n- 원문은 `https://raw.githubusercontent.com/chromium/chromium/main/{source_path}` 에서 가져온다.\n- vault 변경 시 hermes PKM 규칙에 따라 각 노트 `## History`와 TZ=Asia/Seoul 기준 당월 감사 로그 `~/Obsidian/amoseui/agents/state/changelog/YYYY-MM.md`(없으면 \"# Change Log\" 헤딩으로 새로 생성)에 변경 이력을 남긴다.\n\n절차:\n1. `python3 ~/.hermes/scripts/chromium_docs_check.py` 를 실행해 changed / untranslated_queue / errors를 확인한다.\n2. changed가 있으면, 이미 번역 완료된 문서라도 원문 전체를 다시 가져와 해당 노트를 원문 전체 번역으로 갱신한다. 변경분 요약만 추가하지 말고 전체 번역 상태를 유지한다.\n3. changed가 없고 untranslated_queue가 있으면, 대기열 맨 앞 문서 1개만 선택해 원문 전체를 가져와 한국어 전체 번역 노트를 새로 만든다. 긴 문서도 요약하지 말고 제목/섹션/목록/코드블록 구조를 유지해 전체 번역한다. 너무 길어 한 번에 어렵다면 파일을 만들지 말고 '길이 때문에 보류'로 보고하라.\n4. 번역 완료 후 상태 파일에서 해당 doc의 `status`를 `translated`로 바꾸고, `translated_at`을 현재 시각으로 기록한다. 인덱스 `~/Obsidian/amoseui/wiki/references/chromium-docs/Chromium 문서 번역 인덱스.md`의 완료 목록/대기열 체크도 갱신한다.\n5. 최종 보고에는 변경 감지 여부, 새로 번역/갱신한 노트, 남은 대기 수, 에러를 짧게 적는다.",
+      "prompt": "매일 Chromium 주요 문서 PKM 전체번역 업데이트 작업이다. 한국어로 간결하게 보고하라.\n\n중요 사용자 규칙:\n- 요약본 금지. 번역 노트는 원문 구조를 유지한 한국어 전체 번역이어야 한다.\n- 저장 위치는 `~/Obsidian/amoseui/5-wiki/references/chromium-docs/` 하위만 사용한다.\n- 상태 파일은 `~/Obsidian/amoseui/6-agents/state/chromium-docs.json` 이다.\n- 원문은 `https://raw.githubusercontent.com/chromium/chromium/main/{source_path}` 에서 가져온다.\n- vault 변경 시 hermes PKM 규칙에 따라 각 노트 `## History`와 TZ=Asia/Seoul 기준 당월 감사 로그 `~/Obsidian/amoseui/6-agents/state/changelog/YYYY-MM.md`(없으면 \"# Change Log\" 헤딩으로 새로 생성)에 변경 이력을 남긴다.\n\n절차:\n1. `python3 ~/.hermes/scripts/chromium_docs_check.py` 를 실행해 changed / untranslated_queue / errors를 확인한다.\n2. changed가 있으면, 이미 번역 완료된 문서라도 원문 전체를 다시 가져와 해당 노트를 원문 전체 번역으로 갱신한다. 변경분 요약만 추가하지 말고 전체 번역 상태를 유지한다.\n3. changed가 없고 untranslated_queue가 있으면, 대기열 맨 앞 문서 1개만 선택해 원문 전체를 가져와 한국어 전체 번역 노트를 새로 만든다. 긴 문서도 요약하지 말고 제목/섹션/목록/코드블록 구조를 유지해 전체 번역한다. 너무 길어 한 번에 어렵다면 파일을 만들지 말고 '길이 때문에 보류'로 보고하라.\n4. 번역 완료 후 상태 파일에서 해당 doc의 `status`를 `translated`로 바꾸고, `translated_at`을 현재 시각으로 기록한다. 인덱스 `~/Obsidian/amoseui/5-wiki/references/chromium-docs/Chromium 문서 번역 인덱스.md`의 완료 목록/대기열 체크도 갱신한다.\n5. 최종 보고에는 변경 감지 여부, 새로 번역/갱신한 노트, 남은 대기 수, 에러를 짧게 적는다.",
       "skills": [
         "hermes"
       ],
@@ -208,7 +208,7 @@
         "times": 365,
         "completed": 6
       },
-      "enabled": true,
+      "enabled": false,
       "deliver": "origin",
       "origin": {
         "platform": "webui",
@@ -232,7 +232,7 @@
     {
       "id": "8331351e1726",
       "name": "메모 큐레이션 (일요일 10:00)",
-      "prompt": "주간 \"사람 메모 큐레이션\" 작업이다. hermes 스킬을 로드해 config를 읽고 한국어로 간결하게 진행하라.\n\n1. 지난 7일간 수정된 사람 메모를 스캔한다: ~/Obsidian/amoseui/inbox/ 전체와 ~/Obsidian/amoseui/journal/daily/ 최근 7일 파일의 사람 작성 섹션(## 🤖 Hermes 작업 로그 섹션 제외).\n2. 위키(wiki/index.md + SCHEMA)와 대조해 각 메모가 (a) 기존 페이지에 반영할 내용인지 (b) 새 페이지 후보인지 (c) 해당 없음인지 분류한다.\n3. ~/Obsidian/amoseui/agents/review/YYYY-MM-DD-memo-review.md 체크박스 리뷰 노트를 만든다. 형식은 기존 feed-review와 동일: 항목별 [반영할 페이지 또는 신규 제안] 체크박스 + 상단 APPLY 체크. APPLY 전에는 어떤 위키 변경도 하지 않는다.\n4. 원본 메모는 절대 수정·이동하지 않는다(사람 원문 불변).\n5. Discord로 리뷰 노트 경로와 항목 수만 알린다. 후보 0건이면 노트를 만들지 않고 \"이번 주 큐레이션 후보 없음\"으로 보고한다.",
+      "prompt": "주간 \"사람 메모 큐레이션\" 작업이다. hermes 스킬을 로드해 config를 읽고 한국어로 간결하게 진행하라.\n\n1. 지난 7일간 수정된 사람 메모를 스캔한다: ~/Obsidian/amoseui/1-inbox/ 전체와 ~/Obsidian/amoseui/2-journal/daily/ 최근 7일 파일의 사람 작성 섹션(## 🤖 Hermes 작업 로그 섹션 제외).\n2. 위키(5-wiki/index.md + SCHEMA)와 대조해 각 메모가 (a) 기존 페이지에 반영할 내용인지 (b) 새 페이지 후보인지 (c) 해당 없음인지 분류한다.\n3. ~/Obsidian/amoseui/6-agents/review/YYYY-MM-DD-memo-review.md 체크박스 리뷰 노트를 만든다. 형식은 기존 feed-review와 동일: 항목별 [반영할 페이지 또는 신규 제안] 체크박스 + 상단 APPLY 체크. APPLY 전에는 어떤 위키 변경도 하지 않는다.\n4. 원본 메모는 절대 수정·이동하지 않는다(사람 원문 불변).\n5. Discord로 리뷰 노트 경로와 항목 수만 알린다. 후보 0건이면 노트를 만들지 않고 \"이번 주 큐레이션 후보 없음\"으로 보고한다.",
       "skills": [
         "hermes"
       ],
@@ -245,7 +245,7 @@
         "expr": "0 10 * * 0",
         "display": "0 10 * * 0"
       },
-      "enabled": true,
+      "enabled": false,
       "deliver": "origin",
       "origin": {
         "platform": "discord",
@@ -269,7 +269,7 @@
     {
       "id": "172e57bcec4e",
       "name": "위키 큐레이터 정합성 (일요일 22:00)",
-      "prompt": "주간 \"위키 큐레이터 정합성\" 작업이다. hermes 스킬을 로드해 config를 읽고 한국어로 간결하게 진행하라.\n\n1. lint: 스킬 7.3절 절차로 ~/Obsidian/amoseui/wiki/ 하위를 스캔한다 — 깨진 [[wikilink]], orphan(인바운드 0), index.md 누락/불일치, frontmatter 필수 필드 누락, taxonomy 밖 태그.\n2. index.md를 실제 파일 목록과 대조해 누락·잉여를 수정하고 Total/Last updated를 갱신한다.\n3. 승격 후보 제안: ~/Obsidian/amoseui/agents/notes/ 최근 7일 노트 중 위키 반영 가치가 있는 것(반복 주제·인프라 사실 변화·핵심 결정)을 찾아 ~/Obsidian/amoseui/agents/review/YYYY-MM-DD-promotion-review.md 체크박스 노트로 만든다. APPLY 전 위키 변경 없음. 후보 없으면 노트 생략.\n4. wiki/log.md에 \"## [날짜] lint | N issues, M fixed, 승격 후보 K건\"을 기록한다.\n5. Discord 보고: 발견/수정 요약과 리뷰 노트 경로만.",
+      "prompt": "주간 \"위키 큐레이터 정합성\" 작업이다. hermes 스킬을 로드해 config를 읽고 한국어로 간결하게 진행하라.\n\n1. lint: 스킬 7.3절 절차로 ~/Obsidian/amoseui/5-wiki/ 하위를 스캔한다 — 깨진 [[wikilink]], orphan(인바운드 0), index.md 누락/불일치, frontmatter 필수 필드 누락, taxonomy 밖 태그.\n2. index.md를 실제 파일 목록과 대조해 누락·잉여를 수정하고 Total/Last updated를 갱신한다.\n3. 승격 후보 제안: ~/Obsidian/amoseui/6-agents/notes/ 최근 7일 노트 중 위키 반영 가치가 있는 것(반복 주제·인프라 사실 변화·핵심 결정)을 찾아 ~/Obsidian/amoseui/6-agents/review/YYYY-MM-DD-promotion-review.md 체크박스 노트로 만든다. APPLY 전 위키 변경 없음. 후보 없으면 노트 생략.\n4. 5-wiki/log.md에 \"## [날짜] lint | N issues, M fixed, 승격 후보 K건\"을 기록한다.\n5. Discord 보고: 발견/수정 요약과 리뷰 노트 경로만.",
       "skills": [
         "hermes"
       ],
@@ -282,7 +282,7 @@
         "expr": "0 22 * * 0",
         "display": "0 22 * * 0"
       },
-      "enabled": true,
+      "enabled": false,
       "deliver": "origin",
       "origin": {
         "platform": "discord",

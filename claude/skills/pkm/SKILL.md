@@ -19,15 +19,15 @@ description: |
 
 ### ★ Claude 생성 문서 분리 (사용자 규칙)
 
-Claude가 만드는 모든 노트는 사람이 쓴 노트와 섞지 않고 **전용 영역 `agents/`** 아래(`agents/notes/`·`agents/media/`)에만 둔다.
+Claude가 만드는 모든 노트는 사람이 쓴 노트와 섞지 않고 **전용 영역 `6-agents/`** 아래(`6-agents/notes/`·`6-agents/media/`)에만 둔다.
 
 | 종류 | 위치 |
 |------|------|
-| 일반 노트 / PR 문서 | `agents/notes/` |
-| 책/영화 노트 | `agents/media/` |
-| Daily Journal 백링크 | `journal/daily/YYYY-MM-DD.md`의 `## 🤖 Claude 작업 로그` 섹션 (백링크만, 노트 본체는 위 폴더에) |
+| 일반 노트 / PR 문서 | `6-agents/notes/` |
+| 책/영화 노트 | `6-agents/media/` |
+| Daily Journal 백링크 | `2-journal/daily/YYYY-MM-DD.md`의 `## 🤖 Claude 작업 로그` 섹션 (백링크만, 노트 본체는 위 폴더에) |
 
-사람 존 폴더(`inbox/`, `projects/`, `areas/`, `journal/`)에 직접 쓰지 않는다 (daily note의 지정 섹션 편집은 예외).
+사람 존 폴더(`1-inbox/`, `3-projects/`, `4-areas/`, `2-journal/`)에 직접 쓰지 않는다 (daily note의 지정 섹션 편집은 예외).
 
 ## 도구 사용 규칙 (obsidian-cli 미사용)
 
@@ -36,7 +36,7 @@ Claude가 만드는 모든 노트는 사람이 쓴 노트와 섞지 않고 **전
 - 새 노트: `Write`로 절대 경로에 생성. 폴더가 없으면 만든다.
 - 기존 노트 편집: 먼저 `Read`로 읽고 `Edit`로 정확한 위치만 수정(기존 내용 보존, 중복 방지).
 - 검색: `Grep`(내용) / `Glob`(파일명)으로 vault 하위 탐색. 공백 포함 경로 주의.
-- **vault `.md`를 만들거나 고칠 때는 반드시 `[[obsidian-history]]` 규칙을 따른다**(노트 하단 `## History` + 감사 로그 `agents/state/changelog/YYYY-MM.md` 기록).
+- **vault `.md`를 만들거나 고칠 때는 반드시 `[[obsidian-history]]` 규칙을 따른다**(노트 하단 `## History` + 감사 로그 `6-agents/state/changelog/YYYY-MM.md` 기록).
 
 ## 공통 규칙: frontmatter 시간
 
@@ -67,19 +67,19 @@ ls "$REPO"/docs/superpowers/specs/*.md "$REPO"/docs/superpowers/plans/*.md 2>/de
 ```
 
 ## 작업 노트 author 규칙
-agents/notes에 만드는 모든 노트의 frontmatter에 `author: claude`를 넣는다
+6-agents/notes에 만드는 모든 노트의 frontmatter에 `author: claude`를 넣는다
 (Codex/Grok/Hermes 노트와 한 폴더를 공유하며 author로 구분한다).
 
 ## 작업 전 entities 참조
-인프라·도구·프로젝트에 관한 작업을 시작할 때 `wiki/index.md`에서 관련
-`wiki/entities/` 페이지를 찾아 먼저 읽는다. 작업으로 인프라 사실이 바뀌면
+인프라·도구·프로젝트에 관한 작업을 시작할 때 `5-wiki/index.md`에서 관련
+`5-wiki/entities/` 페이지를 찾아 먼저 읽는다. 작업으로 인프라 사실이 바뀌면
 해당 entity 페이지를 갱신한다(설정값 복사 금지 — 맥락·결정·라이브 경로 참조만).
 
 ---
 
 ## 1. 노트 생성
 
-위치: `agents/notes/<제목>.md`. `Write`로 생성. **파일명과 같은 H1은 쓰지 않는다**(파일명이 제목 역할):
+위치: `6-agents/notes/<제목>.md`. `Write`로 생성. **파일명과 같은 H1은 쓰지 않는다**(파일명이 제목 역할):
 
 ```markdown
 ---
@@ -123,19 +123,19 @@ author: claude
 - `# 참고`의 세션·브랜치는 출처 역추적용 — 알 수 있을 때만 채운다.
 - work 노트는 **공통 규칙: superpowers 작업 문서 참고**를 적용한다 — repo에 spec/plan이 있으면 `# 목적`·`## 기술적 고려사항`을 보강하고 `# 참고`에 경로를 남긴다.
 
-생성 후 `[[obsidian-history]]`에 따라 감사 로그(`agents/state/changelog/YYYY-MM.md`)에도 한 줄 기록한다.
+생성 후 `[[obsidian-history]]`에 따라 감사 로그(`6-agents/state/changelog/YYYY-MM.md`)에도 한 줄 기록한다.
 
 ## 2. 노트 편집
 
 1. `Read`로 기존 내용 확인
 2. `Edit`로 해당 부분만 수정(기존 보존, 중복 방지)
 3. frontmatter `modified` 갱신
-4. `## History`에 항목 추가 + 감사 로그(`agents/state/changelog/YYYY-MM.md`) 기록 (`[[obsidian-history]]`)
+4. `## History`에 항목 추가 + 감사 로그(`6-agents/state/changelog/YYYY-MM.md`) 기록 (`[[obsidian-history]]`)
 
 ## 3. 노트 검색
 
 - 내용 검색: `Grep`로 vault 하위에서 검색어 탐색(`path` 지정 가능)
-- 파일명/폴더: `Glob`(예: `agents/notes/*.md`)
+- 파일명/폴더: `Glob`(예: `6-agents/notes/*.md`)
 - 결과를 사용자에게 목록으로 제시
 
 ---
@@ -143,7 +143,7 @@ author: claude
 ## 4. Daily Journal 백링크
 
 ### 위치
-`/Users/amoseui/Obsidian/amoseui/journal/daily/YYYY-MM-DD.md`
+`/Users/amoseui/Obsidian/amoseui/2-journal/daily/YYYY-MM-DD.md`
 
 ### 시간대 판단
 - 00:00~05:59 (새벽) → **전날** 날짜의 Evening (아직 안 잔 것으로 간주)
@@ -155,13 +155,13 @@ author: claude
    - 이미 같은 백링크가 있으면 스킵(멱등). 시간대 헤딩이 없으면 만든다.
    - `## 🤖 Claude 작업 로그` 섹션 자체가 없으면 daily note **맨 끝**에 새로 만들고 그 아래 추가한다(사람이 쓴 다른 섹션은 건드리지 않는다).
 3. daily note 파일이 없으면 `Templates/template-retrospective-1-daily.md`를 참고해 stub을 만든 뒤 추가한다.
-4. daily note는 사람 파일이므로 편집 후 `[[obsidian-history]]` 규칙(`## History` + 감사 로그 `agents/state/changelog/YYYY-MM.md`)을 적용한다.
+4. daily note는 사람 파일이므로 편집 후 `[[obsidian-history]]` 규칙(`## History` + 감사 로그 `6-agents/state/changelog/YYYY-MM.md`)을 적용한다.
 
 ---
 
 ## 5. PR 문서화
 
-GitHub PR을 work 노트로 변환해 **`agents/notes/`**에 기록한다. PR이 속한 repo에 superpowers spec/plan이 있으면 **공통 규칙: superpowers 작업 문서 참고**에 따라 `## 기술적 의사결정`을 보강하고 `## 참고`에 경로를 남긴다.
+GitHub PR을 work 노트로 변환해 **`6-agents/notes/`**에 기록한다. PR이 속한 repo에 superpowers spec/plan이 있으면 **공통 규칙: superpowers 작업 문서 참고**에 따라 `## 기술적 의사결정`을 보강하고 `## 참고`에 경로를 남긴다.
 
 ### PR 정보 수집
 - **URL 제공 시**: `gh pr view {url} --json ...`
@@ -219,19 +219,19 @@ author: claude
 
 PR 타입 → 주제 태그: feat/feature→feature, fix→fix, refactor→refactor, docs→docs, chore/build/ci/test→chore, "troubleshoot/debug"→troubleshooting, "plan/design"→planning, 판단 불가→feature.
 
-생성 후 감사 로그(`agents/state/changelog/YYYY-MM.md`)에 한 줄 기록(`[[obsidian-history]]`).
+생성 후 감사 로그(`6-agents/state/changelog/YYYY-MM.md`)에 한 줄 기록(`[[obsidian-history]]`).
 
 ---
 
 ## 6. 책/영화 노트
 
-위치: **`agents/media/<제목>.md`**.
+위치: **`6-agents/media/<제목>.md`**.
 
 ### 제목 확인
 사용자 입력에서 제목 추출(예: "오펜하이머 영화 추가" → `오펜하이머`). 알 수 없으면 `AskUserQuestion`.
 
 ### 중복 확인
-`Glob`/`Grep`으로 `agents/media/`에 동일 제목 파일이 있으면 알리고 중단.
+`Glob`/`Grep`으로 `6-agents/media/`에 동일 제목 파일이 있으면 알리고 중단.
 
 ### 영화 Frontmatter
 ```yaml
@@ -290,7 +290,7 @@ comment:
 ```
 본문: `## 내용 요약` / `## 느낀 점`. 저자·장르 등 추가 정보 제공 시 기입. cover는 웹 검색으로 채울 수 있음(선택).
 
-생성 후 감사 로그(`agents/state/changelog/YYYY-MM.md`)에 한 줄 기록(`[[obsidian-history]]`).
+생성 후 감사 로그(`6-agents/state/changelog/YYYY-MM.md`)에 한 줄 기록(`[[obsidian-history]]`).
 
 ---
 

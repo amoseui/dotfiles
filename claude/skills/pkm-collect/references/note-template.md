@@ -1,6 +1,6 @@
 # work-note 구조 레퍼런스 (pkm-collect 노트 작성용)
 
-이 노트는 `agents/notes/`(에이전트 전용 폴더, Claude/Codex 등 여러 에이전트와 공유)에만 생성한다. frontmatter의 `author: claude`로 다른 에이전트 노트와 구분한다. 사람이 쓴 노트와 섞지 않는다.
+이 노트는 `6-agents/notes/`(에이전트 전용 폴더, Claude/Codex 등 여러 에이전트와 공유)에만 생성한다. frontmatter의 `author: claude`로 다른 에이전트 노트와 구분한다. 사람이 쓴 노트와 섞지 않는다.
 
 frontmatter:
 ---

@@ -16,7 +16,7 @@ export 노트를 위키화할 때의 검증된 절차. SKILL.md 7.5절의 상세
 # execute_code — stdlib만 사용 (hermes_tools.read_file는 ["content"] 보장 안 함 → KeyError)
 import hashlib, re, os
 base = "<vault>/Readwise"           # export 루트
-raw_root = "<vault>/wiki/raw"
+raw_root = "<vault>/5-wiki/raw"
 ingested = "<오늘 YYYY-MM-DD>"      # date로 확인한 값
 jobs = [("Articles", os.path.join(raw_root, "articles")),
         ("Books",    os.path.join(raw_root, "books"))]
@@ -62,7 +62,7 @@ su = re.search(r'^- Summary:\s*\n?(.+?)(?=\n- URL:|\n## Highlights|\n- Category)
 `delegate_task(tasks=[...])`로 클러스터를 큰 것부터 3개씩. 각 task에 다음을 context로 박는다:
 - 입력: `/tmp/cl/<cluster>.txt`(파일 목록) + raw 절대경로 prefix
 - raw 구조 설명 + **raw 불변**(수정 금지)
-- 출력: `<vault>/wiki/concepts/<제목>.md`, 파일명 규칙(한글 자연어/하이픈, 특수문자→-)
+- 출력: `<vault>/5-wiki/concepts/<제목>.md`, 파일명 규칙(한글 자연어/하이픈, 특수문자→-)
 - 작업: 의미 주제로 클러스터링, 주제당 page 1개(잘게 쪼개지 말 것; 2+ 소스 같은 주제면 묶기), 단일·비핵심은 통합
 - 페이지 형식(반드시): SCHEMA frontmatter, 태그 taxonomy 한정, 첫 줄 요약→핵심 명제 불릿→소스별 `출처: [제목](URL)` + 하이라이트 blockquote, `[[wikilinks]]` 2+(배치 내 상호링크 + 기존 페이지로), 3+ 소스 종합 문단 끝 `^[raw/articles/파일.md]`, 끝에 `---`+`## History`
 - **index.md/log.md는 건드리지 말 것**(부모가 통합), `toolsets=['file']`
