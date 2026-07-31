@@ -18,6 +18,7 @@ date: {YYYY-MM-DD}
 tags:
   - {work|personal}      # base 정확히 1개 (업무 repo→work, 개인→personal)
   - {주제태그}            # feature/fix/refactor/docs/chore/troubleshooting/planning/dev …
+author: hermes
 ---
 
 >[!summary]
@@ -64,6 +65,7 @@ tags:
   - {PR 타입 주제 태그}   # feat→feature, fix→fix, refactor→refactor, docs→docs, chore/ci/test→chore …
 pr_url: {URL}
 repository: {repo-name}   # gh pr view --json headRepository --jq '.headRepository.name'
+author: hermes
 ---
 
 >[!summary]

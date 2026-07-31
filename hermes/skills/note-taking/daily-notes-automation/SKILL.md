@@ -23,8 +23,9 @@ metadata:
 자동으로 만들고 외부 데이터로 채우는 **cron 작업 전용** 스킬이다.
 사람이 직접 호출하기보다 cron job이 이 스킬을 로드해 절차를 그대로 수행한다.
 
-> 이 스킬은 `hermes` PKM 스킬의 **변경 이력 규칙**(노트 하단 `## History` +
-> 감사 로그 `agents/state/changelog/{month}.md`)을 그대로 따른다. vault 경로/규칙이 헷갈리면 `hermes` 스킬과
+> 이 스킬의 실행은 전부 cron이 트리거하는 **자동 반복 작업**이므로 `hermes` PKM 스킬의 변경 이력 규칙 중
+> "cron 자동 반복 기입 예외"가 적용된다 — **daily note 자신의 `## History`에는 기록하지 않고**
+> 감사 로그(`agents/state/changelog/{month}.md`)에만 남긴다. vault 경로/규칙이 헷갈리면 `hermes` 스킬과
 > 그 `config.yaml`을 기준으로 삼는다.
 
 ## 0. 고정 환경 (검증 완료 — 추측 금지)
@@ -109,9 +110,8 @@ TZ=Asia/Seoul date +"%Y-%m-%d %H:%M"   # → DATE, TIME
   1. `{vault}/Templates/template-retrospective-1-daily.md` 를 `read_file`.
   2. **마지막 `---` 이후 `## History` 섹션은 제외**하고 본문만 복사해 새 파일로 `write_file`.
   3. 폴더(`journal/daily/`)가 없으면 write_file이 자동 생성한다.
-  4. 새 파일이므로 본문 끝에 `## History`를 새로 만들고 첫 항목:
-     `- {DATE} {TIME} 일일 회고 노트 자동 생성` (변경 이력 규칙은 아래 공통 절차).
-  5. 감사 로그에도 기록: `- {DATE} \`journal/daily/{DATE}.md\` — 일일 회고 노트 자동 생성`.
+  4. **`## History`는 만들지 않는다**(cron 자동 반복 기입 예외 — 아래 "공통: 감사 로그 기록" 참고).
+     감사 로그에만 기록: `- {DATE} \`journal/daily/{DATE}.md\` — 일일 회고 노트 자동 생성`.
 
 ### A-3. 데이터 수집 (병렬로 한 번에)
 ```bash
@@ -138,7 +138,7 @@ python3 "$SC/starred_mail.py"       # 별표 메일 합침
 - 헤딩 사이에 기존 bullet이 여러 줄이면 그 블록 전체를 새 bullet들로 치환.
 - 대괄호 `[ ]` 금지(스크립트가 이미 치환). 위키링크/마크다운 링크 금지, 순수 텍스트만.
 
-### A-5. 변경 이력 기록 → "공통: 변경 이력" 절차 수행 (action="아침 브리핑 자동 업데이트 (캘린더 일정, Todoist p1, 별표 메일)").
+### A-5. 감사 로그 기록 → "공통: 감사 로그 기록" 절차 수행 (action="아침 브리핑 자동 업데이트 (캘린더 일정, Todoist p1, 별표 메일)").
 
 ---
 
@@ -176,22 +176,23 @@ python3 "$SC/calendar_today.py"      # 캘린더 지난 일정 (오늘 일정과
 - 각 헤딩 아래 `* ` bullet만 교체. `YouTube 시청 기록`은 비워둔다(소스 없음).
 - 대괄호 `[ ]` 절대 금지. 링크 필요 시 URL을 괄호 없이 평문으로.
 
-### B-4. 변경 이력 기록 → "공통: 변경 이력" 절차 (action="일일 회고 자동 업데이트 (Git 커밋, Todoist 완료 항목, 캘린더 지난 일정)").
+### B-4. 감사 로그 기록 → "공통: 감사 로그 기록" 절차 (action="일일 회고 자동 업데이트 (Git 커밋, Todoist 완료 항목, 캘린더 지난 일정)").
 
 ---
 
-## 공통: 변경 이력 (모든 .md 수정 후 — hermes 스킬과 동일)
+## 공통: 감사 로그 기록 (모든 자동 갱신 후 — cron 자동 반복 기입 예외)
 
-`TZ=Asia/Seoul date +"%Y-%m-%d %H:%M"`로 `{DATE} {TIME}`를 구해 **두 곳**에 기록한다.
-기존 항목은 절대 수정/삭제하지 않으며 최신 항목이 항상 맨 위.
+이 스킬의 실행은 전부 cron이 트리거하는 **자동 반복 작업**이므로 `hermes` 스킬의 변경 이력 규칙 중
+"cron 자동 반복 기입 예외"가 적용된다: **daily note 자신의 `## History`에는 기록하지 않는다.**
+감사 로그에만 남긴다(사람이 daily note를 직접 편집하는 경우는 이 예외 대상이 아니며 `hermes`/`obsidian-history`의
+일반 규칙대로 `## History`에도 기록한다).
 
-1. **수정한 파일의 `## History`** (파일 하단):
-   - `## History` 헤딩 바로 아래(기존 항목 위)에 `- {DATE} {TIME} {action}` 삽입.
-   - `## History`가 없으면 파일 맨 끝에 빈 줄 2개 + `---` + `## History` 헤딩과 함께 새로 만든다.
-2. **감사 로그** `{vault}/agents/state/changelog/{month}.md`(`{month}`=YYYY-MM, TZ=Asia/Seoul 기준 당월 파일):
-   - `# Change Log` 헤딩 바로 아래에 다음 한 줄 삽입:
-     `- {DATE} {TIME} \`journal/daily/{DATE}.md\` — {action}`
-   - 파일이 없으면 `# Change Log` 헤딩으로 새로 만든다.
+`TZ=Asia/Seoul date +"%Y-%m-%d %H:%M"`로 `{DATE} {TIME}`를 구해 감사 로그
+`{vault}/agents/state/changelog/{month}.md`(`{month}`=YYYY-MM, TZ=Asia/Seoul 기준 당월 파일)에 기록한다:
+- `# Change Log` 헤딩 바로 아래(기존 항목 위)에 다음 한 줄 삽입 → **최신이 맨 위**:
+  `- {DATE} {TIME} \`journal/daily/{DATE}.md\` — {action}`
+- 파일이 없으면 `# Change Log` 헤딩으로 새로 만든다.
+- 기존 항목은 절대 수정/삭제하지 않는다.
 
 ## 중요 규칙
 
@@ -200,7 +201,7 @@ python3 "$SC/calendar_today.py"      # 캘린더 지난 일정 (오늘 일정과
 - **bullet만 교체** — 헤딩/구조/사람이 쓴 다른 섹션은 건드리지 않는다.
 - **시각은 `TZ=Asia/Seoul date`로 확인** — 추측 금지.
 - **데이터 소스 실패 시 중단하지 말고** 해당 섹션을 "…없음"으로 채우고 나머지를 진행한다.
-- **History 기존 항목 보존** — 추가만, 수정/삭제 금지.
+- **daily note 자신의 `## History`에는 기록하지 않는다** — cron 자동 반복 기입 예외. 감사 로그 기존 항목 보존(추가만, 수정/삭제 금지).
 
 ## Pitfalls
 
