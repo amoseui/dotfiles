@@ -228,7 +228,81 @@
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null
+    },
+    {
+      "id": "8331351e1726",
+      "name": "\uba54\ubaa8 \ud050\ub808\uc774\uc158 (\uc77c\uc694\uc77c 10:00)",
+      "prompt": "\uc8fc\uac04 \"\uc0ac\ub78c \uba54\ubaa8 \ud050\ub808\uc774\uc158\" \uc791\uc5c5\uc774\ub2e4. hermes \uc2a4\ud0ac\uc744 \ub85c\ub4dc\ud574 config\ub97c \uc77d\uace0 \ud55c\uad6d\uc5b4\ub85c \uac04\uacb0\ud558\uac8c \uc9c4\ud589\ud558\ub77c.\n\n1. \uc9c0\ub09c 7\uc77c\uac04 \uc218\uc815\ub41c \uc0ac\ub78c \uba54\ubaa8\ub97c \uc2a4\uce94\ud55c\ub2e4: ~/Obsidian/amoseui/inbox/ \uc804\uccb4\uc640 ~/Obsidian/amoseui/journal/daily/ \ucd5c\uadfc 7\uc77c \ud30c\uc77c\uc758 \uc0ac\ub78c \uc791\uc131 \uc139\uc158(## \ud83e\udd16 Hermes \uc791\uc5c5 \ub85c\uadf8 \uc139\uc158 \uc81c\uc678).\n2. \uc704\ud0a4(wiki/index.md + SCHEMA)\uc640 \ub300\uc870\ud574 \uac01 \uba54\ubaa8\uac00 (a) \uae30\uc874 \ud398\uc774\uc9c0\uc5d0 \ubc18\uc601\ud560 \ub0b4\uc6a9\uc778\uc9c0 (b) \uc0c8 \ud398\uc774\uc9c0 \ud6c4\ubcf4\uc778\uc9c0 (c) \ud574\ub2f9 \uc5c6\uc74c\uc778\uc9c0 \ubd84\ub958\ud55c\ub2e4.\n3. ~/Obsidian/amoseui/agents/review/YYYY-MM-DD-memo-review.md \uccb4\ud06c\ubc15\uc2a4 \ub9ac\ubdf0 \ub178\ud2b8\ub97c \ub9cc\ub4e0\ub2e4. \ud615\uc2dd\uc740 \uae30\uc874 feed-review\uc640 \ub3d9\uc77c: \ud56d\ubaa9\ubcc4 [\ubc18\uc601\ud560 \ud398\uc774\uc9c0 \ub610\ub294 \uc2e0\uaddc \uc81c\uc548] \uccb4\ud06c\ubc15\uc2a4 + \uc0c1\ub2e8 APPLY \uccb4\ud06c. APPLY \uc804\uc5d0\ub294 \uc5b4\ub5a4 \uc704\ud0a4 \ubcc0\uacbd\ub3c4 \ud558\uc9c0 \uc54a\ub294\ub2e4.\n4. \uc6d0\ubcf8 \uba54\ubaa8\ub294 \uc808\ub300 \uc218\uc815\u00b7\uc774\ub3d9\ud558\uc9c0 \uc54a\ub294\ub2e4(\uc0ac\ub78c \uc6d0\ubb38 \ubd88\ubcc0).\n5. Discord\ub85c \ub9ac\ubdf0 \ub178\ud2b8 \uacbd\ub85c\uc640 \ud56d\ubaa9 \uc218\ub9cc \uc54c\ub9b0\ub2e4. \ud6c4\ubcf4 0\uac74\uc774\uba74 \ub178\ud2b8\ub97c \ub9cc\ub4e4\uc9c0 \uc54a\uace0 \"\uc774\ubc88 \uc8fc \ud050\ub808\uc774\uc158 \ud6c4\ubcf4 \uc5c6\uc74c\"\uc73c\ub85c \ubcf4\uace0\ud55c\ub2e4.",
+      "skills": [
+        "hermes"
+      ],
+      "skill": "hermes",
+      "model": "gpt-5.5",
+      "provider": "openai-codex",
+      "no_agent": false,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 10 * * 0",
+        "display": "0 10 * * 0"
+      },
+      "enabled": true,
+      "deliver": "origin",
+      "origin": {
+        "platform": "discord",
+        "chat_id": "1520778022943195238",
+        "thread_id": "1520778022943195238"
+      },
+      "enabled_toolsets": [
+        "terminal",
+        "file"
+      ],
+      "next_run_at": "2026-08-02T10:00:00+09:00",
+      "last_run_at": "2026-07-31T15:04:26.405698+09:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "fire_claim": null,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null
+    },
+    {
+      "id": "172e57bcec4e",
+      "name": "\uc704\ud0a4 \ud050\ub808\uc774\ud130 \uc815\ud569\uc131 (\uc77c\uc694\uc77c 22:00)",
+      "prompt": "\uc8fc\uac04 \"\uc704\ud0a4 \ud050\ub808\uc774\ud130 \uc815\ud569\uc131\" \uc791\uc5c5\uc774\ub2e4. hermes \uc2a4\ud0ac\uc744 \ub85c\ub4dc\ud574 config\ub97c \uc77d\uace0 \ud55c\uad6d\uc5b4\ub85c \uac04\uacb0\ud558\uac8c \uc9c4\ud589\ud558\ub77c.\n\n1. lint: \uc2a4\ud0ac 7.3\uc808 \uc808\ucc28\ub85c ~/Obsidian/amoseui/wiki/ \ud558\uc704\ub97c \uc2a4\uce94\ud55c\ub2e4 \u2014 \uae68\uc9c4 [[wikilink]], orphan(\uc778\ubc14\uc6b4\ub4dc 0), index.md \ub204\ub77d/\ubd88\uc77c\uce58, frontmatter \ud544\uc218 \ud544\ub4dc \ub204\ub77d, taxonomy \ubc16 \ud0dc\uadf8.\n2. index.md\ub97c \uc2e4\uc81c \ud30c\uc77c \ubaa9\ub85d\uacfc \ub300\uc870\ud574 \ub204\ub77d\u00b7\uc789\uc5ec\ub97c \uc218\uc815\ud558\uace0 Total/Last updated\ub97c \uac31\uc2e0\ud55c\ub2e4.\n3. \uc2b9\uaca9 \ud6c4\ubcf4 \uc81c\uc548: ~/Obsidian/amoseui/agents/notes/ \ucd5c\uadfc 7\uc77c \ub178\ud2b8 \uc911 \uc704\ud0a4 \ubc18\uc601 \uac00\uce58\uac00 \uc788\ub294 \uac83(\ubc18\ubcf5 \uc8fc\uc81c\u00b7\uc778\ud504\ub77c \uc0ac\uc2e4 \ubcc0\ud654\u00b7\ud575\uc2ec \uacb0\uc815)\uc744 \ucc3e\uc544 ~/Obsidian/amoseui/agents/review/YYYY-MM-DD-promotion-review.md \uccb4\ud06c\ubc15\uc2a4 \ub178\ud2b8\ub85c \ub9cc\ub4e0\ub2e4. APPLY \uc804 \uc704\ud0a4 \ubcc0\uacbd \uc5c6\uc74c. \ud6c4\ubcf4 \uc5c6\uc73c\uba74 \ub178\ud2b8 \uc0dd\ub7b5.\n4. wiki/log.md\uc5d0 \"## [\ub0a0\uc9dc] lint | N issues, M fixed, \uc2b9\uaca9 \ud6c4\ubcf4 K\uac74\"\uc744 \uae30\ub85d\ud55c\ub2e4.\n5. Discord \ubcf4\uace0: \ubc1c\uacac/\uc218\uc815 \uc694\uc57d\uacfc \ub9ac\ubdf0 \ub178\ud2b8 \uacbd\ub85c\ub9cc.",
+      "skills": [
+        "hermes"
+      ],
+      "skill": "hermes",
+      "model": "gpt-5.5",
+      "provider": "openai-codex",
+      "no_agent": false,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 22 * * 0",
+        "display": "0 22 * * 0"
+      },
+      "enabled": true,
+      "deliver": "origin",
+      "origin": {
+        "platform": "discord",
+        "chat_id": "1520778022943195238",
+        "thread_id": "1520778022943195238"
+      },
+      "enabled_toolsets": [
+        "terminal",
+        "file"
+      ],
+      "next_run_at": "2026-08-02T22:00:00+09:00",
+      "last_run_at": "2026-07-31T15:13:22.176343+09:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "fire_claim": null,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null
     }
   ],
-  "updated_at": "2026-07-31T14:09:24.669433+09:00"
+  "updated_at": "2026-07-31T15:13:22.176729+09:00"
 }
