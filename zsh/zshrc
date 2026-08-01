@@ -47,6 +47,22 @@ ZSH_THEME="ys"
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 HIST_STAMPS="yyyy-mm-dd"
 
+# Location of your history file
+HISTFILE=~/.zsh_history
+
+# Number of lines to keep in the history file and session
+HISTSIZE=10000
+SAVEHIST=10000
+
+# Write to history immediately as you type, rather than when the shell closes
+setopt INC_APPEND_HISTORY
+
+# Share history across all open terminal windows
+setopt SHARE_HISTORY
+
+# Record the exact timestamp of each executed command
+setopt EXTENDED_HISTORY
+
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
