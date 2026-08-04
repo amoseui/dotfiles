@@ -15,7 +15,7 @@ Mac mini에서 확인한 앱과 데이터. Homebrew Cask가 확인된 앱은 `Br
 - JetBrains Toolbox 관리: Android Studio, CLion, IntelliJ IDEA Community Edition
 - vendor/기타: ChatGPT, Claude Code URL Handler, CuaDriver, Orca, Samsung Portable SSD
 - Chrome 앱: Google Docs, Google Sheets, Google Slides
-- Ghostty: 현재 앱 설치 snapshot은 없고 설정만 dotfiles에 포함
+- Ghostty: 2026-08-04 brew cask로 설치되어 Brewfile에 등재 (설정·테마는 기존대로 dotfiles symlink)
 
 ## 별도 데이터와 인증
 
