@@ -171,3 +171,18 @@ export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 [[ -f /opt/homebrew/opt/asdf/libexec/asdf.sh ]] && . /opt/homebrew/opt/asdf/libexec/asdf.sh
 alias cld='claude --dangerously-skip-permissions'
+
+# History: force a single shared history file. Orca pre-sets HISTFILE to its
+# own per-app path before sourcing this file, which isolates Orca panes from
+# every other terminal; assigning here (after oh-my-zsh/antigen) wins over
+# both the injected value and the oh-my-zsh defaults.
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=1000000
+SAVEHIST=1000000
+setopt share_history
+
+# >>> grok installer >>>
+export PATH="$HOME/.grok/bin:$PATH"
+fpath=(~/.grok/completions/zsh $fpath)
+autoload -Uz compinit && compinit -C
+# <<< grok installer <<<
