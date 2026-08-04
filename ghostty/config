@@ -21,7 +21,7 @@
 # # separated by equals signs.
 # font-family = Iosevka
 font-family = "Hack Nerd Font Mono"
-font-family = "Noto Sans CJK KR"
+font-family = "D2Coding"
 font-size = 13
 window-padding-x = 10
 
