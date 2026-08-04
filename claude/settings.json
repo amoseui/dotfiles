@@ -4,7 +4,11 @@
       "mcp__codegraph__*"
     ]
   },
-  "model": "opus[1m]",
+  "model": "claude-fable-5[1m]",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "hooks": {
     "UserPromptSubmit": [
       {
