@@ -8,3 +8,12 @@ delivery = "system"
 [ui]
 show_agent_labels_on_pane_borders = true
 agent_panel_sort = "spaces"
+
+[keys]
+# tmux-style: prefix is already ctrl+b (herdr default)
+# workspace switching without opening the picker (tmux session-switch feel)
+previous_workspace = "prefix+up"
+next_workspace = "prefix+down"
+switch_workspace = "prefix+shift+1..9"
+# tmux muscle memory: prefix+d detaches (herdr default was prefix+q)
+detach = "prefix+d"
