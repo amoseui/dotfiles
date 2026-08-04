@@ -29,6 +29,7 @@ files = (
     ("hermes/feed-pipeline", ".hermes/feed-pipeline"),
     ("ghostty/config", ".config/ghostty/config"),
     ("cmux/cmux.json", ".config/cmux/cmux.json"),
+    ("herdr/config.toml", ".config/herdr/config.toml"),
 )
 directories = (
     ("claude/agents", ".claude/agents"),
