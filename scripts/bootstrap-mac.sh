@@ -123,8 +123,10 @@ fi
 # Stable dotfiles are symlinked by the repository's idempotent linker.
 if $DRY_RUN; then
     echo "[dry-run] $ROOT/link.sh"
+    echo "[dry-run] $ROOT/scripts/apply-codex-defaults.sh"
 else
     "$ROOT/link.sh"
+    "$ROOT/scripts/apply-codex-defaults.sh"
 fi
 
 gateway_is_running() {

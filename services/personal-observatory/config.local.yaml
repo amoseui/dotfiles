@@ -1,6 +1,7 @@
 server:
   host: 127.0.0.1
   port: 8788
+  base_path: /obs
 obsidian:
   enabled: true
   vault_path: ~/Obsidian/amoseui

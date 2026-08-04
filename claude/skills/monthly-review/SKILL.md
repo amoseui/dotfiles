@@ -144,11 +144,31 @@ for pair in "claude/agents:$HOME/.claude/agents" "claude/commands:$HOME/.claude/
 done
 ```
 
-- Hermes가 없는 머신(예: 이 맥북)에서는 `hermes/skills/*` 매핑 4건이 `MISSING`으로
-  나온다 — 로드맵 T1-4(머신 프로파일 분기) 전까지는 정상이므로 결함으로 세지 않는다.
-- `OK` 외 항목은 원인(어느 도구가 언제 바꿨는지 mtime 포함)과 복구안을 보고
-  한다. 복구는 dotfiles-sync 스킬의 "최초 링크 생성 절차"를 따르고, 실행
-  전 사용자 확인을 받는다.
+- Hermes skill은 고정 4건을 세지 말고 dotfiles의 모든 `hermes/skills/**/SKILL.md`를
+  상대 경로로 검사한다. `link.sh`가 같은 상대 경로의 `~/.hermes/skills/` 심링크를
+  생성하므로, 신규 tracked skill은 별도 hard-code 없이 검사 대상에 포함된다.
+
+```bash
+while IFS= read -r skill; do
+  rel="${skill#"$REPO/hermes/skills/"}"
+  rel="${rel%/SKILL.md}"
+  dst="$HOME/.hermes/skills/$rel"
+  if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$REPO/hermes/skills/$rel" ]; then
+    echo "OK           $dst"
+  elif [ -L "$dst" ]; then
+    echo "WRONG_TARGET $dst -> $(readlink "$dst")"
+  elif [ -e "$dst" ]; then
+    echo "NOT_SYMLINK  $dst"
+  else
+    echo "MISSING      $dst"
+  fi
+done < <(find "$REPO/hermes/skills" -type f -name SKILL.md -print)
+```
+
+- Hermes가 없는 머신에서는 위 검사 결과가 모두 `MISSING`일 수 있다 — 그 머신에서
+  Hermes를 사용하지 않는다면 결함으로 세지 않는다.
+- `OK` 외 항목은 원인(어느 도구가 언제 바꿨는지 mtime 포함)과 복구안을 보고한다.
+  복구는 dotfiles-sync 스킬의 "최초 링크 생성 절차"를 따르고, 실행 전 사용자 확인을 받는다.
 
 ## 5. 보고
 

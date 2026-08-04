@@ -9,7 +9,7 @@ load_services_env "${DOTFILES_SERVICES_ENV:-$HOME/.config/dotfiles/services.env}
 DEST_ROOT=$1
 STAMP=$(date +%Y%m%d%H%M%S)-$$
 DEST=$DEST_ROOT/service-data-$STAMP
-OBS_REPO=${PERSONAL_OBSERVATORY_REPO:-$HOME/Workspace/personal-observatory}
+OBS_REPO=${PERSONAL_OBSERVATORY_REPO:-$HOME/Workspace/github/personal-observatory}
 [ ! -e "$DEST" ] || { echo "Backup destination already exists: $DEST" >&2; exit 1; }
 HERMES_PY=${HERMES_HOME:-$HOME/.hermes}/hermes-agent/venv/bin/python
 [ -x "$HERMES_PY" ] || { echo "Hermes Python missing: $HERMES_PY" >&2; exit 1; }

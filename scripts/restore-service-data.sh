@@ -7,7 +7,7 @@ ROOT=$(cd "$(dirname "$0")/.." && pwd)
 . "$ROOT/services/load-services-env.sh"
 load_services_env "${DOTFILES_SERVICES_ENV:-$HOME/.config/dotfiles/services.env}"
 SRC=$1/personal-observatory
-OBS_REPO=${PERSONAL_OBSERVATORY_REPO:-$HOME/Workspace/personal-observatory}
+OBS_REPO=${PERSONAL_OBSERVATORY_REPO:-$HOME/Workspace/github/personal-observatory}
 STAMP=$(date +%Y%m%d%H%M%S)
 HERMES_PY=${HERMES_HOME:-$HOME/.hermes}/hermes-agent/venv/bin/python
 

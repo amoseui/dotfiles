@@ -5,7 +5,7 @@ ROOT=$(cd "$(dirname "$0")/.." && pwd)
 HERMES_HOME_DIR=${HERMES_HOME:-$HOME/.hermes}
 BREW=/opt/homebrew/bin/brew
 HERMES_PY="$HERMES_HOME_DIR/hermes-agent/venv/bin/python"
-PERSONAL_OBSERVATORY_REPO=${PERSONAL_OBSERVATORY_REPO:-$HOME/Workspace/personal-observatory}
+PERSONAL_OBSERVATORY_REPO=${PERSONAL_OBSERVATORY_REPO:-$HOME/Workspace/github/personal-observatory}
 TMP_BREW=""
 STAGE_DIR=""
 
@@ -222,9 +222,11 @@ clean = [portable(job) for job in clean]
 # Validate the generated artifacts without exposing values.
 yaml.safe_load((root / "hermes/config.yaml").read_text())
 json.loads((root / "hermes/cron/jobs.json").read_text())
-todoist_env = (((config.get("mcp_servers") or {}).get("todoist") or {}).get("env") or {})
-if todoist_env.get("TODOIST_API_TOKEN") != "${TODOIST_API_TOKEN}":
-    raise SystemExit("Refusing to write a non-placeholder Todoist token")
+todoist = ((config.get("mcp_servers") or {}).get("todoist") or {})
+if todoist:
+    todoist_env = todoist.get("env") or {}
+    if todoist_env.get("TODOIST_API_TOKEN") != "${TODOIST_API_TOKEN}":
+        raise SystemExit("Refusing to write a non-placeholder Todoist token")
 for path in (root / "hermes/config.yaml", root / "hermes/cron/jobs.json"):
     text = path.read_text()
     if any(secret in text for secret in sensitive_values):

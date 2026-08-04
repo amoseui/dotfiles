@@ -6,7 +6,7 @@
 - **판정 기준** (스펙 §3): 최근 2주 내 3회 이상 실사용 또는 타 구성요소가 의존 → 유지·승격 /
   쓰는데 거슬림 → 수정·재설계 / 사용 0회·유지비용 0 → 보류 / 4주 무사용·유지비용 있음 → 폐기
 - **모름(계측 대기)** 는 T1-2 사용 계측 데이터가 모이면 재판정한다. 추측으로 채우지 않는다.
-- 마지막 갱신: 2026-07-31 (4존 마이그레이션 반영)
+- 마지막 갱신: 2026-08-05 (7월 검증·Hermes 스킬 단일 참조 반영)
 
 ## Claude Code — `claude/`
 
@@ -32,13 +32,16 @@
 
 | 구성요소 | 종류 | 출처 | 상태 | 판정 | 근거·메모 |
 |---|---|---|---|---|---|
-| hermes (허브) | 스킬 | 자작 (Claude pkm 스킬 파생, 7234170·5bba6b2) | 작동 | 유지 | llm-wiki 운영의 본체 — T2-1로 지식 경로 단일 소유자. 2026-07-31 4존 마이그레이션 반영 |
-| brief-morning | 스킬 | 자작 (Claude판 파생) | 작동 | 모름(계측 대기) | 맥미니 실물 확인은 세션 2 (스펙 §8). 2026-07-31 4존 마이그레이션 반영 |
+| hermes (허브) | 스킬 | 자작 (Claude pkm 스킬 파생, 7234170·5bba6b2) | 작동 | 유지 | llm-wiki 운영의 본체. 공통 PKM 규칙은 `shared/note-taking/CORE.md` 단일 참조를 읽고 Hermes 도구·config만 어댑트한다. |
+| brief-morning | 스킬 | 자작 (Claude판 파생) | 작동 | 모름(계측 대기) | 이전 Mac 환경 실물 확인은 세션 2 (스펙 §8). 2026-07-31 4존 마이그레이션 반영 |
 | daily-notes-automation | 스킬 | 자작 | 작동 | 모름(계측 대기) | 〃. 2026-07-31 4존 마이그레이션 반영 |
-| pkm-collect | 스킬 | 자작 (Claude판 파생) | 작동 | 유지 | 파이프라인의 맥미니 쪽 절반. 2026-07-31 4존 마이그레이션 반영 |
-| Hermes 코어 설정 | config·SOUL.md·cron·script | 자작 | **dotfiles 백업됨** | 유지 | 민감값은 `${ENV_VAR}`로 치환. note-taking 스킬(hermes·daily-notes-automation·pkm-collect·brief-morning)은 dotfiles로 symlink됨(편집이 곧 반영) — bootstrap 복사는 atomic-write 대상인 `~/.hermes/cron/jobs.json`·`~/.hermes/config.yaml`뿐(이전 표기 "symlink 대신 bootstrap 복사"는 부정확 — Task 7b 실측으로 정정, 2026-07-31) |
+| pkm-collect | 스킬 | 자작 (Claude판 파생) | 작동 | 유지 | 파이프라인의 로컬 Mac 쪽 절반. 2026-07-31 4존 마이그레이션 반영 |
+| rss-triage-ingest | 스킬 | 자작 (feed-pipeline cron 절차 추출) | 작동 | 유지 | 2026-08-05 dotfiles에 추가하고 `~/.hermes/skills/note-taking/rss-triage-ingest`로 symlink. 신규/누적 feed cron의 skill 참조를 복구했다. APPLY 전 외부 상태·위키 변경 없음. |
+| wiki-handoff-verification | 스킬 | 자작 (live 스킬 백업) | 작동 | 유지 | 2026-08-05 live skill과 references를 dotfiles로 백업하고 동일 경로로 symlink. 문서·live profile/cron/service 대조용. |
+| note-taking CORE | 공통 참조 | 자작 (2026-08-05) | 작동 | 유지 | `shared/note-taking/CORE.md`가 Claude `pkm`과 Hermes `hermes`가 공유하는 단일 규칙. `link.sh`가 `~/.claude/skills/note-taking-core.md`와 `~/.hermes/skills/note-taking-core.md`로 연결한다. |
+| Hermes 코어 설정 | config·SOUL.md·cron·script | 자작 | **dotfiles 백업됨** | 유지 | 민감값은 `${ENV_VAR}`로 치환. `hermes/skills/**/SKILL.md`는 Git에서 추적되었거나 ignore되지 않은 신규 원본을 `link.sh`가 자동 발견해 같은 상대 경로로 symlink한다(신규 skill 별도 hard-code 불필요) — atomic-write 대상인 `~/.hermes/cron/jobs.json`·`~/.hermes/config.yaml`은 복사 관리. |
 | 메모 큐레이션 (일요일 10:00) | cron | 자작 (2026-07-31) | 신설 | 모름(계측 대기) | ID `8331351e1726`. Task 11 live-verified(2026-07-31) — `hermes cron list` 8/8 확인 |
-| 위키 큐레이터 정합성 (일요일 22:00) | cron | 자작 (2026-07-31) | 신설 | 모름(계측 대기) | ID `172e57bcec4e`. Task 11 live-verified(2026-07-31) — `hermes cron list` 8/8 확인 |
+| 위키 큐레이터 정합성 (일요일 22:00) | cron | 자작 (2026-07-31) | 신설 | 확인 완료 (2026-08-05) | ID `172e57bcec4e`. 2026-08-05 수동 재실행 `completed`; `hermes cron list` 8/8 확인 |
 
 ## 전통 dotfiles
 

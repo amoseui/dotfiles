@@ -1,27 +1,53 @@
 model:
-  provider: custom
-  default: qwen3.6-27b
-  base_url: http://127.0.0.1:8080/v1
-  context_length: 65536
-  api_mode: chat_completions
+  provider: openai-codex
+  default: gpt-5.6-luna
 agent:
   max_turns: 150
-  reasoning_effort: medium
+  reasoning_effort: max
+  service_tier: priority
+  verbose: false
+  personalities:
+    surfer: Duuude! You're chatting with the chillest AI on the web, bro! Everything's
+      gonna be totally rad. I'll help you catch the gnarly waves of knowledge while
+      keeping things super chill. Cowabunga! 🤙
+    hype: YOOO LET'S GOOOO!!! 🔥🔥🔥 I am SO PUMPED to help you today! Every question
+      is AMAZING and we're gonna CRUSH IT together! This is gonna be LEGENDARY! ARE
+      YOU READY?! LET'S DO THIS! 💪😤🚀
 terminal:
   backend: local
+  cwd: .
+  timeout: 180
+  home_mode: auto
+  container_cpu: 1
+  container_memory: 5120
+  container_disk: 51200
+  container_persistent: true
+  docker_mount_cwd_to_workspace: false
+  lifetime_seconds: 300
 web:
-  backend: firecrawl
+  backend: ddgs
   use_gateway: false
 browser:
   cloud_provider: local
   use_gateway: false
+  inactivity_timeout: 120
 auxiliary:
   vision:
     provider: auto
     model: ''
 display:
-  busy_input_mode: queue
+  busy_input_mode: interrupt
   tool_progress: all
+  compact: false
+  bell_on_complete: false
+  show_reasoning: false
+  streaming: true
+  skin: default
+  interim_assistant_messages: true
+  cleanup_progress: false
+  long_running_notifications: true
+  busy_ack_detail: true
+  background_process_notifications: all
 dashboard:
   theme: mono
   font: jetbrains-mono
@@ -29,6 +55,7 @@ tts:
   use_gateway: false
 skills:
   disabled: []
+  creation_nudge_interval: 15
 onboarding:
   seen:
     profile_build_offered: true
@@ -38,12 +65,15 @@ _config_version: 33
 plugins:
   enabled:
   - orca-status
+  - herdr-agent-state
 session_reset:
   mode: none
+  idle_minutes: 1440
+  at_hour: 4
 image_gen:
   provider: openai-codex
   use_gateway: false
-  model: gpt-image-2-medium
+  model: gpt-image-2-high
 platform_toolsets:
   cli:
   - browser
@@ -63,6 +93,7 @@ platform_toolsets:
   - tts
   - vision
   - web
+  - mcp-codegraph
   discord:
   - browser
   - clarify
@@ -80,6 +111,24 @@ platform_toolsets:
   - tts
   - vision
   - web
+  telegram:
+  - hermes-telegram
+  whatsapp:
+  - hermes-whatsapp
+  slack:
+  - hermes-slack
+  signal:
+  - hermes-signal
+  homeassistant:
+  - hermes-homeassistant
+  qqbot:
+  - hermes-qqbot
+  yuanbao:
+  - hermes-yuanbao
+  teams:
+  - hermes-teams
+  google_chat:
+  - hermes-google_chat
 known_plugin_toolsets:
   cli:
   - spotify
@@ -91,3 +140,12 @@ mcp_servers:
     enabled: true
     env:
       TODOIST_API_TOKEN: ${TODOIST_API_TOKEN}
+  codegraph:
+    command: codegraph
+    args:
+    - serve
+    - --mcp
+    enabled: true
+    timeout: 120
+approvals:
+  destructive_slash_confirm: false

@@ -1,0 +1,5 @@
+# Portable Codex defaults.
+# `priority` is Codex's Fast service tier.
+model = "gpt-5.6-luna"
+model_reasoning_effort = "max"
+service_tier = "priority"

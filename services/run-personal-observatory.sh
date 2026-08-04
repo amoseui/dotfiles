@@ -7,7 +7,7 @@ SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 . "$SCRIPT_DIR/load-services-env.sh"
 load_services_env "$SERVICES_ENV"
 
-REPO=${PERSONAL_OBSERVATORY_REPO:-$HOME/Workspace/personal-observatory}
+REPO=${PERSONAL_OBSERVATORY_REPO:-$HOME/Workspace/github/personal-observatory}
 HOST=${PERSONAL_OBSERVATORY_HOST:-}
 PORT=${PERSONAL_OBSERVATORY_PORT:-8788}
 [[ "$PORT" =~ ^[0-9]+$ ]] || { echo "Invalid Personal Observatory port: $PORT" >&2; exit 1; }

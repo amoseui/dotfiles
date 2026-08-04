@@ -1,6 +1,6 @@
 # Mac Studio 수동 이전 체크리스트
 
-Mac mini에서 확인한 앱과 데이터. Homebrew Cask가 확인된 앱은 `Brewfile`로 옮겼고,
+이전 Mac 환경에서 확인한 앱과 데이터. Homebrew Cask가 확인된 앱은 `Brewfile`로 옮겼고,
 아래에는 App Store·vendor installer·앱 자체 manager가 필요한 항목만 남긴다.
 
 ## Brewfile로 자동 복원
@@ -36,12 +36,18 @@ Mac mini에서 확인한 앱과 데이터. Homebrew Cask가 확인된 앱은 `Br
 - [ ] `gh auth status`와 SSH Git clone 확인
 - [ ] `claude auth status --text` 확인
 - [ ] `hermes doctor` 통과
-- [ ] `hermes cron list`에서 8개 job 확인
+- [x] `hermes cron list`에서 8개 job 확인 (2026-08-05)
 - [ ] `hermes gateway start` 후 Discord 응답 확인
-- [ ] `local.hermes.webui` launchd와 loopback HTTP 8787 health 확인
-- [ ] `local.personal.observatory` launchd와 loopback HTTP 8788 health 확인
+- [x] `local.hermes.webui` launchd와 loopback HTTP 8787 health 확인 (2026-08-05, password 없음)
+- [x] `local.personal.observatory` launchd와 loopback HTTP 8788 health 확인 (2026-08-05)
 - [ ] Gmail/Calendar/Todoist/Readwise 연동 확인
 - [ ] Karabiner right-command → F18 확인
 - [ ] Ghostty/cmux/zsh 설정 확인
-- [ ] Tailscale 접속 확인
+- [x] Tailscale Serve의 8787/8788 경로 확인 (2026-08-05)
 - [ ] `docs/SERVICES.md`의 기동 순서와 별도 데이터 복원 완료
+
+## 2026-08-05 live 확인 메모
+
+- WebUI, Personal Observatory, llama.cpp의 loopback health가 모두 `ok`.
+- `local.hermes.webui`, `local.personal.observatory`, `local.llama.server`가 launchd에서 running.
+- `hermes doctor`는 core config/cron/gateway는 통과했지만 npm vulnerability와 SSH password-auth 경고가 남아 있어 전체 체크는 미완료로 유지.

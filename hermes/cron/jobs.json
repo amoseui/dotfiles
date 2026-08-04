@@ -8,8 +8,8 @@
         "daily-notes-automation"
       ],
       "skill": "daily-notes-automation",
-      "model": "gpt-5.5",
-      "provider": "openai-codex",
+      "model": "qwen3.6-27b",
+      "provider": "local-qwen",
       "no_agent": false,
       "schedule": {
         "kind": "cron",
@@ -26,16 +26,7 @@
       "enabled_toolsets": [
         "terminal",
         "file"
-      ],
-      "next_run_at": "2026-08-01T06:00:00+09:00",
-      "last_run_at": "2026-07-31T13:49:28.925791+09:00",
-      "last_status": "ok",
-      "last_error": null,
-      "last_delivery_error": null,
-      "fire_claim": null,
-      "state": "scheduled",
-      "paused_at": null,
-      "paused_reason": null
+      ]
     },
     {
       "id": "d36562c85f40",
@@ -45,8 +36,8 @@
         "daily-notes-automation"
       ],
       "skill": "daily-notes-automation",
-      "model": "gpt-5.5",
-      "provider": "openai-codex",
+      "model": "qwen3.6-27b",
+      "provider": "local-qwen",
       "no_agent": false,
       "schedule": {
         "kind": "cron",
@@ -63,16 +54,7 @@
       "enabled_toolsets": [
         "terminal",
         "file"
-      ],
-      "next_run_at": "2026-07-31T23:50:00+09:00",
-      "last_run_at": "2026-07-31T13:51:15.433952+09:00",
-      "last_status": "ok",
-      "last_error": null,
-      "last_delivery_error": null,
-      "fire_claim": null,
-      "state": "scheduled",
-      "paused_at": null,
-      "paused_reason": null
+      ]
     },
     {
       "id": "a9b0ddd29da7",
@@ -82,7 +64,7 @@
         "pkm-collect"
       ],
       "skill": "pkm-collect",
-      "model": "gpt-5.5",
+      "model": "gpt-5.6-luna",
       "provider": "openai-codex",
       "no_agent": false,
       "schedule": {
@@ -100,16 +82,7 @@
       "enabled_toolsets": [
         "terminal",
         "file"
-      ],
-      "next_run_at": "2026-07-31T23:55:00+09:00",
-      "last_run_at": "2026-07-31T13:55:05.186895+09:00",
-      "last_status": "ok",
-      "last_error": null,
-      "last_delivery_error": null,
-      "fire_claim": null,
-      "state": "scheduled",
-      "paused_at": null,
-      "paused_reason": null
+      ]
     },
     {
       "id": "d9b51c66615a",
@@ -120,8 +93,8 @@
         "hermes"
       ],
       "skill": "rss-triage-ingest",
-      "model": "gpt-5.5",
-      "provider": "openai-codex",
+      "model": "grok-4.5",
+      "provider": "xai-oauth",
       "no_agent": false,
       "schedule": {
         "kind": "cron",
@@ -140,15 +113,7 @@
         "file",
         "web"
       ],
-      "next_run_at": "2026-08-01T12:00:00+09:00",
-      "fire_claim": null,
-      "last_run_at": "2026-07-31T14:05:12.811259+09:00",
-      "last_status": "ok",
-      "last_error": null,
-      "last_delivery_error": null,
-      "state": "scheduled",
-      "paused_at": null,
-      "paused_reason": null
+      "base_url": "https://api.x.ai/v1"
     },
     {
       "id": "5b07ded82e4a",
@@ -158,8 +123,8 @@
         "rss-triage-ingest"
       ],
       "skill": "rss-triage-ingest",
-      "model": "gpt-5.5",
-      "provider": "openai-codex",
+      "model": "grok-4.5",
+      "provider": "xai-oauth",
       "no_agent": false,
       "schedule": {
         "kind": "cron",
@@ -178,15 +143,7 @@
         "file",
         "web"
       ],
-      "next_run_at": "2026-08-01T12:05:00+09:00",
-      "last_run_at": "2026-07-31T14:07:09.385395+09:00",
-      "last_status": "ok",
-      "last_error": null,
-      "last_delivery_error": null,
-      "fire_claim": null,
-      "state": "scheduled",
-      "paused_at": null,
-      "paused_reason": null
+      "base_url": "https://api.x.ai/v1"
     },
     {
       "id": "b60801d34906",
@@ -196,7 +153,7 @@
         "hermes"
       ],
       "skill": "hermes",
-      "model": "gpt-5.5",
+      "model": "gpt-5.6-luna",
       "provider": "openai-codex",
       "no_agent": false,
       "schedule": {
@@ -206,7 +163,7 @@
       },
       "repeat": {
         "times": 365,
-        "completed": 6
+        "completed": 0
       },
       "enabled": true,
       "deliver": "origin",
@@ -218,16 +175,7 @@
       "enabled_toolsets": [
         "terminal",
         "file"
-      ],
-      "next_run_at": "2026-08-01T09:00:00+09:00",
-      "last_run_at": "2026-07-31T14:09:24.669112+09:00",
-      "last_status": "ok",
-      "last_error": null,
-      "last_delivery_error": "unknown platform 'webui'",
-      "fire_claim": null,
-      "state": "scheduled",
-      "paused_at": null,
-      "paused_reason": null
+      ]
     },
     {
       "id": "8331351e1726",
@@ -237,8 +185,8 @@
         "hermes"
       ],
       "skill": "hermes",
-      "model": "gpt-5.5",
-      "provider": "openai-codex",
+      "model": "qwen3.6-27b",
+      "provider": "local-qwen",
       "no_agent": false,
       "schedule": {
         "kind": "cron",
@@ -255,16 +203,7 @@
       "enabled_toolsets": [
         "terminal",
         "file"
-      ],
-      "next_run_at": "2026-08-02T10:00:00+09:00",
-      "last_run_at": "2026-07-31T15:04:26.405698+09:00",
-      "last_status": "ok",
-      "last_error": null,
-      "last_delivery_error": null,
-      "fire_claim": null,
-      "state": "scheduled",
-      "paused_at": null,
-      "paused_reason": null
+      ]
     },
     {
       "id": "172e57bcec4e",
@@ -274,7 +213,7 @@
         "hermes"
       ],
       "skill": "hermes",
-      "model": "gpt-5.5",
+      "model": "gpt-5.6-luna",
       "provider": "openai-codex",
       "no_agent": false,
       "schedule": {
@@ -292,17 +231,7 @@
       "enabled_toolsets": [
         "terminal",
         "file"
-      ],
-      "next_run_at": "2026-08-02T22:00:00+09:00",
-      "last_run_at": "2026-07-31T15:13:22.176343+09:00",
-      "last_status": "ok",
-      "last_error": null,
-      "last_delivery_error": null,
-      "fire_claim": null,
-      "state": "scheduled",
-      "paused_at": null,
-      "paused_reason": null
+      ]
     }
-  ],
-  "updated_at": "2026-07-31T15:13:22.176729+09:00"
+  ]
 }

@@ -6,6 +6,7 @@ Mac 설정과 AI-agent 환경을 재현하기 위한 개인 dotfiles 저장소.
 
 - Git, Vim, Tmux, Zsh
 - Claude Code 설정·스킬
+- Codex의 portable 기본 모델·추론·속도 설정
 - Hermes의 비밀값을 제거한 config, SOUL, custom skills, cron 정의, feed pipeline
 - Hermes Gateway, Hermes WebUI, Personal Observatory, llama.cpp 서비스 정의와 복원 절차
 - Ghostty, cmux, Karabiner
@@ -19,7 +20,7 @@ Git에 넣지 않는 것:
 - Obsidian vault와 개인 데이터 원본
 - TLS private key, WebUI auth/signing state, 대시보드 로컬 feed 상태
 
-## Mac mini에서 최신 설정 백업
+## Mac Studio에서 최신 설정 백업
 
 ```bash
 cd ~/Workspace/github/dotfiles

@@ -11,6 +11,13 @@ description: |
 
 사용자가 요청하는 vault 작업(노트 작성/편집/검색, 저널, PR 문서화, 책/영화)을 수행한다.
 
+## 공통 규칙 단일 참조
+
+플랫폼 공통 PKM 규칙은 `~/.claude/skills/note-taking-core.md`를 먼저 읽는다.
+이 파일은 dotfiles의 `shared/note-taking/CORE.md`로 연결된 단일 참조다.
+이 문서에는 Claude의 Read/Edit/Write/Grep 도구 매핑과 Claude 전용 작업만 둔다.
+공통 규칙과 아래의 오래된 상세 설명이 충돌하면 단일 참조를 따른다.
+
 ## Vault 경로
 
 > [!CRITICAL] **절대 경로 — 반드시 준수**
@@ -38,42 +45,11 @@ Claude가 만드는 모든 노트는 사람이 쓴 노트와 섞지 않고 **전
 - 검색: `Grep`(내용) / `Glob`(파일명)으로 vault 하위 탐색. 공백 포함 경로 주의.
 - **vault `.md`를 만들거나 고칠 때는 반드시 `[[obsidian-history]]` 규칙을 따른다**(노트 하단 `## History` + 감사 로그 `6-agents/state/changelog/YYYY-MM.md` 기록).
 
-## 공통 규칙: frontmatter 시간
+## Claude 어댑터 규칙
 
-`created`/`modified`에는 `Bash`로 실제 시간을 확인해 넣는다(추측 금지):
-
-```bash
-date '+%Y-%m-%d %H:%M:%S'
-```
-- 생성 시: `created` = `modified` = 현재 시간
-- 편집 시: `modified`만 현재 시간으로 갱신
-
-frontmatter·태그 규칙(최소):
-- base 태그 정확히 1개: `work` | `personal` (업무 repo→work, 개인→personal)
-- 주제 태그: feature/fix/refactor/docs/chore/troubleshooting/planning/dev/book/movie 등에서 적절히
-- 파일명: 한글 자연어, 특수문자(`/\:*?"<>|#`)→`-`, 최대 100자
-
-## 공통 규칙: superpowers 작업 문서 참고
-
-work 노트(개발·작업 기록)·PR 문서를 만들 때, 그 작업의 repo에 superpowers 산출물이 있으면 참고해 맥락을 보강한다.
-
-- 위치: `<repo>/docs/superpowers/specs/*.md`(brainstorming 설계)·`<repo>/docs/superpowers/plans/*.md`(writing-plans 구현 계획). cwd가 아니라 **그 작업의 repo 루트** 기준.
-- 활용: 관련 문서만 읽어 `# 목적`·`## 기술적 고려사항`(PR 노트는 `## 기술적 의사결정`)의 "왜"를 보강한다.
-- 출처: 참고한 문서는 `# 참고`(PR 노트는 `## 참고`)에 repo-상대경로로 남긴다.
-- gitignore된 로컬 산출물이라 없을 수 있다 → 있을 때만 쓰고 없으면 조용히 건너뛴다.
-
-```bash
-ls "$REPO"/docs/superpowers/specs/*.md "$REPO"/docs/superpowers/plans/*.md 2>/dev/null
-```
-
-## 작업 노트 author 규칙
-6-agents/notes에 만드는 모든 노트의 frontmatter에 `author: claude`를 넣는다
-(Codex/Grok/Hermes 노트와 한 폴더를 공유하며 author로 구분한다).
-
-## 작업 전 entities 참조
-인프라·도구·프로젝트에 관한 작업을 시작할 때 `5-wiki/index.md`에서 관련
-`5-wiki/entities/` 페이지를 찾아 먼저 읽는다. 작업으로 인프라 사실이 바뀌면
-해당 entity 페이지를 갱신한다(설정값 복사 금지 — 맥락·결정·라이브 경로 참조만).
+- 공통 frontmatter·시간·태그·superpowers·entity 참조 규칙은 `~/.claude/skills/note-taking-core.md`에서 읽는다.
+- 이 문서에서만 Claude 전용 도구 매핑, `author: claude`, PR/미디어 절차를 정의한다.
+- 공통 규칙과 legacy 상세 절차가 충돌하면 CORE가 우선한다.
 
 ---
 

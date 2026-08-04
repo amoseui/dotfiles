@@ -27,6 +27,13 @@ metadata:
 이 스킬은 Claude Code의 `pkm` 스킬과 동일한 PKM 규칙을 따르되, **Hermes 생성물은 전용 폴더에 격리**하고
 **모든 경로를 `config.yaml`에서 읽는다**(머신마다 경로가 달라도 config만 바꾸면 동작).
 
+## 공통 규칙 단일 참조
+
+플랫폼 공통 PKM 규칙은 `~/.hermes/skills/note-taking-core.md`를 먼저 읽는다.
+이 파일은 dotfiles의 `shared/note-taking/CORE.md`로 연결된 단일 참조다.
+이 문서에는 Hermes의 `config.yaml`·file/search/patch 도구 매핑과 Hermes/llm-wiki 전용 작업만 둔다.
+공통 규칙과 아래의 오래된 상세 설명이 충돌하면 단일 참조를 따른다.
+
 ## 0. 설정 로드 (모든 작업 전 필수)
 
 **작업 시작 전 반드시 이 스킬 폴더의 `config.yaml`을 `read_file`로 읽는다.**
@@ -87,37 +94,9 @@ echo "VAULT=$VAULT"
 - 검색: `search_files`(내용/파일명). 공백 포함 경로 주의.
 - vault `.md`를 만들거나 고칠 때는 **항상 아래 "변경 이력" 규칙**(노트 하단 `## History` + config의 `history_log`)을 따른다.
 
-## 공통 규칙: frontmatter 시간
+## Hermes 어댑터 규칙
 
-`created`/`modified`/`date`/History 시각은 추측 금지 — `terminal`로 실제 시각 확인:
-
-```bash
-date '+%Y-%m-%d %H:%M:%S'   # created/modified
-date '+%Y-%m-%d'            # date
-date '+%Y-%m-%d %H:%M'      # History 항목
-```
-- 생성 시: `created` = `modified` = 현재 시각
-- 편집 시: `modified`만 현재 시각으로 갱신
-- 시간대는 config의 `timezone`(기본 Asia/Seoul) 기준
-
-태그 규칙(최소):
-- base 태그 정확히 1개: `work` | `personal` (업무 repo→work, 개인→personal)
-- 주제 태그: feature/fix/refactor/docs/chore/troubleshooting/planning/dev/book/movie 등에서 적절히
-- 파일명: 한글 자연어, 특수문자(`/\:*?"<>|#`)→`-`, 최대 100자
-
-## 공통 규칙: superpowers 작업 문서 참고
-
-work 노트·PR 문서를 만들 때 그 작업의 repo에 superpowers 산출물이 있으면 참고해 맥락을 보강한다.
-- 위치: `<repo>/docs/superpowers/specs/*.md`(설계)·`<repo>/docs/superpowers/plans/*.md`(구현 계획). cwd가 아니라 **그 작업의 repo 루트** 기준.
-- 활용: 관련 문서만 읽어 `# 목적`·`## 기술적 고려사항`(PR 노트는 `## 기술적 의사결정`)의 "왜"를 보강.
-- 출처: 참고한 문서는 `# 참고`(PR 노트는 `## 참고`)에 repo-상대경로로 남긴다.
-- gitignore된 로컬 산출물이라 없을 수 있다 → 있을 때만 쓰고 없으면 조용히 건너뛴다.
-
-```bash
-ls "$REPO"/docs/superpowers/specs/*.md "$REPO"/docs/superpowers/plans/*.md 2>/dev/null
-```
-
-상세 노트 구조는 `references/note-template.md`를 참고한다.
+공통 frontmatter·시간·태그·superpowers·이력 규칙은 `~/.hermes/skills/note-taking-core.md`에서 읽는다. 이 문서에서는 Hermes `config.yaml`, `file/search/patch` 도구, 4존·llm-wiki·cron 연결만 정의한다. 공통 규칙과 legacy 상세 절차가 충돌하면 CORE가 우선한다.
 
 ## 볼트 4존 구조
 

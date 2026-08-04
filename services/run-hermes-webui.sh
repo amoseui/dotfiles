@@ -27,12 +27,14 @@ case "$HOST" in
     127.0.0.1|localhost|::1) ;;
     *) echo "Refusing non-loopback Hermes WebUI; use Tailscale Serve" >&2; exit 1 ;;
 esac
-# Direct TLS is deliberately disabled. Keep empty values exported so
-# bootstrap.py's repo-local .env cannot restore old direct-TLS paths.
+# Direct TLS and application password auth are deliberately disabled. Keep
+# empty values exported so bootstrap.py's repo-local .env cannot restore old
+# direct-TLS/password paths. Access is bounded by loopback + Tailscale Serve.
 export HERMES_WEBUI_TLS_CERT= HERMES_WEBUI_TLS_KEY=
+export HERMES_WEBUI_PASSWORD=
 export HERMES_WEBUI_HOST=$HOST HERMES_WEBUI_PORT=$PORT
-# bootstrap.py parses the repo-local .env without executing it. Keep the
-# loopback network values resolved above while allowing local password settings to load.
+# bootstrap.py parses the repo-local .env without executing it. Preserve the
+# launcher values above, including the intentional empty password value.
 export HERMES_WEBUI_PRESERVE_ENV=1
 cd "$REPO"
 exec "$PYTHON" bootstrap.py --no-browser --foreground --skip-agent-install \

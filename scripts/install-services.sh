@@ -71,7 +71,7 @@ else
 fi
 load_services_env "$ENV_SOURCE"
 
-OBS_REPO=${PERSONAL_OBSERVATORY_REPO:-$HOME/Workspace/personal-observatory}
+OBS_REPO=${PERSONAL_OBSERVATORY_REPO:-$HOME/Workspace/github/personal-observatory}
 SPEC=$(mktemp)
 TMP_FILES+=("$SPEC")
 spec_args=()
