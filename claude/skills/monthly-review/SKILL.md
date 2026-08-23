@@ -45,7 +45,9 @@ python3 ~/.claude/skills/monthly-review/scripts/usage_audit.py
 
 ## 2. INVENTORY 소화 판정 갱신
 
-`$REPO/docs/INVENTORY.md`를 읽고, 계측 결과로 각 구성요소를 재판정한다.
+`$REPO/private/docs/INVENTORY.md`를 읽고, 계측 결과로 각 구성요소를 재판정한다.
+(INVENTORY는 2026-08-23 public/private 분리로 private submodule에 있다 —
+private 미초기화 머신에서는 이 절차를 건너뛴다.)
 
 | 판정 | 기준 |
 |------|------|
@@ -115,16 +117,28 @@ link.sh 선언과 실제 홈 디렉터리 상태를 대조한다(settings.json �
 
 ```bash
 setopt null_glob 2>/dev/null; shopt -s nullglob 2>/dev/null   # Guard empty-dir globs
-DOTFILES_PATH="$REPO"
-# link_file 단건 매핑 검사
-grep -E '^link_file ' "$REPO/link.sh" | while read -r _ src dst; do
-  src=$(eval echo "$src"); dst=$(eval echo "$dst")
-  if   [ -L "$dst" ] && [ "$(readlink "$dst")" = "$src" ]; then echo "OK           $dst"
-  elif [ -L "$dst" ]; then echo "WRONG_TARGET $dst -> $(readlink "$dst")"
-  elif [ -e "$dst" ]; then echo "NOT_SYMLINK  $dst"
-  else                     echo "MISSING      $dst"
-  fi
-done
+# 단건 매핑 검사 — link.sh(public)와 private/link.sh의 Python `files` 튜플을
+# 파싱해 전수 대조한다. (link.sh가 Python 트랜잭션 방식이라 grep 검사가
+# 무동작이었던 것을 2026-08-23 수리. 튜플 형식이 바뀌면 이 검사도 갱신할 것.)
+python3 - "$REPO" <<'PY'
+import os, re, sys
+from pathlib import Path
+repo = Path(sys.argv[1]); home = Path.home()
+scripts = [repo / "link.sh"]
+if (repo / "private/link.sh").exists():
+    scripts.append(repo / "private/link.sh")
+for script in scripts:
+    m = re.search(r"files = \((.*?)\n\)", script.read_text(), re.S)
+    if not m:
+        print(f"PARSE_FAIL   {script}")
+        continue
+    for s, d in re.findall(r'\("([^"]+)", "([^"]+)"\)', m.group(1)):
+        src, dst = script.parent / s, home / d
+        if dst.is_symlink() and os.readlink(dst) == str(src): print(f"OK           {dst}")
+        elif dst.is_symlink(): print(f"WRONG_TARGET {dst} -> {os.readlink(dst)}")
+        elif dst.exists(): print(f"NOT_SYMLINK  {dst}")
+        else: print(f"MISSING      {dst}")
+PY
 # link_dir_contents 매핑(agents/commands/skills)은 항목별 검사
 for pair in "claude/agents:$HOME/.claude/agents" "claude/commands:$HOME/.claude/commands" "claude/skills:$HOME/.claude/skills"; do
   srcdir="$REPO/${pair%%:*}"; dstdir="${pair##*:}"
@@ -144,16 +158,18 @@ for pair in "claude/agents:$HOME/.claude/agents" "claude/commands:$HOME/.claude/
 done
 ```
 
-- Hermes skill은 고정 4건을 세지 말고 dotfiles의 모든 `hermes/skills/**/SKILL.md`를
-  상대 경로로 검사한다. `link.sh`가 같은 상대 경로의 `~/.hermes/skills/` 심링크를
-  생성하므로, 신규 tracked skill은 별도 hard-code 없이 검사 대상에 포함된다.
+- Hermes skill은 고정 개수를 세지 말고 `private/hermes/skills/**/SKILL.md` 전체를
+  상대 경로로 검사한다(2026-08-23 분리로 hermes는 private submodule에 있다).
+  `private/link.sh`가 같은 상대 경로의 `~/.hermes/skills/` 심링크를 생성하므로,
+  신규 tracked skill은 별도 hard-code 없이 검사 대상에 포함된다.
 
 ```bash
-while IFS= read -r skill; do
-  rel="${skill#"$REPO/hermes/skills/"}"
+HERMES_SKILLS="$REPO/private/hermes/skills"
+[ -d "$HERMES_SKILLS" ] && while IFS= read -r skill; do
+  rel="${skill#"$HERMES_SKILLS/"}"
   rel="${rel%/SKILL.md}"
   dst="$HOME/.hermes/skills/$rel"
-  if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$REPO/hermes/skills/$rel" ]; then
+  if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$HERMES_SKILLS/$rel" ]; then
     echo "OK           $dst"
   elif [ -L "$dst" ]; then
     echo "WRONG_TARGET $dst -> $(readlink "$dst")"
@@ -162,7 +178,7 @@ while IFS= read -r skill; do
   else
     echo "MISSING      $dst"
   fi
-done < <(find "$REPO/hermes/skills" -type f -name SKILL.md -print)
+done < <(find "$HERMES_SKILLS" -type f -name SKILL.md -print)
 ```
 
 - Hermes가 없는 머신에서는 위 검사 결과가 모두 `MISSING`일 수 있다 — 그 머신에서
