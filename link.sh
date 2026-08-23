@@ -8,12 +8,10 @@ STAMP=$(date +%Y%m%d%H%M%S)-$$
 # Python transaction restores files, directories, and symlinks on any failure.
 python3 - "$DOTFILES_PATH" "$HOME" "$STAMP" <<'PY'
 from pathlib import Path
-import os, subprocess, sys
+import os, sys
 
 root, home = map(Path, sys.argv[1:3])
 stamp = sys.argv[3]
-hermes_live_root = home / ".hermes/skills"
-hermes_backup_root = home / ".hermes/skill-backups"
 
 files = (
     ("git/gitconfig", ".gitconfig"),
@@ -24,14 +22,7 @@ files = (
     ("claude/settings.json", ".claude/settings.json"),
     ("claude/CLAUDE.md", ".claude/CLAUDE.md"),
     ("claude/statusline-command.sh", ".claude/statusline-command.sh"),
-    # The common PKM rules have one source under shared/. Each platform gets a
-    # stable adapter-facing link in its own skill root.
-    ("shared/note-taking/CORE.md", ".claude/skills/note-taking-core.md"),
-    ("shared/note-taking/CORE.md", ".hermes/skills/note-taking-core.md"),
-    ("hermes/feed-pipeline", ".hermes/feed-pipeline"),
     ("ghostty/config", ".config/ghostty/config"),
-    ("cmux/cmux.json", ".config/cmux/cmux.json"),
-    ("herdr/config.toml", ".config/herdr/config.toml"),
 )
 directories = (
     ("claude/agents", ".claude/agents"),
@@ -41,26 +32,6 @@ directories = (
 )
 
 mappings = [(root / source, home / destination) for source, destination in files]
-
-# Every non-ignored Hermes SKILL.md kept in dotfiles is linked automatically.
-# Include untracked files as well: a newly added skill must be usable before
-# the next commit, while ignored cache/config files must never become links.
-hermes_skill_root = root / "hermes/skills"
-tracked = subprocess.run(
-    ["git", "-C", str(root), "ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", "hermes/skills"],
-    check=True,
-    capture_output=True,
-).stdout.split(b"\0")
-hermes_skill_dirs = sorted({
-    root / Path(os.fsdecode(raw)).parent
-    for raw in tracked
-    if raw and Path(os.fsdecode(raw)).name == "SKILL.md"
-})
-if not hermes_skill_dirs:
-    raise SystemExit(f"Incomplete checkout; no Hermes skills under: {hermes_skill_root}")
-for source_dir in hermes_skill_dirs:
-    relative = source_dir.relative_to(root / "hermes/skills")
-    mappings.append((source_dir, home / ".hermes/skills" / relative))
 
 for source_name, destination_name in directories:
     source_dir = root / source_name
@@ -112,13 +83,7 @@ try:
             old_kind, old_value = "symlink", os.readlink(destination)
         elif destination.exists():
             old_kind = "entry"
-            if destination.is_relative_to(hermes_live_root):
-                relative = destination.relative_to(hermes_live_root)
-                backup_parent = hermes_backup_root / relative.parent
-                backup_parent.mkdir(parents=True, exist_ok=True)
-                old_value = backup_parent / f"{relative.name}.{stamp}"
-            else:
-                old_value = Path(f"{destination}.old.{stamp}")
+            old_value = Path(f"{destination}.old.{stamp}")
             if old_value.exists() or old_value.is_symlink():
                 raise RuntimeError(f"Backup destination already exists: {old_value}")
         else:
@@ -158,6 +123,12 @@ for source, destination in mappings:
         raise SystemExit(f"Link verification failed: {destination}")
 print(f"Dotfile links installed from {root}")
 PY
+
+# Personal machines attach the private submodule; company forks leave it
+# uninitialized and get the public links only.
+if [ -f "$DOTFILES_PATH/private/link.sh" ]; then
+    bash "$DOTFILES_PATH/private/link.sh"
+fi
 
 if command -v vim >/dev/null 2>&1; then
     vim +silent! +PlugInstall +qall || true
