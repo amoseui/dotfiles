@@ -49,6 +49,10 @@
 ## Git worktree
 - **Chromium 개발 시 worktree를 절대 사용하지 않는다.** 저장소 규모가 너무 커서 worktree 생성 비용이 과도하기 때문이다. superpowers:using-git-worktrees 등이 worktree를 제안하더라도 chromium 대상에서는 예외 없이 금지한다.
 
+## 작업 산출물·리뷰
+- 대규모 작업의 spec·plan은 dotfiles private의 `docs/superpowers/`에 커밋해 보관한다(구 workspace-flow 규약 승계).
+- 고위험·대규모 변경의 2차 리뷰는 `/codex:review`·`/codex:adversarial-review`를 선호한다. 필요할 때만 호출하고 모든 작업에 강제하지 않는다.
+
 <!-- CODEGRAPH_START -->
 ## CodeGraph
 
