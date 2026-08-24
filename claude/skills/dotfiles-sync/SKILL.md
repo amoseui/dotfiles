@@ -34,19 +34,30 @@ description: |
 저장소가 홈의 최신 상태와 일치하게 만드는 것이다. 단순히 `git add` 하나로 끝나지 않기 때문에 이
 스킬이 존재한다.
 
-## 기준점: link.sh가 매핑의 진실
+## 기준점 1: public/private 배치는 AGENTS.md가 진실
 
-repo 경로 ↔ 홈 경로 매핑은 **항상 `link.sh`를 읽어서** 파악한다. 추측하지 않는다. 현재 매핑은
-대략 다음과 같지만, 작업 전 반드시 `link.sh`를 다시 읽어 최신 상태를 확인한다:
+2026-08-23 분리 이후 저장소는 public(공통 뼈대) + `private/` submodule(사외 머신 전용 개인
+인프라) 2계층이다. **새 파일의 자리는 `$REPO/AGENTS.md`의 3문항 판정**으로 정한다:
+① secret·타인 PII·머신 로컬 상태 → git 밖(gitignore·`${ENV_VAR}` 플레이스홀더)
+② 개인 머신 전용이거나 개인 인프라가 드러남 → `private/`
+③ 사내 fork가 rebase 베이스로 필요로 하는 범용 설정 → public.
+이 스킬은 저장소 밖 디렉터리에서도 발동하므로 AGENTS.md가 자동 로드되지 않는다 —
+새 파일을 추가할 때는 반드시 `$REPO/AGENTS.md`를 읽고 판정하고, 애매하면 사용자에게 확인한다.
 
-| 홈 경로 | repo 경로 | scope |
+## 기준점 2: link.sh 두 개가 매핑의 진실
+
+repo 경로 ↔ 홈 경로 매핑은 **항상 `$REPO/link.sh`(public)와 `$REPO/private/link.sh`를 읽어서**
+파악한다. 추측하지 않는다. 두 스크립트 모두 Python 트랜잭션의 `files = ( ... )` 튜플이 단건
+매핑이고, 디렉터리 자식 일괄 링크(claude/agents·commands·skills)와 hermes 스킬 자동 발견이
+뒤따른다. 대략의 분포(작업 전 반드시 실물 재확인):
+
+| 홈 경로 | repo 경로 | 소속 |
 |---|---|---|
-| `~/.gitconfig`, `~/.gitignore` | `git/` | `git` |
-| `~/.tmux.conf` | `tmux/tmux.conf` | `tmux` |
-| `~/.zshrc` | `zsh/zshrc` | `zsh` |
-| `~/.vimrc` | `vim/vimrc` | `vim` |
-| `~/.claude/settings.json`, `CLAUDE.md` | `claude/` | `claude` |
-| `~/.claude/{agents,commands,skills}/*` | `claude/{agents,commands,skills}/*` | `claude` |
+| `~/.gitconfig`·`~/.zshrc`·`~/.vimrc`·`~/.tmux.conf` | `git/`·`zsh/`·`vim/`·`tmux/` | public |
+| `~/.claude/settings.json`·`CLAUDE.md`·statusline | `claude/` | public |
+| `~/.claude/skills/{dotfiles-sync,handoff,make-pr}` | `claude/skills/` | public |
+| `~/.claude/skills/{pkm*,obsidian-history,brief-morning,monthly-review}` | `private/claude/skills/` | private |
+| `~/.hermes/**`·`~/.config/{herdr,cmux}`·`~/.grok/config.toml`·`~/.agents/skills/*` | `private/` | private |
 
 ### 저장소 경로 찾기 (처음 한 번만 입력받아 로컬 파일에 저장)
 
@@ -158,12 +169,14 @@ diff ~/.claude/settings.json "$REPO/claude/settings.json"
    ln -sfn "$DST" "$SRC"
    ```
 
-5. **link.sh에 기록** — 다음 머신의 최초 설치를 위해 `link.sh`의 해당 섹션에 매핑 한 줄을 추가한다.
+5. **link.sh에 기록** — 다음 머신의 최초 설치를 위해, 배치 판정에 맞는 링커(public이면
+   `$REPO/link.sh`, private이면 `$REPO/private/link.sh`)의 Python `files` 튜플에 매핑을 추가한다.
    이건 어디까지나 **기록**이며, 지금 링크를 거는 수단이 아니다(링크는 4번에서 이미 직접 만들었다).
 
-   ```bash
-   # link.sh의 # Claude Code 섹션에 추가
-   link_file "$DOTFILES_PATH/claude/statusline-command.sh" ~/.claude/statusline-command.sh
+   ```python
+   # 해당 link.sh의 files = ( ... ) 튜플에 추가 — 반드시 한 줄로.
+   # monthly-review 심링크 감사가 한 줄짜리 쌍만 파싱하며, 주석에 따옴표 쌍 예시를 쓰면 오파싱된다.
+   ("claude/statusline-command.sh", ".claude/statusline-command.sh"),
    ```
 
 백업(`*.old`)은 동기화가 검증되면 지워도 된다. `.old` 파일은 repo에 commit하지 않는다.
@@ -178,11 +191,18 @@ diff ~/.claude/settings.json "$REPO/claude/settings.json"
 #### 임의 경로를 새로 dotfile로 추가하기
 
 사용자가 기존 매핑에 없는 경로를 직접 지정하며 "이 경로를 dotfile로 추가해줘"라고 하는 경우가 있다
-(예: `~/.config/ghostty/config`). 이때는 다음과 같이 repo 위치를 정한다:
+(예: `~/.config/ghostty/config`). 이때는 두 단계로 자리를 정한다:
+
+**(a) public/private 판정** — 기준점 1(AGENTS.md 3문항)을 적용한다. secret·타인 PII·머신 로컬
+상태면 추가를 거절하거나 gitignore+플레이스홀더로 처리하고, 개인 도구·개인 인프라면
+`$REPO/private/` 아래, 사내 fork도 쓸 범용 설정이면 public이다. 앱이 atomic write로 재작성하는
+파일(예: Karabiner, Hermes config)은 symlink 대신 복사 백업으로 다룬다.
+
+**(b) repo 내 위치** — 판정된 루트(`$REPO` 또는 `$REPO/private`) 기준으로:
 
 - 홈 바로 아래의 dotfile(`~/.foo`)이면 → 도구 이름 디렉터리에 점을 떼고 넣는다: `foo/foo` 또는 `foo/config`.
-- XDG 스타일(`~/.config/<tool>/<file>`)이면 → repo 최상위에 `<tool>/<file>`로 넣는다.
-  예: `~/.config/ghostty/config` → `ghostty/config`, scope는 `ghostty`.
+- XDG 스타일(`~/.config/<tool>/<file>`)이면 → 루트에 `<tool>/<file>`로 넣는다.
+  예: `~/.config/ghostty/config` → `ghostty/config`(public), `~/.grok/config.toml` → `private/grok/config.toml`.
 
 처리 절차는 위 **최초 링크 생성 절차**(백업 → 비교 → 최신화 → 직접 링크 → link.sh 기록)와 같다.
 **작업 디렉터리에 무관하게** 절대 경로로 진행한다:
@@ -198,22 +218,29 @@ mkdir -p "$(dirname "$DST")"; cp "$SRC" "$DST"                # 3) 최신화
 ln -sfn "$DST" "$SRC"                                         # 4) 직접 링크
 ```
 
-그리고 5) `link.sh`에 새 섹션과 `link_file` 한 줄을 **기록**한다. `link_file`은 내부에서 `mkdir -p`로
+그리고 5) 배치에 맞는 링커의 `files` 튜플에 **한 줄로 기록**한다. 링커의 트랜잭션이 목적지의
 중첩 디렉터리(`~/.config/ghostty/`)를 알아서 만들어 주므로 XDG 경로도 그대로 쓸 수 있다:
 
-```bash
-# Ghostty
-link_file "$DOTFILES_PATH/ghostty/config" ~/.config/ghostty/config
+```python
+("ghostty/config", ".config/ghostty/config"),
 ```
 
 도구 이름이나 repo 위치가 애매하면 사용자에게 한 번 확인한다.
 
 ### 3. commit 한다 (자동)
 
-scope별로 묶어서 commit한다. 이 저장소의 컨벤션은 `[scope] message`이며 scope는 최상위 디렉터리
+scope별로 묶어서 commit한다. public 컨벤션은 `[scope] message`이며 scope는 최상위 디렉터리
 이름(`claude`, `vim`, `tmux`, `git`, `zsh`, 또는 새로 추가한 `ghostty` 같은 도구 이름)이다.
+`private/` 아래 변경은 **별도 저장소**이므로 `git -C "$REPO/private"`로 따로 commit하고
+(컨벤션은 conventional prefix — `feat:`/`chore:` 등), public에는 submodule 포인터 bump 커밋
+(`[repo] bump private submodule: ...`)을 뒤이어 만든다.
 서로 다른 scope의 변경이 섞였다면 가능하면 **scope별로 나눠서** 여러 commit으로 만든다.
-새 도구를 처음 추가하는 경우 `link.sh` 변경은 그 도구 scope에 함께 묶는다.
+새 도구를 처음 추가하는 경우 link.sh 변경은 그 도구 scope에 함께 묶는다.
+commit 직전에 대소문자 무시 secret scan을 돌린다(AGENTS.md 규약 — 2026-08-24 토큰 사건 재발 방지):
+
+```bash
+git -C "$REPO" diff --cached | grep -niE "(token|secret|password|api[_-]?key)\s*[:=]\s*[\"']?[A-Za-z0-9+/]{16,}"
+```
 
 ```bash
 git -C "$REPO" add claude/statusline-command.sh claude/settings.json link.sh
@@ -233,10 +260,14 @@ git -C "$REPO" log origin/main..HEAD --oneline   # push될 커밋 미리보기
 
 사용자가 동의하면 `git push`, 보류하면 commit 상태로 남겨 둔다. 사용자가 처음부터 "push까지 해줘"라고
 명시했다면 그 한 번의 요청을 동의로 보고 바로 push해도 된다.
+private 커밋이 있으면 **private을 먼저 push**하고 `git -C "$REPO/private" ls-remote origin main`으로
+원격 반영을 확인한 뒤 public을 push한다 — public gitlink가 private 커밋 SHA를 참조하므로 순서가
+바뀌면 새 clone의 submodule 초기화가 깨진다.
 
 ## 주의
 
-- repo 경로 매핑은 외우지 말고 매번 `link.sh`에서 읽는다. 매핑이 바뀌어 있을 수 있다.
+- repo 경로 매핑은 외우지 말고 매번 두 link.sh(`link.sh`·`private/link.sh`)에서 읽는다. 매핑이 바뀌어 있을 수 있다.
+- 사내 머신(private 미초기화)에서는 private 대상 파일이 애초에 없으므로 public 범위만 다룬다.
 - drift된 파일을 repo로 동기화할 때 어느 쪽이 최신인지 확신이 없으면 덮어쓰기 전에 `diff`를 보여주고
   확인한다. 사용자가 손으로 repo를 고쳤을 가능성도 있다.
 - `.gitkeep` 같은 placeholder 파일은 건드리지 않는다.
