@@ -6,6 +6,10 @@ docs/superpowers/
 # Hermes가 repo 안에 쓰는 로컬 계획 파일 — private/docs/plans/로 이동해 보관
 .hermes/
 
+# 에이전트 도구가 repo 루트에 떨어뜨리는 배치·산출물 파일 (예: aside/suno)
+.aside-*
+artifacts/
+
 # Python 캐시
 __pycache__/
 *.pyc
