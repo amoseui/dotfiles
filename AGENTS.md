@@ -13,7 +13,7 @@ rebase 베이스로 쓰며 private을 초기화하지 않는다.
 - 머신 로컬 상태(state.db·세션·로그·캐시·개인 경로 config): gitignore.
 
 **Q2. 사외(개인) 머신에만 존재하거나, 공개되면 개인 인프라·일상 구조가 드러나는가?
-→ `private/`** — Hermes·Herdr·Grok 등 개인 에이전트, services/launchd(포트·Tailscale),
+→ `private/`** — Hermes·Grok 등 개인 에이전트, services/launchd(포트·Tailscale),
 PKM 파이프라인, 개인 거버넌스 문서(INVENTORY·스펙·플랜), 개인 머신 운영 스크립트.
 
 **Q3. 나머지 — 사내 fork가 rebase 베이스로 받아 써야 하는 범용 설정 → public.**

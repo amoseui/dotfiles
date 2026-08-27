@@ -1,0 +1,33 @@
+onboarding = false
+[theme]
+name = "tokyo-night"
+auto_switch = false
+
+[ui.toast]
+delivery = "terminal"
+
+[ui]
+show_agent_labels_on_pane_borders = true
+agent_panel_sort = "spaces"
+# Fixed state glyphs (working=◐, done=✓, blocked=×); not a frame spinner.
+status_indicators = "symbols"
+
+# Sidebar agent entries: state as text (not just icon color), location,
+# and the live terminal title (agents update it with their current task).
+# Agent-owned activity frames remain visible only when terminal_title changes.
+[ui.sidebar.agents]
+row_gap = 1
+rows = [
+  ["state_icon", "agent", "state_text"],
+  ["workspace", "tab"],
+  [{ token = "terminal_title", dim = true }],
+]
+
+[keys]
+# tmux-style: prefix is already ctrl+b (herdr default)
+# workspace switching without opening the picker (tmux session-switch feel)
+previous_workspace = "prefix+up"
+next_workspace = "prefix+down"
+switch_workspace = "prefix+shift+1..9"
+# tmux muscle memory: prefix+d detaches (herdr default was prefix+q)
+detach = "prefix+d"

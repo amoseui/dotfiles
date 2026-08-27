@@ -9,9 +9,9 @@ dotfiles (public, 이 저장소)      ← 공통 뼈대. 사내 fork의 rebase �
 └── private/                      ← submodule: amoseui/dotfiles-private (사외 머신 전용)
 ```
 
-- **public**: Git, Vim, Tmux, Zsh, Ghostty, Karabiner, Brewfile, Claude Code
+- **public**: Git, Vim, Tmux, Zsh, Ghostty, Karabiner, Herdr, Brewfile, Claude Code
   범용 설정·스킬(`claude/`), Codex portable 기본값(`codex/`), `link.sh`
-- **private** (submodule): Hermes(에이전트·cron·skills·feed-pipeline), Herdr·cmux,
+- **private** (submodule): Hermes(에이전트·cron·skills·feed-pipeline),
   services·launchd, PKM 계열 Claude 스킬, `shared/note-taking/CORE.md`,
   개인 거버넌스 문서와 머신 운영 스크립트 — `private/README.md` 참고
 - **사내 fork**: 이 public repo를 사내 저장소로 fork해 사내 커밋을 rebase로 유지한다.

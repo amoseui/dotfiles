@@ -23,6 +23,7 @@ files = (
     ("claude/CLAUDE.md", ".claude/CLAUDE.md"),
     ("claude/statusline-command.sh", ".claude/statusline-command.sh"),
     ("ghostty/config", ".config/ghostty/config"),
+    ("herdr/config.toml", ".config/herdr/config.toml"),
 )
 directories = (
     ("claude/agents", ".claude/agents"),
