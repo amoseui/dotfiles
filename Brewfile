@@ -1,5 +1,4 @@
 tap "andyyyy64/whichllm"
-tap "stablyai/orca"
 tap "steipete/tap"
 tap "yakitrak/yakitrak"
 # Plugin manager for zsh, inspired by oh-my-zsh and vundle
@@ -65,7 +64,6 @@ cask "claude-code"
 # Time tracking tool for agencies and freelancers
 cask "clockify"
 # Ghostty-based terminal with vertical tabs and notifications for AI coding agents
-cask "cmux"
 # Write, edit, and chat about your code with AI
 cask "cursor"
 # Voice and text chat software
@@ -94,7 +92,6 @@ cask "notion"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
 # IDE for orchestrating AI coding agents across terminals and worktrees
-cask "stablyai/orca/orca", trusted: true
 # Email client
 cask "readdle-spark"
 # Save articles to read, highlight key content, and organise notes for review
