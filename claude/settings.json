@@ -44,7 +44,8 @@
     "security-guidance@claude-plugins-official": true,
     "ralph-loop@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
-    "clangd-lsp@claude-plugins-official": true
+    "clangd-lsp@claude-plugins-official": true,
+    "eli5@claude-community": true
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
@@ -57,6 +58,12 @@
       "source": {
         "source": "github",
         "repo": "openai/codex-plugin-cc"
+      }
+    },
+    "claude-community": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-community"
       }
     }
   },
