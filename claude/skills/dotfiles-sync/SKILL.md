@@ -56,8 +56,9 @@ repo 경로 ↔ 홈 경로 매핑은 **항상 `$REPO/link.sh`(public)와 `$REPO/
 | `~/.gitconfig`·`~/.zshrc`·`~/.vimrc`·`~/.tmux.conf` | `git/`·`zsh/`·`vim/`·`tmux/` | public |
 | `~/.claude/settings.json`·`CLAUDE.md`·statusline | `claude/` | public |
 | `~/.claude/skills/{dotfiles-sync,handoff,make-pr}` | `claude/skills/` | public |
+| `~/.config/herdr/config.toml` | `herdr/` | public |
 | `~/.claude/skills/{pkm*,obsidian-history,brief-morning,monthly-review}` | `private/claude/skills/` | private |
-| `~/.hermes/**`·`~/.config/{herdr,cmux}`·`~/.grok/config.toml`·`~/.agents/skills/*` | `private/` | private |
+| `~/.hermes/**`·`~/.grok/config.toml`·`~/.agents/skills/*` | `private/` | private |
 
 ### 저장소 경로 찾기 (처음 한 번만 입력받아 로컬 파일에 저장)
 
