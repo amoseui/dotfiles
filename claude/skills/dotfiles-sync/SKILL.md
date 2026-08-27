@@ -236,11 +236,26 @@ scope별로 묶어서 commit한다. public 컨벤션은 `[scope] message`이며 
 (`[repo] bump private submodule: ...`)을 뒤이어 만든다.
 서로 다른 scope의 변경이 섞였다면 가능하면 **scope별로 나눠서** 여러 commit으로 만든다.
 새 도구를 처음 추가하는 경우 link.sh 변경은 그 도구 scope에 함께 묶는다.
-commit 직전에 대소문자 무시 secret scan을 돌린다(AGENTS.md 규약 — 2026-08-24 토큰 사건 재발 방지):
+commit 직전에 **검수 게이트**를 통과해야 한다(2026-08-24 토큰 사건 재발 방지 — 위험도 비례 3-tier
+중 Tier 0·1을 여기서, Tier 2는 push 단계에서 다룬다):
+
+**Tier 0 — 결정론 스캔 (매 커밋, 필수)**: **커밋 대상을 모두 `git add`로 stage한 뒤** 실행한다
+— staged diff를 검사하므로 stage 전에 돌리면 빈 검사가 통과해 버린다. 양 repo의 staged diff에서
+secret(대소문자 무시·값 패턴·Bearer/cookie 포함)·roster형 타인 PII·public 배치 위반·link.sh 파서
+사각(멀티라인 매핑, 주석 쌍 — index 버전 기준)을 검사하며, git 오류 시 fail closed(exit 2)한다.
 
 ```bash
-git -C "$REPO" diff --cached | grep -niE "(token|secret|password|api[_-]?key)\s*[:=]\s*[\"']?[A-Za-z0-9+/]{16,}"
+git -C "$REPO" add <커밋 대상들>                                            # 반드시 stage 먼저
+python3 ~/.claude/skills/dotfiles-sync/scripts/precommit_scan.py "$REPO"   # exit 0만 통과 (1=BLOCK, 2=검사 실패)
 ```
+
+BLOCK이면 커밋하지 않고 사유를 사용자에게 보고한다. WARN은 커밋을 막지 않지만 결과에 함께
+보고한다. 스캐너 규칙을 고쳤다면 먼저 `--self-test`로 자가 검증한다.
+
+**Tier 1 — 서브에이전트 적대 검토 (조건부)**: 새 파일을 처음 편입하거나 private에 3개 파일
+이상 대량 변경이 생기면, 커밋 전에 별도 컨텍스트의 서브에이전트에게 staged diff와
+`$REPO/AGENTS.md`를 주고 "이 커밋을 **거절할 이유**(secret·타인 PII·배치 오류·심링크 계약
+파손)를 찾아라"라고 시킨다. 발견이 해소된 뒤에만 커밋한다.
 
 ```bash
 git -C "$REPO" add claude/statusline-command.sh claude/settings.json link.sh
@@ -263,6 +278,11 @@ git -C "$REPO" log origin/main..HEAD --oneline   # push될 커밋 미리보기
 private 커밋이 있으면 **private을 먼저 push**하고 `git -C "$REPO/private" ls-remote origin main`으로
 원격 반영을 확인한 뒤 public을 push한다 — public gitlink가 private 커밋 SHA를 참조하므로 순서가
 바뀌면 새 clone의 submodule 초기화가 깨진다.
+
+**Tier 2 — Codex 2차 리뷰 (push 전, 제안형)**: push 확인을 받을 때 함께 제안한다 — 일상 변경이면
+`/codex:review`, 구조 변경·대량 이동·secret 경계를 건드린 변경이면 `/codex:adversarial-review`
+(2026-08-24 토큰 유출을 실제로 잡은 실적이 있는 쪽). 수 분과 비용이 들므로 자동 실행하지 않고
+제안만 하며, 실행 여부는 사용자가 결정한다.
 
 ## 주의
 

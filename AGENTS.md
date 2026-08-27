@@ -28,9 +28,10 @@ public 판정의 리트머스는 "노출 무해"가 아니라 "사내 fork가 �
 
 ## 작업 규약
 
-- 새 백업·편입 커밋 전에 **대소문자 무시 secret scan**을 돌린다
-  (예: `git grep -niE "(token|secret|password|api[_-]?key)\s*[:=]\s*[\"']?[A-Za-z0-9+/]{16,}"`).
-  2026-08-24 Todoist 토큰 사건의 재발 방지 규칙이다.
+- 새 백업·편입 커밋 전에 결정론 검수를 돌린다(2026-08-24 Todoist 토큰 사건 재발 방지):
+  `python3 claude/skills/dotfiles-sync/scripts/precommit_scan.py <repo>` — exit 1(BLOCK)이면
+  커밋 금지. secret(대소문자 무시)·roster형 타인 PII·public 배치 위반·link.sh 파서 사각을
+  잡는다. 대량 편입·구조 변경의 push 전에는 `/codex:adversarial-review` 2차 리뷰를 권한다.
 - 커밋은 `[scope] message`(영어) 컨벤션. 어떤 스크립트·에이전트도 자동 push하지 않는다 —
   push는 커밋 요약을 보여주고 사용자 확인 후에만.
 - push 순서: private 먼저, public 나중 (public gitlink가 private 커밋 SHA를 참조).
