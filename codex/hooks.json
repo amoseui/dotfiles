@@ -4,7 +4,7 @@
       {
         "hooks": [
           {
-            "command": "bash '/Users/amoseui/.codex/herdr-agent-state.sh' session",
+            "command": "if [ -x \"$HOME/.codex/herdr-agent-state.sh\" ]; then bash \"$HOME/.codex/herdr-agent-state.sh\" session; fi",
             "timeout": 10,
             "type": "command"
           }
