@@ -19,3 +19,13 @@ __pycache__/
 **/.env
 **/.env.*
 !**/.env.example
+
+# Codex portable settings live in defaults.toml; runtime files remain local.
+codex/config.toml
+codex/auth.json
+codex/sessions/
+codex/archived_sessions/
+codex/log/
+codex/plugins/
+codex/state*.sqlite*
+codex/*.old.*

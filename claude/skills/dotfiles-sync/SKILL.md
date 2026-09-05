@@ -17,6 +17,16 @@ description: |
 
 # dotfiles-sync — 로컬 설정 → 저장소 동기화
 
+## Claude / Codex 호환
+
+- Claude는 `~/.claude/skills/dotfiles-sync`, Codex는 `~/.agents/skills/dotfiles-sync`에서 같은 스킬을 읽는다.
+- Codex에서는 `$dotfiles-sync`로 호출하거나 이 파일을 직접 읽는다. 아래 `Read/Edit/Write/Bash`는 현재 제공된 파일·쉘 도구로 대응한다.
+- 사용자 메시지나 현재 작업 환경에서 저장소의 절대 경로가 이미 확인됐으면 그 경로를 사용한다. 아래 로컬 경로 파일이 없다는 이유만으로 다시 묻지 않는다. `.git`은 디렉터리뿐 아니라 worktree/submodule의 파일일 수도 있다.
+- Codex의 전역 지침은 `codex/AGENTS.md` → `~/.codex/AGENTS.md`, 공용 스킬은 `claude/skills/` → `~/.agents/skills/`도 점검한다.
+- `~/.codex/config.toml`은 앱이 갱신하는 머신 로컬 파일이다. 통째로 복사하거나 symlink하지 않는다. 모델·reasoning·service tier·프로젝트 문서 fallback만 `codex/defaults.toml`에 선별하고 `scripts/apply-codex-defaults.sh`로 적용한다.
+- Codex hooks와 herdr 스크립트는 복사 백업이다. hook trust hash, 프로젝트 신뢰·승인 규칙, 인증·세션·캐시와 앱이 생성한 MCP 경로는 백업하지 않는다.
+- 아래 `/codex:*` 리뷰는 Claude 플러그인 명령이다. Codex에서는 native review 또는 별도 컨텍스트의 검토자를 사용한다.
+
 로컬에서 바뀐 설정을 dotfiles 저장소에 정확히 반영하고, 일관된 컨벤션으로 commit한 뒤
 사용자 확인을 거쳐 push한다.
 
@@ -55,10 +65,12 @@ repo 경로 ↔ 홈 경로 매핑은 **항상 `$REPO/link.sh`(public)와 `$REPO/
 |---|---|---|
 | `~/.gitconfig`·`~/.zshrc`·`~/.vimrc`·`~/.tmux.conf` | `git/`·`zsh/`·`vim/`·`tmux/` | public |
 | `~/.claude/settings.json`·`CLAUDE.md`·statusline | `claude/` | public |
+| `~/.codex/AGENTS.md` | `codex/AGENTS.md` | public |
+| `~/.agents/skills/{dotfiles-sync,handoff,make-pr}` | `claude/skills/` | public |
 | `~/.claude/skills/{dotfiles-sync,handoff,make-pr}` | `claude/skills/` | public |
 | `~/.config/herdr/config.toml` | `herdr/` | public |
 | `~/.claude/skills/{pkm*,obsidian-history,brief-morning,monthly-review}` | `private/claude/skills/` | private |
-| `~/.hermes/**`·`~/.grok/config.toml`·`~/.agents/skills/*` | `private/` | private |
+| `~/.hermes/**`·`~/.grok/config.toml`·개인 `~/.agents/skills/*` | `private/` | private |
 
 ### 저장소 경로 찾기 (처음 한 번만 입력받아 로컬 파일에 저장)
 
@@ -233,7 +245,7 @@ ln -sfn "$DST" "$SRC"                                         # 4) 직접 링크
 scope별로 묶어서 commit한다. public 컨벤션은 `[scope] message`이며 scope는 최상위 디렉터리
 이름(`claude`, `vim`, `tmux`, `git`, `zsh`, 또는 새로 추가한 `ghostty` 같은 도구 이름)이다.
 `private/` 아래 변경은 **별도 저장소**이므로 `git -C "$REPO/private"`로 따로 commit하고
-(컨벤션은 conventional prefix — `feat:`/`chore:` 등), public에는 submodule 포인터 bump 커밋
+(컨벤션은 해당 저장소의 AGENTS.md를 우선하며, 별도 규칙이 없으면 `[scope] message`), public에는 submodule 포인터 bump 커밋
 (`[repo] bump private submodule: ...`)을 뒤이어 만든다.
 서로 다른 scope의 변경이 섞였다면 가능하면 **scope별로 나눠서** 여러 commit으로 만든다.
 새 도구를 처음 추가하는 경우 link.sh 변경은 그 도구 scope에 함께 묶는다.

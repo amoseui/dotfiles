@@ -22,6 +22,10 @@ files = (
     ("claude/settings.json", ".claude/settings.json"),
     ("claude/CLAUDE.md", ".claude/CLAUDE.md"),
     ("claude/statusline-command.sh", ".claude/statusline-command.sh"),
+    ("codex/AGENTS.md", ".codex/AGENTS.md"),
+    ("claude/skills/dotfiles-sync", ".agents/skills/dotfiles-sync"),
+    ("claude/skills/handoff", ".agents/skills/handoff"),
+    ("claude/skills/make-pr", ".agents/skills/make-pr"),
     ("ghostty/config", ".config/ghostty/config"),
     ("herdr/config.toml", ".config/herdr/config.toml"),
 )

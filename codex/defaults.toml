@@ -1,5 +1,7 @@
 # Portable Codex defaults.
-# `priority` is Codex's Fast service tier.
-model = "gpt-5.6-luna"
-model_reasoning_effort = "max"
-service_tier = "priority"
+# Match the selected local settings; apply explicitly, never during linking.
+model = "gpt-6-astra"
+model_reasoning_effort = "high"
+service_tier = "default"
+# Read existing project conventions when the repository has no AGENTS.md.
+project_doc_fallback_filenames = ["CLAUDE.md"]

@@ -21,7 +21,14 @@ argument-hint: "[PR 제목]"
 
 ### Subagent 위임
 
-`Agent` 툴로 `general-purpose`에 위임한다. Subagent 내부에서 `Skill` 툴로 `pkm`을 호출할 수 있다.
+Claude에서는 `Agent` 툴로 `general-purpose`에 위임한다. Codex에서는 현재 제공된
+`spawn_agent`를 사용하고, 도구가 없거나 위임이 허용되지 않으면 직접 수행한다.
+모델명은 현재 도구의 허용 목록을 따르며 Claude 모델명을 Codex에 넘기지 않는다.
+`Skill` 도구가 없으면 발견된 `pkm/SKILL.md`를 읽어 절차를 따른다.
+
+Codex는 `~/.agents/skills/make-pr`, Claude는 `~/.claude/skills/make-pr`를 사용한다.
+아래 `SKILL_DIR`는 현재 읽은 이 파일의 디렉터리로 정하고, config·scripts·references는
+그 디렉터리를 기준으로 찾는다. 위임 시 이 경로와 사용자에게 승인받은 범위를 전달한다.
 
 ### 위임 프롬프트 템플릿
 
@@ -55,7 +62,8 @@ argument-hint: "[PR 제목]"
 
 ## 1. Commit & Push
 
-- 미커밋 로컬 변경이 있으면 의미 단위로 **한국어 메시지** atomic commit을 만든다. 변경이 여러 관심사를 섞고 있으면 나눠서 커밋한다.
+- 요청에 해당하는 변경만 의미 단위로 **영어 메시지** atomic commit을 만든다. 저장소의 커밋 규칙을 우선하며, 기존 무관한 변경을 포함하지 않는다.
+- push는 사용자 요청과 저장소 규칙을 따른다. dotfiles에서는 커밋 요약을 보여주고 사용자 확인 후에만 push한다.
 - 현재 브랜치가 리모트에 없으면 `git push -u origin <branch>`로 푸시한다.
 
 ## 2. Base Branch 선택
@@ -111,10 +119,10 @@ argument-hint: "[PR 제목]"
 
 ### Draft 여부 결정 (config.yaml 참조)
 
-`~/.claude/skills/make-pr/config.yaml`의 `ready_repos`에 현재 repo가 있으면 ready, 아니면 draft.
+현재 스킬 디렉터리의 `config.yaml`의 `ready_repos`에 현재 repo가 있으면 ready, 아니면 draft.
 
 ```bash
-SKILL_DIR="$HOME/.claude/skills/make-pr"
+# Set SKILL_DIR to the directory containing the loaded SKILL.md.
 CONFIG_FILE="$SKILL_DIR/config.yaml"
 REPO_NAME=$(gh repo view --json name --jq '.name' 2>/dev/null)
 if [ -f "$CONFIG_FILE" ] && [ -n "$REPO_NAME" ] \
@@ -157,8 +165,11 @@ fi
 ```
 
 ### 6-2. 프롬프트 추출
+`extract_prompts.py`는 Claude transcript 형식 전용이다. Codex에서는 이 추출기를
+실행하지 않고 Prompt Journal을 생략한다. 다른 에이전트의 로그를 현재 세션 기록으로 대체하지 않는다.
+
 ```bash
-SKILL_DIR="$HOME/.claude/skills/make-pr"
+# Claude only; SKILL_DIR is the directory containing the loaded SKILL.md.
 EXTRACT_RESULT=$(python3 "$SKILL_DIR/scripts/extract_prompts.py" --find-since "$(pwd)" --since "$BRANCH_START")
 ```
 여러 파일이면 uuid 기준 중복 제거 후 시간순 병합. 실패해도 Step 7로 계속 진행.
@@ -169,7 +180,9 @@ PKM 노트에 포함: A등급 전체, B등급 중 길이>50자 또는 다수 도
 
 ## 7. PKM 문서 업데이트
 
-PR 생성 성공 시 **반드시** `pkm` 스킬을 실행해 PR 노트를 vault에 기록한다.
+PR 생성 성공 시 `pkm` 스킬과 vault가 구성되어 있으면 PR 노트를 기록한다.
+사내 머신 등 해당 구성이 없으면 문서화 단계만 생략하고 이유를 보고한다.
+Codex가 새로 만드는 노트의 작성자는 `codex`로 기록하고 기존 노트의 최초 작성자는 보존한다.
 - PR URL을 컨텍스트로 제공하며 `pkm` 스킬 호출 → pkm이 PR 노트를 **`6-agents/notes/`**(AI 전용 폴더)에 생성하고 `[[obsidian-history]]` 규칙을 적용한다.
 - Step 6의 Prompt Journal이 있으면 노트에 함께 포함:
 
