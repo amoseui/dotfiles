@@ -8,7 +8,7 @@
       "mcp__codegraph__*"
     ]
   },
-  "model": "claude-fable-5[1m]",
+  "model": "opus[1m]",
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -45,7 +45,8 @@
     "ralph-loop@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
     "clangd-lsp@claude-plugins-official": true,
-    "eli5@claude-community": true
+    "eli5@claude-community": true,
+    "ponytail@ponytail": true
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
@@ -65,10 +66,17 @@
         "source": "github",
         "repo": "anthropics/claude-plugins-community"
       }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
     }
   },
   "language": "Korean",
   "alwaysThinkingEnabled": true,
+  "effortLevel": "medium",
   "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
