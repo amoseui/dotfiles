@@ -56,3 +56,39 @@
  
      sys.exit(0)
  
+--- a/hooks/ensure_agent_sdk.py
++++ b/hooks/ensure_agent_sdk.py
+@@ -27,6 +27,7 @@
+ # → ~/.claude/security. See _base.state_dir for resolution precedence. Re-aliased
+ # here to match the existing local name (state_dir was already a local var in
+ # main() and _maybe_emit_user_notice).
++from _base import debug_log
+ from _base import state_dir as _resolve_state_dir
+
+ # Outcome codes for the sdk_bootstrap metric. Values are stable for telemetry.
+@@ -760,12 +761,8 @@
+
+
+ if __name__ == "__main__":
+-    # Tell the harness this is async — venv create + pip install can take
+-    # 30-60s on a cold cache, well past the default sync hook timeout.
+-    # SessionStart runs before the user's first prompt; doing this in the
+-    # background means the first commit-review of the session usually finds
+-    # the venv ready.
+-    print(json.dumps({"async": True, "asyncTimeout": 180000}), flush=True)
++    # Codex expects one JSON response; the Claude async preamble is invalid.
++    # The hook already has a 180-second timeout in hooks.json.
+     t0 = time.perf_counter()
+     try:
+         outcome, err_phase, err_kind = main()
+@@ -845,7 +842,9 @@
+     pv = _plugin_version_int()
+     if pv:
+         metrics["pv"] = pv
+-    response: dict[str, object] = {"metrics": metrics}
++    # Keep telemetry out of Codex's strict SessionStart output schema.
++    debug_log("Codex SDK bootstrap metrics: " + json.dumps(metrics))
++    response: dict[str, object] = {}
+     # One-time user-visible notice when the agentic reviewer is dead on
+     # arrival. Uses hookSpecificOutput.additionalContext (SessionStart's
+     # supported channel for surfacing text to both the model and the user)
