@@ -1,0 +1,58 @@
+--- a/hooks/security_reminder_hook.py
++++ b/hooks/security_reminder_hook.py
+@@ -198,6 +198,18 @@
+     "response."
+ )
+ 
++def emit_codex_hook_json(output, **print_options):
++    """Preserve security feedback using Codex's strict hook output schema."""
++    output = dict(output)
++    metrics = output.pop("metrics", None)
++    if metrics is not None:
++        debug_log("Codex hook metrics: " + json.dumps(metrics))
++    summary = output.pop("rewakeSummary", None)
++    if summary and not output.get("systemMessage"):
++        output["systemMessage"] = summary
++    print(json.dumps(output), **print_options)
++
++
+ def emit_metrics(
+     metrics,
+     rewake_summary=None,
+@@ -296,7 +308,7 @@
+             }
+     if system_message:
+         out["systemMessage"] = system_message
+-    print(json.dumps(out), flush=True)
++    emit_codex_hook_json(out, flush=True)
+ 
+ # =====================================================================
+ # State management
+@@ -2334,7 +2346,7 @@
+             # Another spawn for this same tool_use_id already claimed the
+             # work (compound matched multiple `if` configs). Emit a single
+             # metric so telemetry can count how often the de-dupe kicks in.
+-            print(json.dumps({"metrics": {"bash_hook_dedup": True}}), flush=True)
++            emit_codex_hook_json({"metrics": {"bash_hook_dedup": True}}, flush=True)
+             sys.exit(0)
+         if _GIT_COMMIT_RE.search(cmd):
+             handle_commit_review_posttooluse(input_data)
+@@ -2410,15 +2422,15 @@
+                     "hookEventName": "PostToolUse",
+                     "additionalContext": PROVENANCE_TAG + "\n\n" + "\n\n".join(all_guidance),
+                 }
+-            print(json.dumps(output))
++            emit_codex_hook_json(output)
+         elif all_guidance:
+             # Defensive: pattern rules disabled but guidance somehow set (shouldn't happen)
+-            print(json.dumps({
++            emit_codex_hook_json({
+                 "hookSpecificOutput": {
+                     "hookEventName": "PostToolUse",
+                     "additionalContext": PROVENANCE_TAG + "\n\n" + "\n\n".join(all_guidance),
+                 }
+-            }))
++            })
+ 
+     sys.exit(0)
+ 
