@@ -27,6 +27,8 @@
 ## 코드 작성 규칙
 - 코드 주석은 영어로 작성한다.
 - 커밋 메시지는 영어로 작성한다 (type prefix 포함 — feat/fix/refactor/chore 등).
+- Chromium 커밋 메시지에는 `Test:` footer를 작성하지 않는다. `cl-description` 등 스킬·템플릿에서 요구하더라도 이 사용자 규칙을 우선한다. 필요한 테스트와 검증은 수행하고, 결과는 작업 보고에 남긴다.
+- Git 개발 브랜치를 새로 만들 때는 생성일(사용자 로컬 시간대)의 `YYMMDD-`를 이름 맨 앞에 붙인다(예: `260912-cssstylerule-inherits-grouping-rule`). 날짜는 브랜치 생성 시점에 확인한다.
 - 라인 길이·포맷은 전역 고정값을 두지 않고, 해당 프로젝트 설정(.clang-format / .prettierrc / .editorconfig 등)을 따른다.
 - 기존 코드의 컨벤션(네이밍·구조·주석 밀도)을 우선 따른다.
 
