@@ -21,6 +21,10 @@ brew "gh"
 brew "git"
 # Git extension for versioning large files
 brew "git-lfs"
+# Open-source build automation tool based on the Groovy and Kotlin DSL
+brew "gradle"
+# Statically typed programming language for the JVM
+brew "kotlin"
 # LLM inference in C/C++
 brew "llama.cpp"
 # GUI for vim, made for macOS
@@ -37,8 +41,12 @@ brew "node@22"
 brew "openjdk@11"
 # Development kit for the Java programming language
 brew "openjdk@17"
+# Development kit for the Java programming language
+brew "openjdk@21"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
+# PDF rendering library (based on the xpdf-3.0 code base)
+brew "poppler"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.10"
 # Interpreted, interactive, object-oriented programming language
@@ -47,12 +55,22 @@ brew "python@3.11"
 brew "python@3.9"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# Safe, concurrent, practical language
+brew "rust"
 # Terminal multiplexer
 brew "tmux"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Programming language designed for robustness, optimality, and clarity
+brew "zig"
+# Programming language designed for robustness, optimality, and clarity
+brew "zig@0.15"
 # Find the best local LLM that actually runs on your hardware
 brew "andyyyy64/whichllm/whichllm", trusted: true
+# Command-line tools for building and debugging Android apps
+cask "android-commandlinetools"
+# Transfer files from and to an Android smartphone
+cask "android-file-transfer"
 # Desktop password and login vault
 cask "bitwarden"
 # OpenAI's official ChatGPT desktop app
@@ -63,7 +81,6 @@ cask "claude"
 cask "claude-code"
 # Time tracking tool for agencies and freelancers
 cask "clockify"
-# Ghostty-based terminal with vertical tabs and notifications for AI coding agents
 # Write, edit, and chat about your code with AI
 cask "cursor"
 # Voice and text chat software
@@ -87,11 +104,12 @@ cask "iterm2"
 cask "jetbrains-toolbox"
 # Keyboard customiser
 cask "karabiner-elements"
+# Free cross-platform office suite, fresh version
+cask "libreoffice"
 # App to write, plan, collaborate, and get organised
 cask "notion"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
-# IDE for orchestrating AI coding agents across terminals and worktrees
 # Email client
 cask "readdle-spark"
 # Save articles to read, highlight key content, and organise notes for review
