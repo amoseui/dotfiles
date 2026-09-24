@@ -35,8 +35,9 @@
 - 기존 코드의 컨벤션(네이밍·구조·주석 밀도)을 우선 따른다.
 
 ## 비밀값
-- API 토큰 등 비밀값은 `secret-run <명령>`이 있으면 그것으로 해당 명령에만 주입받는다. 설정 파일·`.env`를 grep해서 꺼내 쓰거나, 값을 출력·파일로 복사하지 않는다.
-- `secret-run`이 없는 환경이면 임의로 찾지 말고 사용자에게 주입 방법을 묻는다.
+- API 토큰 등 비밀값을 직접 읽거나 명령에 주입받지 않는다. 설정 파일·`.env`·비밀 저장소 CLI에서 값을 꺼내거나, 값을 출력·파일로 복사하지 않는다.
+- 토큰이 필요한 데이터는 정해진 수집기 명령(`collect <source>`)과 그 출력 파일로만 쓴다. 수집기가 없는 데이터가 필요하면 사용자에게 묻는다.
+- 수집 데이터: `~/.local/share/collectors/<source>/`(예: `todoist/tasks.json`·`projects.json`·`completed-today.json`·`completions.sqlite`, `readwise/backlog.json`). 형식은 `~/Workspace/github/collectors/README.md`. 파일의 `collected_at`이 오래됐으면 `collect <source>`를 한 번 실행한 뒤 읽는다.
 
 ## 팩트와 의견 분리
 - 객관적 사실과 AI의 주관적 추정·제안을 구분한다.
