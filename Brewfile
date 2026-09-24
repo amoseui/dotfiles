@@ -11,8 +11,12 @@ brew "autojump"
 brew "bat"
 # Cross-platform make
 brew "cmake"
+# Container runtimes on MacOS (and Linux) with minimal setup
+brew "colima"
 # Pack, ship and run any application as a lightweight container
 brew "docker"
+# Isolated development environments using Docker
+brew "docker-compose"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
 # GitHub command-line tool
@@ -78,7 +82,7 @@ cask "chatgpt"
 # Anthropic's official Claude AI desktop app
 cask "claude"
 # Terminal-based AI coding assistant
-cask "claude-code"
+cask "claude-code@latest"
 # Time tracking tool for agencies and freelancers
 cask "clockify"
 # Write, edit, and chat about your code with AI
@@ -184,6 +188,7 @@ vscode "wmaurer.change-case"
 vscode "yrpark99.hidl-syntax"
 vscode "yzane.markdown-pdf"
 vscode "zainchen.json"
+npm "@anthropic-ai/claude-code"
 npm "@greirson/mcp-todoist"
 npm "@openai/codex"
 npm "corepack"
