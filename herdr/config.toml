@@ -8,7 +8,7 @@ delivery = "terminal"
 
 [ui]
 show_agent_labels_on_pane_borders = true
-agent_panel_sort = "spaces"
+agent_panel_sort = "priority"
 
 # Sidebar agent entries: state as text (not just icon color), location,
 # and the live terminal title (agents update it with their current task).
