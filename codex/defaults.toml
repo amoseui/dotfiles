@@ -1,7 +1,7 @@
 # Portable Codex defaults.
 # Match the selected local settings; apply explicitly, never during linking.
-model = "gpt-6-astra"
-model_reasoning_effort = "xhigh"
-service_tier = "default"
+model = "gpt-6.1-sol"
+model_reasoning_effort = "max"
+service_tier = "fast"
 # Read existing project conventions when the repository has no AGENTS.md.
 project_doc_fallback_filenames = ["CLAUDE.md"]
