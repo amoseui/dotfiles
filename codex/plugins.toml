@@ -1,0 +1,23 @@
+# Portable plugin preferences only. Merge these tables into the local config;
+# never replace config.toml or copy hook trust, auth, and session state.
+# Install the two remote plugins before enabling their preferences.
+
+[plugins."superpowers@openai-curated-remote"]
+enabled = true
+
+[plugins."codex-security@openai-curated-remote"]
+enabled = true
+
+# Use Codex distributions and built-in skills instead of Claude-only hooks.
+[plugins."superpowers@claude-plugins-official"]
+enabled = false
+
+[plugins."security-guidance@claude-plugins-official"]
+enabled = false
+
+[plugins."skill-creator@claude-plugins-official"]
+enabled = false
+
+# Codex goals provide persistent iteration without Claude transcript parsing.
+[plugins."ralph-loop@claude-plugins-official"]
+enabled = false

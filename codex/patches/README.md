@@ -1,6 +1,44 @@
 # Codex plugin compatibility patches
 
+## Preferred setup
+
+Use the official Codex distributions rather than repeatedly patching a
+Claude plugin cache. Cache refreshes replaced the security-guidance patch
+and brought its hook failures back.
+
+```sh
+codex plugin add superpowers@openai-curated-remote
+codex plugin add codex-security@openai-curated-remote
+```
+
+Merge the selective preferences from `../plugins.toml` into the local
+`~/.codex/config.toml`. Do not replace the entire local config, symlink it,
+or copy authentication, hook trust, or session state into this repository.
+Leave other plugins and the global hooks setting unchanged.
+
+| Capability | Codex setup |
+| --- | --- |
+| Development workflow | `superpowers@openai-curated-remote` (6.4.2 verified) |
+| Security review | `codex-security@openai-curated-remote` (0.1.31 verified) |
+| Skill authoring | Built-in Codex `skill-creator` skill |
+| Persistent iteration | Native Codex goals; start only when explicitly requested |
+
+The Claude versions remain installed but disabled in Codex. The separate
+Claude installation is unaffected. Codex Security provides security review
+workflows; it does not reproduce the Claude plugin's automatic background
+reviews or require its Anthropic API credentials.
+
+The original security-guidance failures have two causes: Claude-only
+`metrics`/`rewakeSummary` JSON fields, and a push handler calling `.get()` on
+Codex's string `tool_response`. Its seven Bash handlers also rely on Claude's
+`if` filtering. The already-loaded handlers in a running turn may need the
+legacy output patch and a string-to-object normalization while that turn
+finishes; freshly started Codex sessions use the disabled plugin preference.
+Do not rely on cache patches as the permanent configuration.
+
 ## security-guidance 2.0.8
+
+Legacy reference for sessions still using the Claude plugin.
 
 Codex 0.154.0 rejects the Claude-specific `metrics` and `rewakeSummary`
 fields in hook output. This patch logs metrics and maps notification
