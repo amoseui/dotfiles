@@ -186,3 +186,8 @@ export PATH="$HOME/.grok/bin:$PATH"
 fpath=(~/.grok/completions/zsh $fpath)
 autoload -Uz compinit && compinit -C
 # <<< grok installer <<<
+
+# Resolve this file's symlink so the helper stays next to its repository source.
+if [[ -r "${${(%):-%x}:A:h}/handoff-prompt.zsh" ]]; then
+  source "${${(%):-%x}:A:h}/handoff-prompt.zsh"
+fi
