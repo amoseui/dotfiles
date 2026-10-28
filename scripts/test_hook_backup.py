@@ -64,7 +64,7 @@ class ManagedHookIntegrationTests(unittest.TestCase):
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         root = HELPER.resolve().parents[1]
-        with tempfile.TemporaryDirectory(prefix='.hook-fixture-', dir=root) as raw:
+        with tempfile.TemporaryDirectory(prefix='.hook-fixture-', dir=Path(tempfile.gettempdir()).resolve()) as raw:
             home = Path(raw)
             for platform in ('claude', 'codex'):
                 with self.subTest(platform=platform):

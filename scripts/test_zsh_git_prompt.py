@@ -1,4 +1,4 @@
-"""Exercise the prompt with real Git repos; all state stays in this worktree."""
+"""Exercise the prompt with real Git repos; all state stays in temporary fixtures."""
 from pathlib import Path
 import os
 import pty
@@ -19,7 +19,7 @@ GIT = shutil.which("git") or "git"
 
 class GitPromptTest(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix=".prompt-test-", dir=ROOT)
+        self.temp = tempfile.TemporaryDirectory(prefix=".prompt-test-", dir=Path(tempfile.gettempdir()).resolve())
         self.addCleanup(self.temp.cleanup)
         self.base = Path(self.temp.name)
         self.repo = self.base / "repo"
