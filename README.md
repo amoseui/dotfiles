@@ -72,13 +72,6 @@ fallback만 보관한다. 적용 스크립트는 기존 config를 로컬 `config
 `CODEX_HOME`을 따로 쓰는 머신에서는 config 적용 스크립트가 그 경로를 따르며,
 전역 지침은 해당 디렉터리에 별도로 연결한다(기본 `link.sh` 계약은 `~/.codex`).
 
-CodeGraph를 설치한 머신에서는 다음과 같이 MCP를 등록하고 확인할 수 있다:
-
-```bash
-codex mcp add codegraph -- codegraph serve --mcp
-codex mcp list
-```
-
 플러그인은 Codex 설정에서 설치·활성화한다. Claude의 `enabledPlugins`를 복사해도
 Codex에 설치되지 않는다. 공통 워크플로우에 쓰는 `superpowers`, `skill-creator`,
 `security-guidance`, `ralph-loop`는 각각 Codex 쪽 설치 상태를 확인한다.

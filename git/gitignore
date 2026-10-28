@@ -12,8 +12,5 @@
 
 **/.claude/settings.local.json
 
-# CodeGraph index — auto-generated per repo, never commit
-.codegraph/
-
 # Personal agent handoffs; shared HANDOFF.md remains visible to Git.
 HANDOFF.amoseui.md

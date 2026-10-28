@@ -3,23 +3,8 @@
     "commit": "",
     "pr": ""
   },
-  "permissions": {
-    "allow": [
-      "mcp__codegraph__*"
-    ]
-  },
   "model": "opus[1m]",
   "hooks": {
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "codegraph prompt-hook"
-          }
-        ]
-      }
-    ],
     "SessionStart": [
       {
         "matcher": "*",

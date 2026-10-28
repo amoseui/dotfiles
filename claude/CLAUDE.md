@@ -70,14 +70,3 @@
 ## 작업 산출물·리뷰
 - 대규모 작업의 spec·plan은 dotfiles private의 `docs/superpowers/`에 커밋해 보관한다(구 workspace-flow 규약 승계).
 - 고위험·대규모 변경의 2차 리뷰는 `/codex:review`·`/codex:adversarial-review`를 선호한다. 필요할 때만 호출하고 모든 작업에 강제하지 않는다.
-
-<!-- CODEGRAPH_START -->
-## CodeGraph
-
-In repositories indexed by CodeGraph (a `.codegraph/` directory exists at the repo root), reach for it BEFORE grep/find or reading files when you need to understand or locate code:
-
-- **MCP tool** (when available): `codegraph_explore` answers most code questions in one call — the relevant symbols' verbatim source plus the call paths between them, including dynamic-dispatch hops grep can't follow. Name a file or symbol in the query to read its current line-numbered source. If it's listed but deferred, load it by name via tool search.
-- **Shell** (always works): `codegraph explore "<symbol names or question>"` prints the same output.
-
-If there is no `.codegraph/` directory, skip CodeGraph entirely — indexing is the user's decision.
-<!-- CODEGRAPH_END -->
