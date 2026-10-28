@@ -187,7 +187,10 @@ fpath=(~/.grok/completions/zsh $fpath)
 autoload -Uz compinit && compinit -C
 # <<< grok installer <<<
 
-# Resolve this file's symlink so the helper stays next to its repository source.
+# Resolve this file's symlink so helpers stay next to their repository source.
 if [[ -r "${${(%):-%x}:A:h}/handoff-prompt.zsh" ]]; then
   source "${${(%):-%x}:A:h}/handoff-prompt.zsh"
+fi
+if [[ -r "${${(%):-%x}:A:h}/git-prompt.zsh" ]]; then
+  source "${${(%):-%x}:A:h}/git-prompt.zsh"
 fi
